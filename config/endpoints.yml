@@ -1,0 +1,12 @@
+passport-api:
+  login: http://localhost:8000/api/login
+  register: http://localhost:8000/api/user
+  update_user: http://localhost:8000/api/user
+  users: http://localhost:8000/api/user
+  details: http://localhost:8000/api/details
+  create_rol: http://localhost:8000/api/rol
+  update_rol: http://localhost:8000/api/update_rol
+  assign_rol: http://localhost:8000/api/assign_rol
+  change_password: http://localhost:8000/api/change_password
+  auth_workflow_action: http://localhost:8000/api/auth_workflow_action
+  user_workflow_actions: http://localhost:8000/api/user_workflow_actions

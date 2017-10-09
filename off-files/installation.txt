@@ -1,0 +1,5 @@
+# yaml
+composer require symfony/yaml
+
+# Guzzle for HTTP instead of cURL
+composer require "guzzlehttp/guzzle" 
