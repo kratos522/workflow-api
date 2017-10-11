@@ -1,0 +1,4 @@
+dummy_workflow:
+  a: ['rol1', 'rol2', 'rol3']
+  b: ['worker1', 'worker2', 'Professor']
+  c: ['rol4', 'ro6', 'rol7']

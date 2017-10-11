@@ -10,3 +10,4 @@ passport-api:
   change_password: http://localhost:8000/api/change_password
   auth_workflow_action: http://localhost:8000/api/auth_workflow_action
   user_workflow_actions: http://localhost:8000/api/user_workflow_actions
+  emails: http://localhost:8000/api/emails

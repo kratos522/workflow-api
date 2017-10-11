@@ -12,11 +12,25 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
-        ],
-    ];
+     protected $listen = [
+         'Brexis\LaravelWorkflow\Events\Leave' => [
+             'App\Listeners\WorkflowSubscribers@onLeave',
+         ],
+         'Brexis\LaravelWorkflow\Events\Guard' => [
+             'App\Listeners\WorkflowSubscribers@onGuard',
+         ],
+         'App\Events\taskBeforeB' => [
+             'App\Listeners\TaskB',
+         ],
+         'App\Events\taskAfterB' => [
+             'App\Listeners\TaskB',
+         ],
+     ];
+
+     protected $subscribe = [
+         'App\Listeners\WorkflowSubscribers',
+         'App\Listeners\TaskB',
+     ];
 
     /**
      * Register any events for your application.

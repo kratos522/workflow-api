@@ -24,7 +24,7 @@ class RequestHttp
     $response = new \stdClass();
     $response->code = 500;
     $response->msg = "Error: ".$msg;
-    $response->token = "";
+    $response->contents = "";
     $response->params = $params;
     return $response;
   }
@@ -56,7 +56,7 @@ class RequestHttp
 
     try {
       $res = $this->client->request($params->method, $endpoint, $request_body);
-      $response->token = $res->getBody()->getContents();
+      $response->contents = $res->getBody()->getContents();
       $response->code = $res->getStatusCode();
       $response->msg = "Ok";
     } catch (RequestException $e) {

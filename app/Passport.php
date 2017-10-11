@@ -20,6 +20,7 @@ class Passport
   const CHANGE_PASSWORD = 'change_password';
   const AUTH_WORKFLOW_ACTION = 'auth_workflow_action';
   const USER_WORKFLOW_ACTIONS = 'user_workflow_actions';
+  const EMAILS = 'emails';
   const POST_METHOD = 'POST';
   const GET_METHOD = 'GET';
   const PUT_METHOD = 'PUT';
@@ -148,6 +149,20 @@ class Passport
       #load $request
       $req = new \stdClass();
       $req->service = self::USER_WORKFLOW_ACTIONS;
+      $req->body = $params;
+
+      # call service
+      $response = $this->process_request($req);
+
+      # return response
+      return $response;
+  }
+
+  public function emails($params)
+  {
+      #load $request
+      $req = new \stdClass();
+      $req->service = self::EMAILS;
       $req->body = $params;
 
       # call service
