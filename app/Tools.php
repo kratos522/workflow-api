@@ -7,6 +7,13 @@ use App\Passport;
 class Tools
 {
 
+  private $log;
+
+  public function __construct()
+  {
+      $this->log = new \Log;
+  }
+
   public function get_workflow_transitions($objeto, $action, $user_email) {
     $arr = [] ;
     $objeto->enabled_transitions = [];
@@ -38,6 +45,7 @@ class Tools
     try {
       $res = $objeto->workflow_apply($action);
     } catch (\Exception $e) {
+        $this->log::alert($e);
         $res = NULL;
     }
 

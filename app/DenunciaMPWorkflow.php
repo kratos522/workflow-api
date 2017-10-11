@@ -2,12 +2,12 @@
 
 namespace App;
 
-use App\Task;
+use App\DenunciaMP;
 use App\Tools;
 use App\Passport;
 use Symfony\Component\Yaml\Yaml;
 
-class TaskWorkflow
+class DenunciaMPWorkflow
 {
 
   private $state;
@@ -25,41 +25,41 @@ class TaskWorkflow
       $this->log = new \Log;
       $this->state = 'a';
       $this->tools = new Tools;
-      $this->workflow_name = "dummy_workflow";
+      $this->workflow_name = "denuncia_mp";
       $this->workflow_owners = Yaml::parse(file_get_contents(self::OWNERS_YAML))[$this->workflow_name];
       $this->workflow_notifications = Yaml::parse(file_get_contents(self::NOTIFICATIONS_YAML))[$this->workflow_name];
   }
 
-  public function apply(Task $task, $action, $user_email) {
+  public function apply(DenunciaMP $denuncia_mp, $action, $user_email) {
     # set enabled transitions
     try {
-      $arr = $this->tools->get_workflow_transitions($task, $action, $user_email);
+      $arr = $this->tools->get_workflow_transitions($denuncia_mp, $action, $user_email);
 
       # set initial state if workflow_state is null
-      if (is_null($task->workflow_state)) { $task->workflow_state = $this->state;}
+      if (is_null($denuncia_mp->workflow_state)) { $denuncia_mp->workflow_state = $this->state;}
 
       # apply workflow transition
-      $res = $this->tools->workflow_apply($task, $action);
+      $res = $this->tools->workflow_apply($denuncia_mp, $action);
       if (!$res) { return false; }
 
-      # update task
-      $task->save();
+      # update $denuncia_mp
+      $denuncia_mp->save();
       return true;
     } catch (\Exception $e) {
-      unset($task["enabled_transitions"]);
-      unset($task["user_email"]);
+      unset($denuncia_mp["enabled_transitions"]);
+      unset($denuncia_mp["user_email"]);
       return $e;
     }
   }
 
-  public function user_actions(Task $task, $user_email) {
+  public function user_actions(DenunciaMP $denuncia_mp, $user_email) {
     # set enabled transitions
-    $arr = $this->tools->allowed_actions($task, $this->workflow_name, $user_email);
+    $arr = $this->tools->allowed_actions($denuncia_mp, $this->workflow_name, $user_email);
     return $arr;
   }
 
-  public function actions(Task $task) {
-    $arr = $this->tools->get_actions($task);
+  public function actions(DenunciaMP $denuncia_mp) {
+    $arr = $this->tools->get_actions($denuncia_mp);
     return $arr;
   }
 
@@ -98,12 +98,7 @@ class TaskWorkflow
 
       }
     }
-
     return $all_emails;
-    // $unique_emails = array_unique($all_emails);
-    // $emails = array_values($unique_emails);
-    //
-    // return $emails;
   }
 
 }

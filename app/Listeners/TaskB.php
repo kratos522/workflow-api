@@ -57,7 +57,7 @@ class TaskB
         $task = Task::find($event->task->id);
         $this->logger->alert('[onAfterB]');
         $task_workflow = new TaskWorkflow;
-        $users = $task_workflow->users($task->workflow_state);
+        $users = $task_workflow->notification_users($task->workflow_state);
         foreach($users as $u) {
           foreach($u->emails as $email) {
             $user = new \stdClass;

@@ -1,0 +1,18 @@
+dummy_workflow:
+  a: ['rol1', 'rol2', 'rol3']
+  b: ['worker2', 'Professor']
+  c: ['rol4', 'ro6', 'rol7']
+
+denuncia_mp:
+  remitir_a_evaluacion: ['fiscal_mrd']
+  asignar_delitos: ['']
+  elaborar_auto: ['']
+  asignar_fiscales: ['fiscal_coordinador_mrd']
+  entregar_expediente_fiscalia: ['fiscal_mrd']
+  aplicar_auto_cierre: ['fiscal_coordinador_mrd']
+  autorizar_auto_cierre: ['secretaria_fiscal_mrd']
+  solicitar_conformidad_auto_cierre: ['secretaria_fiscal_mrd']
+  aceptar_auto_cierre: ['secretaria_fiscal_mrd']
+  apelar_auto_cierre: ['dgf']
+  aceptar_apelacion_auto_cierre: ['secretaria_fiscal_mrd']
+  entregar_a_maadeh: ['']
