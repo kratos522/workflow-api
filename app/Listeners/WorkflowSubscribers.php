@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use Gate;
-use App\Task;
+// use App\Task;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;

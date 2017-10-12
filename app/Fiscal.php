@@ -19,12 +19,14 @@ class Fiscal extends Model
 
   public function imputados()
   {
-      return $this->hasMany(FiscaleAsignado::class);
+      return $this->hasMany(FiscalAsignado::class);
   }
 
   public function denuncias()
   {
-      return $this->hasMany(Denuncia::class);
+      // return $this->hasMany(Denuncia::class);
+      // return $this->hasManyThrough(Denuncia::class, FiscalAsignado::class);
+      return $this->belongsToMany(\App\Denuncia::class, 'fiscales_asignados');
   }
 
   public function casos_asignados()

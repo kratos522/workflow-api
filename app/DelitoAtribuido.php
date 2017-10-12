@@ -23,4 +23,9 @@ class DelitoAtribuido extends Model
         return $this->belongsTo(Delito::class);
     }
 
+    public function fiscales_asignados()
+    {
+        return $this->hasMany(FiscalAsignado::class,'delito_atribuido_id', 'id');
+    }
+
 }

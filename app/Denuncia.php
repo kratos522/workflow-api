@@ -62,7 +62,8 @@ class Denuncia extends Model
 
   public function fiscales()
   {
-      return $this->hasMany(FiscalAsignado::class);
+      //return $this->hasMany(FiscalAsignado::class);
+      return $this->belongsToMany(Fiscal::class, 'fiscales_asignados');
   }
 
   public function fiscalias()

@@ -34,9 +34,9 @@ return [
         'places'        => [
                           	'nueva',
                           	'pendiente_evaluar',
-                          	'pendiente_asignar_delitos',
-                          	'pendiente_elaborar_auto',
-                          	'pendiente_asignar_fiscales',
+                          	'delitos_asignados',
+                          	'auto_elaborado',
+                          	'fiscales_asignados',
                           	'pendiente_autorizacion_auto_cierre_administrativo',
                           	'pendiente_recibir_notificacion_auto_cierre_firmada',
                           	'pendiente_recibir_notificacion_de_conformidad_auto_cierre',
@@ -54,18 +54,18 @@ return [
             ],
             'asignar_delitos' => [
                 'from' => 'pendiente_evaluar',
-                'to'   => 'pendiente_asignar_delitos',
+                'to'   => 'delitos_asignados',
             ],
             'elaborar_auto' => [
-                'from' => 'pendiente_asignar_delitos',
-                'to'   => 'pendiente_elaborar_auto',
+                'from' => 'delitos_asignados',
+                'to'   => 'auto_elaborado',
             ],
             'asignar_fiscales' => [
-                'from' => 'pendiente_elaborar_auto',
-                'to'   => 'pendiente_asignar_fiscales',
+                'from' => 'auto_elaborado',
+                'to'   => 'fiscales_asignados',
             ],
             'entregar_expediente_fiscalia' => [
-                'from' => 'pendiente_asignar_fiscales',
+                'from' => 'fiscales_asignados',
                 'to'   => 'entregada_a_fiscalia_correspondiente',
             ],
             'aplicar_auto_cierre' => [

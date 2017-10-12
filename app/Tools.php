@@ -3,15 +3,65 @@
 namespace App;
 
 use App\Passport;
+use App\DenunciaMP;
+use App\DenunciaMPWorkflow;
 
 class Tools
 {
 
   private $log;
+  private $actionable_before_states;
+  private $actionable_functions;
 
   public function __construct()
   {
       $this->log = new \Log;
+      $this->actionable_before_states = Array("delitos_asignados","fiscales_asignados");
+      $this->actionable_functions = Array("onBeforeTransitionDelitosAsignados","onBeforeTransitionFiscalesAsignados");
+  }
+
+  private function onBeforeTransitionFiscalesAsignados(DenunciaMP $denuncia_mp){
+    $log = new \Log;
+    $log::alert('onBeforeTransitionFiscalesAsignados called');
+    $denuncia_mp_workflow = new DenunciaMPWorkflow;
+    $fiscales_asignados = $denuncia_mp_workflow->fiscales_asignados($denuncia_mp);
+    $log::alert('$fiscales_asignados is '. var_export($fiscales_asignados,true));
+    if ($fiscales_asignados) {
+      return true;
+    }
+    $log::error('Hay delitos atribuídos al imputado sin fiscal asignado!');
+    return false;
+  }
+
+  private function onBeforeTransitionDelitosAsignados(DenunciaMP $denuncia_mp){
+    $log = new \Log;
+    $log::alert('onBeforeTransitionDelitosAsignados called');
+    $denuncia_mp_workflow = new DenunciaMPWorkflow;
+    $delitos_asignados = $denuncia_mp_workflow->delitos_asignados($denuncia_mp);
+    // $log::alert('$delitos_asignados is '. var_export($delitos_asignados,true));
+    if ($delitos_asignados) {
+      return true;
+    }
+    $log::error('A la denuncia le falta asignar los delitos !');        
+    return false;
+  }
+
+  public function DenunciaMPonBeforeTransition($event) {
+      //$this->log::alert('[Tools][DenunciaMPonBeforeTransition]');
+      $res = true;
+      $denuncia_mp = $event;
+      //$this->log::alert('[Tools][DenunciaMPonBeforeTransition][Actionable State] '. $denuncia_mp->workflow_state);
+      $workflow_state = $denuncia_mp->workflow_state;
+      $condition = (in_array($workflow_state,$this->actionable_before_states));
+      if ($condition) {
+        $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+        $condition = (in_array($function_name,$this->actionable_functions));
+        if ($condition) {
+          $res = (new \App\Tools)->$function_name($denuncia_mp);
+          //$this->log::alert('$res is '. var_export($res, true) );
+        }
+      }
+      return $res;
   }
 
   public function get_workflow_transitions($objeto, $action, $user_email) {
@@ -95,6 +145,8 @@ class Tools
     $passport = new Passport;
     $res = $passport->auth_workflow_action(json_encode($params));
     $jres = json_decode($res->contents);
+
+    if (is_null($jres)) {return false;}
 
     if (!property_exists($jres, "success")){
       return false;

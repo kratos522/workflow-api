@@ -58,9 +58,37 @@ class DenunciaMPWorkflow
     return $arr;
   }
 
+  public function fiscales_asignados(DenunciaMP $denuncia_mp) {
+    #check fiscales asignados a todos los delitos del imputado en la denuncia
+    $denuncia = $denuncia_mp->institucion()->first();
+    $id = $denuncia->id;
+    $count_delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('imputado.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
+    $delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('imputado.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->get();
+    $count_fiscales_asignados = 0 ;
+    foreach($delitos_atribuidos_denuncia as $dad) {
+       $id = $dad->id;
+       $count_fiscales_asignados += $dad::whereId($dad->id)->whereHas('fiscales_asignados', function($f) use($id) {$f->where('delito_atribuido_id',$id);})->count();
+    }
+    $this->log::alert('count_fiscales_asignados = ' . $count_fiscales_asignados . ' count_delitos_atribuidos_denuncia ' . $count_delitos_atribuidos_denuncia);
+    $condition = ($count_fiscales_asignados >= $count_delitos_atribuidos_denuncia) and ($count_fiscales_asignados > 0);
+    if ($condition) { return true;}
+    return false;
+  }
+
   public function actions(DenunciaMP $denuncia_mp) {
     $arr = $this->tools->get_actions($denuncia_mp);
     return $arr;
+  }
+
+  public function delitos_asignados(DenunciaMP $denuncia_mp) {
+    $d = $denuncia_mp::whereId($denuncia_mp->id)->with('institucion')->first();
+    $id = $d->institucion->id; // capturing $denuncia id
+    $delitos_count = $denuncia_mp::whereId($denuncia_mp->id)->whereHas('institucion.delitos', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
+    $this->log::alert('delitos count is '. $delitos_count);
+    $result = false;
+    if ($delitos_count > 0) { $result = true;}
+    $this->log::alert('$result in delitos_asignados is '. var_export($result, true) );
+    return (boolean)$result;
   }
 
   public function owner_users($workflow_state) {
@@ -78,7 +106,7 @@ class DenunciaMPWorkflow
     $exists = in_array($workflow_state,array_keys($workflow_users));
     if (!($exists)) { return $arr; }
 
-    $this->log::alert($workflow_users);
+    //$this->log::alert($workflow_users);
     $arr = $workflow_users[$workflow_state];
 
     $all_emails = [];

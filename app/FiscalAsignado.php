@@ -24,6 +24,11 @@ class FiscalAsignado extends Model
         return $this->belongsTo(Denuncia::class);
     }
 
+    public function delito_atribuido()
+    {
+        return $this->belongsTo(DelitoAtribuido::class, 'delito_atribuido_id');
+    }
+
     public function fiscalia()
     {
         return $this->belongsTo(FiscaliaAsignada::class, 'fiscalia_asignada_id');

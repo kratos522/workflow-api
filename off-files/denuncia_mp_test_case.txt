@@ -1,0 +1,97 @@
+## DO
+$denuncia_mp = DenunciaMP::find(14)
+$denuncia_mp->workflow_state = "nueva"
+$denuncia_mp->save()
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->apply($denuncia_mp, "remitir_a_evaluacion", "raquel.zemlak@example.com")
+
+## FAIL
+$denuncia_mp = DenunciaMP::find(14)
+$denuncia_mp->workflow_state = "nueva"
+$denuncia_mp->save()
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->apply($denuncia_mp, "remitir_a_evaluacion", "rweber@example.com")
+
+#DO TEST ASIGNAR DELITOS
+$denuncia_mp = DenunciaMP::find(14)
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->apply($denuncia_mp, "asignar_delitos", "keebler.noemy@example.net")
+$denuncia_mp->save()
+
+#DO TEST ASIGNAR FISCALES
+$denuncia_mp = DenunciaMP::find(14)
+$denuncia_mp->workflow_state = "nueva"
+$denuncia_mp->save()
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->apply($denuncia_mp, "remitir_a_evaluacion", "raquel.zemlak@example.com")
+$denuncia_mp->save()
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->apply($denuncia_mp, "asignar_delitos", "keebler.noemy@example.net")
+$denuncia_mp->save()
+$denuncia_mp = DenunciaMP::find(14)
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->apply($denuncia_mp, "elaborar_auto", "keebler.noemy@example.net")
+$denuncia_mp->save()
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->apply($denuncia_mp, "asignar_fiscales", "keebler.noemy@example.net")
+$denuncia_mp->save()
+
+#DO
+$denuncia_mp = DenunciaMP::find(14)
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->user_actions($denuncia_mp, "raquel.zemlak@example.com")
+
+#FAIL
+$denuncia_mp = DenunciaMP::find(14)
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->user_actions($denuncia_mp, "weber@example.com")
+
+#DO
+$denuncia_mp = DenunciaMP::find(14)
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->actions($denuncia_mp)
+
+#DO
+$denuncia_mp = DenunciaMP::find(14)
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->owner_users("asignar_delitos")
+$denuncia_mp_workflow->owner_users("entregar_expediente_fiscalia")
+
+#DO
+$denuncia_mp = DenunciaMP::find(14)
+$denuncia_mp_workflow = new App\DenunciaMPWorkflow
+$denuncia_mp_workflow->notification_users("asignar_delitos")
+$denuncia_mp_workflow->notification_users("entregar_expediente_fiscalia")
+
+#DO add delito
+$delito_atribuido = DelitoAtribuido::whereDenunciaId(22)->first()
+$delito_atribuido->delete()
+$denuncia = Denuncia::find(22)
+$imputado = Imputado::find(3)
+$delito = Delito::find(8)
+$delito_atribuido = new DelitoAtribuido
+$delito_atribuido->imputado()->associate($imputado)
+$delito_atribuido->denuncia()->associate($denuncia)
+$delito_atribuido->delito()->associate($delito)
+$delito_atribuido->save()
+
+
+#DO test has fiscal asignado for all delitos
+$last_fiscal =  FiscalAsignado::orderBy('id','desc')->take(1)->first()
+$last_fiscal->delete()
+$fiscal = Fiscal::find(25)
+$denuncia = Denuncia::find(22)
+$fiscalia = Fiscalia::find(40)
+$fiscalia_asignada = FiscaliaAsignada::find(11)
+$imputado = Imputado::find(3)
+$delito_atribuido = DelitoAtribuido::find(3)
+$fiscal_asignado = new FiscalAsignado
+$fiscal_asignado->fecha_asignacion = date(now())
+$fiscal_asignado->fiscalia()->associate($fiscalia_asignada)
+$fiscal_asignado->denuncia()->associate($denuncia)
+$fiscal_asignado->imputado()->associate($imputado)
+$fiscal_asignado->fiscal()->associate($fiscal)
+$fiscal_asignado->delito_atribuido()->associate($delito_atribuido)
+$fiscal_asignado->save()
+
+

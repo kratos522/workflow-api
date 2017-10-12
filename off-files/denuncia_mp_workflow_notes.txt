@@ -1,0 +1,8 @@
+# notes
+* Falta conocer estructura del "auto de cierre administrativo"
+
+
+# features
+* AppServiceProvider must be only for triggering events and stopping before action
+* Use Tools as joker to generate dynamically all the intended "actions" before/after workflow models like DenunciaMP/SS
+* Non stopping Actions should be triggered from AppServiceProvider as Events/Listeners pairs 
