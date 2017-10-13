@@ -6,7 +6,7 @@ use Gate;
 use App\DenunciaSS;
 use App\DenunciaSSWorkflow;
 // use App\Mail\TaskB as NotifyTaskB;
-//use App\Mail\DenunciaSSAfterTransition as NotifyTransition;
+use App\Mail\DenunciaSSAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -41,7 +41,7 @@ class DenunciaSSSubscriber
             $user->email = $email;
             $rol = $u->rol;
             $this->logger->alert('[Notify] email: '.$email);
-            //\Mail::to($user)->send(new NotifyTransition($denuncia_ss, $rol, $user->email));
+            \Mail::to($user)->send(new NotifyTransition($denuncia_ss, $rol, $user->email));
           }
         }
     }
