@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Task;
 use App\DenunciaMP;
+use App\DenunciaSS;
 use App\Tools;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function __construct()
     {
-        $this->available_events = Array("App\Events\\taskBeforeB","App\Events\\taskAfterB","App\Events\\DenunciaMPAfterTransition", "App\Events\\DenunciaMPBeforeTransition" );
+        $this->available_events = Array("App\Events\\taskBeforeB","App\Events\\taskAfterB","App\Events\\DenunciaMPAfterTransition", "App\Events\\DenunciaMPBeforeTransition","App\Events\\DenunciaSSAfterTransition", "App\Events\\DenunciaSSBeforeTransition" );
         $this->tools = new Tools;
         $this->log = new \Log;
     }
@@ -67,31 +68,6 @@ class AppServiceProvider extends ServiceProvider
     {
         { Schema::defaultStringLength(191); }
 
-        Task::saving(function ($task) {
-            //  $event_name = "task_before";
-            //  $log = new \Log;
-            //  $original = $task->getOriginal();
-            //  if (!($original["workflow_state"] == $task->workflow_state)) {
-            //    //$log::alert('[BEFORE SAVE] original workflow_state '. $original["workflow_state"] . ' changed workflow_state '. $task->workflow_state);
-            //    if (!(is_null($task->workflow_state))){
-            //      $this->raise_event($event_name, $task);
-            //    }
-            //  }
-        });
-
-        Task::saved(function ($task) {
-             $event_name = "task_after";
-             $res = $this->after_object($event_name, $task);
-            //  $log = new \Log;
-            //  $original = $task->getOriginal();
-            //  if (!($original["workflow_state"] == $task->workflow_state)) {
-            //    //$log::alert('[AFTER SAVE] original workflow_state '. $original["workflow_state"] . ' changed workflow_state '. $task->workflow_state);
-            //    if (!(is_null($task->workflow_state))){
-            //      $this->raise_event($event_name, $task);
-            //    }
-            //  }
-        });
-
         DenunciaMP::saving(function ($denuncia_mp) {
              // check has delitos asignados
              $res = $this->tools->DenunciaMPonBeforeTransition($denuncia_mp);
@@ -108,6 +84,11 @@ class AppServiceProvider extends ServiceProvider
              $event_name = "denuncia_m_p_after_transition";
              $res = $this->after_object($event_name, $denuncia_mp);
         });
+
+        DenunciaSS::saved(function ($denuncia_ss) {
+             $event_name = "denuncia_s_s_after_transition";
+             $res = $this->after_object($event_name, $denuncia_ss);
+        });
     }
 
     /**
@@ -119,4 +100,30 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
+    // Task::saving(function ($task) {
+    //     //  $event_name = "task_before";
+    //     //  $log = new \Log;
+    //     //  $original = $task->getOriginal();
+    //     //  if (!($original["workflow_state"] == $task->workflow_state)) {
+    //     //    //$log::alert('[BEFORE SAVE] original workflow_state '. $original["workflow_state"] . ' changed workflow_state '. $task->workflow_state);
+    //     //    if (!(is_null($task->workflow_state))){
+    //     //      $this->raise_event($event_name, $task);
+    //     //    }
+    //     //  }
+    // });
+    //
+    // Task::saved(function ($task) {
+    //      $event_name = "task_after";
+    //      $res = $this->after_object($event_name, $task);
+    //     //  $log = new \Log;
+    //     //  $original = $task->getOriginal();
+    //     //  if (!($original["workflow_state"] == $task->workflow_state)) {
+    //     //    //$log::alert('[AFTER SAVE] original workflow_state '. $original["workflow_state"] . ' changed workflow_state '. $task->workflow_state);
+    //     //    if (!(is_null($task->workflow_state))){
+    //     //      $this->raise_event($event_name, $task);
+    //     //    }
+    //     //  }
+    // });
+
 }
