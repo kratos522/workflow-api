@@ -37,13 +37,20 @@ class EventServiceProvider extends ServiceProvider
          'App\Events\DenunciaSSBeforeTransition' => [
              'App\Listeners\DenunciaSSSubscriber',
          ],
+         'App\Events\DocumentoAfterTransition' => [
+             'App\Listeners\DocumentoSubscriber',
+         ],
+         'App\Events\DocumentoBeforeTransition' => [
+             'App\Listeners\DocumentoSubscriber',
+         ],
      ];
 
      protected $subscribe = [
          'App\Listeners\WorkflowSubscribers',
          'App\Listeners\TaskB',
          'App\Listeners\DenunciaMPSubscriber',
-         'App\Listeners\DenunciaSSSubscriber',         
+         'App\Listeners\DenunciaSSSubscriber',
+         'App\Listeners\DocumentoSubscriber',                  
      ];
 
     /**

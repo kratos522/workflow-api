@@ -27,7 +27,7 @@ denuncia_ss:
   descripcion_hechos_firmados: ['receptor_denuncia_ss']
   remitida_ministerio_publico: ['receptor_denuncia_ss']
 
-recepcion_documentos:
+recepcion_documento:
   nuevo: ['receptor_documentos']
   recibido: ['receptor_documentos']
   dependencia_asignada: ['receptor_documentos']

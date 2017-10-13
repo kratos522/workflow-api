@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Task;
 use App\DenunciaMP;
 use App\DenunciaSS;
+use App\Documento;
 use App\Tools;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,15 @@ class AppServiceProvider extends ServiceProvider
 
     public function __construct()
     {
-        $this->available_events = Array("App\Events\\taskBeforeB","App\Events\\taskAfterB","App\Events\\DenunciaMPAfterTransition", "App\Events\\DenunciaMPBeforeTransition","App\Events\\DenunciaSSAfterTransition", "App\Events\\DenunciaSSBeforeTransition" );
+        $this->available_events = Array("App\Events\\taskBeforeB",
+                                        "App\Events\\taskAfterB",
+                                        "App\Events\\DenunciaMPAfterTransition",
+                                        "App\Events\\DenunciaMPBeforeTransition",
+                                        "App\Events\\DenunciaSSAfterTransition",
+                                        "App\Events\\DenunciaSSBeforeTransition",
+                                        "App\Events\\DocumentoAfterTransition",
+                                        "App\Events\\DocumentoBeforeTransition"
+                                      );
         $this->tools = new Tools;
         $this->log = new \Log;
     }
@@ -100,6 +109,23 @@ class AppServiceProvider extends ServiceProvider
         DenunciaSS::saved(function ($denuncia_ss) {
              $event_name = "denuncia_s_s_after_transition";
              $res = $this->after_object($event_name, $denuncia_ss);
+        });
+
+        Documento::saving(function ($documento) {
+             // check has delitos asignados
+             $res = $this->tools->DocumentoonBeforeTransition($documento);
+             $this->log::alert('$res@::saving is .. ' . var_export($res, true));
+             if ($res) {
+               // launch other events for other listeners
+               $event_name = "documento_before_transition";
+               $result = $this->before_object($event_name, $documento);
+             }
+             return $res;
+        });
+
+        Documento::saved(function ($documento) {
+             $event_name = "documento_after_transition";
+             $res = $this->after_object($event_name, $documento);
         });
     }
 

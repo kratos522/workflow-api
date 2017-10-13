@@ -18,12 +18,18 @@ class Tools
   public function __construct()
   {
       $this->log = new \Log;
-      $this->actionable_before_states = Array("delitos_asignados","fiscales_asignados", "delitos_tipificados", "pendiente_revision");
+      $this->actionable_before_states = Array("delitos_asignados",
+                                              "fiscales_asignados",
+                                              "delitos_tipificados",
+                                              "pendiente_revision",
+                                              "dependencia_asignada"
+                                            );
       $this->actionable_functions = Array(
                                           "onBeforeTransitionDelitosAsignados",
                                           "onBeforeTransitionFiscalesAsignados",
                                           "onBeforeTransitionDelitosTipificados",
-                                          "onBeforeTransitionPendienteRevision"
+                                          "onBeforeTransitionPendienteRevision",
+                                          "onBeforeTransitionDependenciaAsignada"
                                           );
   }
 
@@ -78,6 +84,18 @@ class Tools
     return false;
   }
 
+  private function onBeforeTransitionDependenciaAsignada(Documento $documento){
+    $log = new \Log;
+    $log::alert('onBeforeTransitionDependenciaAsignada called');
+    $documento_workflow = new DocumentoWorkflow;
+    $dependencia_asignada = $documento_workflow->dependencia($documento);
+    if ($dependencia_asignada) {
+      return true;
+    }
+    $log::error('Al Documento le falta asignar una Dependencia de una Institución!');
+    return false;
+  }
+
   public function DenunciaMPonBeforeTransition($event) {
       //$this->log::alert('[Tools][DenunciaMPonBeforeTransition]');
       $res = true;
@@ -114,6 +132,23 @@ class Tools
       return $res;
   }
 
+  public function DocumentoonBeforeTransition($event) {
+      //$this->log::alert('[Tools][DenunciaMPonBeforeTransition]');
+      $res = true;
+      $documento = $event;
+      //$this->log::alert('[Tools][DenunciaMPonBeforeTransition][Actionable State] '. $denuncia_mp->workflow_state);
+      $workflow_state = $documento->workflow_state;
+      $condition = (in_array($workflow_state,$this->actionable_before_states));
+      if ($condition) {
+        $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+        $condition = (in_array($function_name,$this->actionable_functions));
+        if ($condition) {
+          $res = (new \App\Tools)->$function_name($documento);
+          //$this->log::alert('$res is '. var_export($res, true) );
+        }
+      }
+      return $res;
+  }
 
   public function get_workflow_transitions($objeto, $action, $user_email) {
     $arr = [] ;

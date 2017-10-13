@@ -140,7 +140,7 @@ return [
             ]
         ]
     ],
-    'recepcion_documentos'   => [
+    'recepcion_documento'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
