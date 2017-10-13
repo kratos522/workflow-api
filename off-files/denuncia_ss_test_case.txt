@@ -56,27 +56,14 @@ $denuncia_ss->save()
 $denuncia_ss
 DenunciaSS::find(9)
 
-
-#DO
-$denuncia_mp = DenunciaMP::find(14)
-$denuncia_mp_workflow = new App\DenunciaMPWorkflow
-$denuncia_mp_workflow->owner_users("asignar_delitos")
-$denuncia_mp_workflow->owner_users("entregar_expediente_fiscalia")
-
-#DO
-$denuncia_mp = DenunciaMP::find(14)
-$denuncia_mp_workflow = new App\DenunciaMPWorkflow
-$denuncia_mp_workflow->notification_users("asignar_delitos")
-$denuncia_mp_workflow->notification_users("entregar_expediente_fiscalia")
-
 #DO add delito
-$delito_atribuido = DelitoAtribuido::whereDenunciaId(22)->first()
+$delito_atribuido = DelitoAtribuido::whereDenunciaId(9)->first()
 $delito_atribuido->delete()
-$denuncia = Denuncia::find(22)
-$imputado = Imputado::find(3)
-$delito = Delito::find(8)
+$denuncia = Denuncia::find(9)
+$sospechoso = Sospechoso::find(9)
+$delito = Delito::find(8) ##???
 $delito_atribuido = new DelitoAtribuido
-$delito_atribuido->imputado()->associate($imputado)
+$delito_atribuido->sospechoso()->associate($sospechoso)
 $delito_atribuido->denuncia()->associate($denuncia)
 $delito_atribuido->delito()->associate($delito)
 $delito_atribuido->save()

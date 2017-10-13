@@ -85,6 +85,18 @@ class AppServiceProvider extends ServiceProvider
              $res = $this->after_object($event_name, $denuncia_mp);
         });
 
+        DenunciaSS::saving(function ($denuncia_ss) {
+             // check has delitos asignados
+             $res = $this->tools->DenunciaSSonBeforeTransition($denuncia_ss);
+             $this->log::alert('$res@::saving is .. ' . var_export($res, true));
+             if ($res) {
+               // launch other events for other listeners
+               $event_name = "denuncia_s_s_before_transition";
+               $result = $this->before_object($event_name, $denuncia_ss);
+             }
+             return $res;
+        });
+
         DenunciaSS::saved(function ($denuncia_ss) {
              $event_name = "denuncia_s_s_after_transition";
              $res = $this->after_object($event_name, $denuncia_ss);

@@ -6,6 +6,7 @@ use App\Passport;
 use App\DenunciaMP;
 use App\DenunciaSS;
 use App\DenunciaMPWorkflow;
+use App\DenunciaSSWorkflow;
 
 class Tools
 {
@@ -17,8 +18,12 @@ class Tools
   public function __construct()
   {
       $this->log = new \Log;
-      $this->actionable_before_states = Array("delitos_asignados","fiscales_asignados");
-      $this->actionable_functions = Array("onBeforeTransitionDelitosAsignados","onBeforeTransitionFiscalesAsignados");
+      $this->actionable_before_states = Array("delitos_asignados","fiscales_asignados", "delitos_tipificados");
+      $this->actionable_functions = Array(
+                                          "onBeforeTransitionDelitosAsignados",
+                                          "onBeforeTransitionFiscalesAsignados",
+                                          "onBeforeTransitionDelitosTipificados"
+                                          );
   }
 
   private function onBeforeTransitionFiscalesAsignados(DenunciaMP $denuncia_mp){
@@ -47,6 +52,18 @@ class Tools
     return false;
   }
 
+  private function onBeforeTransitionDelitosTipificados(DenunciaSS $denuncia_ss){
+    $log = new \Log;
+    $log::alert('onBeforeTransitionDelitosTipificados called');
+    $denuncia_ss_workflow = new DenunciaSSWorkflow;
+    $delitos_tipificados = $denuncia_ss_workflow->delitos_asignados($denuncia_ss);
+    if ($delitos_tipificados) {
+      return true;
+    }
+    $log::error('A la denuncia le falta tipificar los delitos !');
+    return false;
+  }
+
   public function DenunciaMPonBeforeTransition($event) {
       //$this->log::alert('[Tools][DenunciaMPonBeforeTransition]');
       $res = true;
@@ -64,6 +81,25 @@ class Tools
       }
       return $res;
   }
+
+  public function DenunciaSSonBeforeTransition($event) {
+      //$this->log::alert('[Tools][DenunciaMPonBeforeTransition]');
+      $res = true;
+      $denuncia_ss = $event;
+      //$this->log::alert('[Tools][DenunciaMPonBeforeTransition][Actionable State] '. $denuncia_mp->workflow_state);
+      $workflow_state = $denuncia_ss->workflow_state;
+      $condition = (in_array($workflow_state,$this->actionable_before_states));
+      if ($condition) {
+        $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+        $condition = (in_array($function_name,$this->actionable_functions));
+        if ($condition) {
+          $res = (new \App\Tools)->$function_name($denuncia_ss);
+          //$this->log::alert('$res is '. var_export($res, true) );
+        }
+      }
+      return $res;
+  }
+
 
   public function get_workflow_transitions($objeto, $action, $user_email) {
     $arr = [] ;
