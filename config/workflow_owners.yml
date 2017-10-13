@@ -16,3 +16,11 @@ denuncia_mp:
   apelar_auto_cierre: ['secretaria_fiscal_mrd']
   aceptar_apelacion_auto_cierre: ['dgf']
   entregar_a_maadeh: ['secretaria_fiscal_mrd']
+
+denuncia_ss:
+  recibir_denuncia: [receptor_denuncia_ss]
+  tipificar_delitos: [fiscal_asignado_ss]
+  aceptar_denuncia: [fiscal_asignado_ss]
+  desestimar: [fiscal_asignado_ss]
+  firmar_descripcion_hechos: [receptor_denuncia_ss]
+  remitir_ministerio_publico: [receptor_denuncia_ss]

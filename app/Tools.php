@@ -4,6 +4,7 @@ namespace App;
 
 use App\Passport;
 use App\DenunciaMP;
+use App\DenunciaSS;
 use App\DenunciaMPWorkflow;
 
 class Tools
@@ -42,7 +43,7 @@ class Tools
     if ($delitos_asignados) {
       return true;
     }
-    $log::error('A la denuncia le falta asignar los delitos !');        
+    $log::error('A la denuncia le falta asignar los delitos !');
     return false;
   }
 

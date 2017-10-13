@@ -41,7 +41,6 @@ return [
                           	'pendiente_recibir_notificacion_auto_cierre_firmada',
                           	'pendiente_recibir_notificacion_de_conformidad_auto_cierre',
                             'pendiente_aceptacion_apelacion_auto_cierre',
-                          	'pendiente_remitir_expediente_a_maadeh',
                           	'entregada_a_fiscalia_correspondiente',
                           	'entregada_a_maadeh',
                           	'auto_cierre_aceptado',
@@ -95,6 +94,49 @@ return [
             'entregar_a_maadeh' => [
                 'from' => 'pendiente_recibir_notificacion_de_conformidad_auto_cierre',
                 'to'   => 'entregada_a_maadeh',
+            ]
+        ]
+    ],
+    'denuncia_ss'   => [
+        'type'          => 'state_machine',
+        'marking_store' => [
+            'type' => 'single_state',
+            'arguments' => ['workflow_state']
+        ],
+        'supports'      => ['App\DenunciaSS'],
+        'places'        => [
+                          	'nueva',
+                            'pendiente_revision',
+                            'delitos_tipificados',
+                            'aceptada',
+                            'no_aceptada',
+                            'descripcion_hechos_firmados',
+                            'remitida_ministerio_publico'
+                          ],
+        'transitions'   => [
+            'recibir_denuncia' => [
+                'from' => 'nueva',
+                'to'   => 'pendiente_revision',
+            ],
+            'tipificar_delitos' => [
+                'from' => 'pendiente_revision',
+                'to'   => 'delitos_tipificados',
+            ],
+            'desestimar' => [
+                'from' => 'delitos_tipificados',
+                'to'   => 'no_aceptada',
+            ],
+            'aceptar_denuncia' => [
+                'from' => 'delitos_tipificados',
+                'to'   => 'aceptada',
+            ],
+            'firmar_descripcion_hechos' => [
+                'from' => 'aceptada',
+                'to'   => 'descripcion_hechos_firmados',
+            ],
+            'remitir_ministerio_publico' => [
+                'from' => 'descripcion_hechos_firmados',
+                'to'   => 'remitida_ministerio_publico',
             ]
         ]
     ]

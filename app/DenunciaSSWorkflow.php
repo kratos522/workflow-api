@@ -2,12 +2,12 @@
 
 namespace App;
 
-use App\DenunciaMP;
+use App\DenunciaSS;
 use App\Tools;
 use App\Passport;
 use Symfony\Component\Yaml\Yaml;
 
-class DenunciaMPWorkflow
+class DenunciaSSWorkflow
 {
 
   private $state;
@@ -25,65 +25,49 @@ class DenunciaMPWorkflow
       $this->log = new \Log;
       $this->state = 'nueva';
       $this->tools = new Tools;
-      $this->workflow_name = "denuncia_mp";
+      $this->workflow_name = "denuncia_ss";
       $this->workflow_owners = Yaml::parse(file_get_contents(self::OWNERS_YAML))[$this->workflow_name];
       $this->workflow_notifications = Yaml::parse(file_get_contents(self::NOTIFICATIONS_YAML))[$this->workflow_name];
   }
 
-  public function apply(DenunciaMP $denuncia_mp, $action, $user_email) {
+  public function apply(DenunciaSS $denuncia_ss, $action, $user_email) {
     # set enabled transitions
     try {
-      $arr = $this->tools->get_workflow_transitions($denuncia_mp, $action, $user_email);
+      $arr = $this->tools->get_workflow_transitions($denuncia_ss, $action, $user_email);
 
       # set initial state if workflow_state is null
-      if (is_null($denuncia_mp->workflow_state)) { $denuncia_mp->workflow_state = $this->state;}
+      if (is_null($denuncia_ss->workflow_state)) { $denuncia_ss->workflow_state = $this->state;}
 
       # apply workflow transition
-      $res = $this->tools->workflow_apply($denuncia_mp, $action);
+      $res = $this->tools->workflow_apply($denuncia_ss, $action);
       if (!$res) { return false; }
 
-      # update $denuncia_mp
-      $denuncia_mp->save();
+      # update $denuncia_ss
+      $denuncia_ss->save();
       return true;
     } catch (\Exception $e) {
-      unset($denuncia_mp["enabled_transitions"]);
-      unset($denuncia_mp["user_email"]);
+      unset($denuncia_ss["enabled_transitions"]);
+      unset($denuncia_ss["user_email"]);
       return $e;
     }
   }
 
-  public function user_actions(DenunciaMP $denuncia_mp, $user_email) {
+  public function user_actions(DenunciaSS $denuncia_ss, $user_email) {
     # set enabled transitions
-    $arr = $this->tools->allowed_actions($denuncia_mp, $this->workflow_name, $user_email);
+    $arr = $this->tools->allowed_actions($denuncia_ss, $this->workflow_name, $user_email);
     return $arr;
   }
 
-  public function fiscales_asignados(DenunciaMP $denuncia_mp) {
-    #check fiscales asignados a todos los delitos del imputado en la denuncia
-    $denuncia = $denuncia_mp->institucion()->first();
-    $id = $denuncia->id;
-    $count_delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('imputado.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
-    $delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('imputado.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->get();
-    $count_fiscales_asignados = 0 ;
-    foreach($delitos_atribuidos_denuncia as $dad) {
-       $id = $dad->id;
-       $count_fiscales_asignados += $dad::whereId($dad->id)->whereHas('fiscales_asignados', function($f) use($id) {$f->where('delito_atribuido_id',$id);})->count();
-    }
-    $this->log::alert('count_fiscales_asignados = ' . $count_fiscales_asignados . ' count_delitos_atribuidos_denuncia ' . $count_delitos_atribuidos_denuncia);
-    $condition = ($count_fiscales_asignados >= $count_delitos_atribuidos_denuncia) and ($count_fiscales_asignados > 0);
-    if ($condition) { return true;}
-    return false;
-  }
 
-  public function actions(DenunciaMP $denuncia_mp) {
-    $arr = $this->tools->get_actions($denuncia_mp);
+  public function actions(DenunciaSS $denuncia_ss) {
+    $arr = $this->tools->get_actions($denuncia_ss);
     return $arr;
   }
 
-  public function delitos_asignados(DenunciaMP $denuncia_mp) {
-    $d = $denuncia_mp::whereId($denuncia_mp->id)->with('institucion')->first();
+  public function delitos_asignados(DenunciaSS $denuncia_ss) {
+    $d = $denuncia_ss::whereId($denuncia_ss->id)->with('institucion')->first();
     $id = $d->institucion->id; // capturing $denuncia id
-    $delitos_count = $denuncia_mp::whereId($denuncia_mp->id)->whereHas('institucion.delitos', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
+    $delitos_count = $denuncia_ss::whereId($denuncia_ss->id)->whereHas('institucion.delitos', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
     $this->log::alert('delitos count is '. $delitos_count);
     $result = false;
     if ($delitos_count > 0) { $result = true;}
@@ -102,6 +86,7 @@ class DenunciaMPWorkflow
   }
 
   private function users($workflow_state, $workflow_users) {
+    //get emails from users for specific workflow_state
     $arr = [];
     $exists = in_array($workflow_state,array_keys($workflow_users));
     if (!($exists)) { return $arr; }
@@ -127,6 +112,23 @@ class DenunciaMPWorkflow
       }
     }
     return $all_emails;
+  }
+
+  public function fiscales_asignados(DenunciaSS $denuncia_ss) {
+    #check fiscales asignados a todos los delitos del imputado en la denuncia
+    $denuncia = $denuncia_ss->institucion()->first();
+    $id = $denuncia->id;
+    $count_delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('i.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
+    $delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('imputado.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->get();
+    $count_fiscales_asignados = 0 ;
+    foreach($delitos_atribuidos_denuncia as $dad) {
+       $id = $dad->id;
+       $count_fiscales_asignados += $dad::whereId($dad->id)->whereHas('fiscales_asignados', function($f) use($id) {$f->where('delito_atribuido_id',$id);})->count();
+    }
+    $this->log::alert('count_fiscales_asignados = ' . $count_fiscales_asignados . ' count_delitos_atribuidos_denuncia ' . $count_delitos_atribuidos_denuncia);
+    $condition = ($count_fiscales_asignados >= $count_delitos_atribuidos_denuncia) and ($count_fiscales_asignados > 0);
+    if ($condition) { return true;}
+    return false;
   }
 
 }

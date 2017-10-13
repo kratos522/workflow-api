@@ -4,6 +4,7 @@ dummy_workflow:
   c: ['rol4', 'ro6', 'rol7']
 
 denuncia_mp:
+  nueva: ['fiscal_mrd']
   pendiente_evaluar: ['fiscal_mrd']
   delitos_asignados: ['fiscal_mrd']
   auto_elaborado: ['fiscal_mrd']
@@ -16,3 +17,12 @@ denuncia_mp:
   pendiente_aceptacion_apelacion_auto_cierre: ['dgf']
   apelacion_aceptada: ['secretaria_fiscal_mrd']
   entregada_a_maadeh: ['secretaria_fiscal_mrd']
+
+denuncia_ss:
+  nueva: ['receptor_denuncia_ss']
+  pendiente_revision: ['fiscal_asignado_ss']
+  delitos_tipificados: ['fiscal_asignado_ss']
+  aceptada: ['receptor_denuncia_ss']
+  no_aceptada: ['receptor_denuncia_ss']
+  descripcion_hechos_firmados: ['receptor_denuncia_ss']
+  remitida_ministerio_publico: ['receptor_denuncia_ss']
