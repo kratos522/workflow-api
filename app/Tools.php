@@ -18,11 +18,12 @@ class Tools
   public function __construct()
   {
       $this->log = new \Log;
-      $this->actionable_before_states = Array("delitos_asignados","fiscales_asignados", "delitos_tipificados");
+      $this->actionable_before_states = Array("delitos_asignados","fiscales_asignados", "delitos_tipificados", "pendiente_revision");
       $this->actionable_functions = Array(
                                           "onBeforeTransitionDelitosAsignados",
                                           "onBeforeTransitionFiscalesAsignados",
-                                          "onBeforeTransitionDelitosTipificados"
+                                          "onBeforeTransitionDelitosTipificados",
+                                          "onBeforeTransitionPendienteRevision"
                                           );
   }
 
@@ -49,6 +50,19 @@ class Tools
       return true;
     }
     $log::error('A la denuncia le falta asignar los delitos !');
+    return false;
+  }
+
+  private function onBeforeTransitionPendienteRevision(DenunciaSS $denuncia_ss){
+    $log = new \Log;
+    $log::alert('onBeforeTransitionPendienteRevision called');
+    $denuncia_ss_workflow = new DenunciaSSWorkflow;
+    $fiscales_asignados = $denuncia_ss_workflow->fiscales_asignados($denuncia_ss);
+    $log::alert('$fiscales_asignados is '. var_export($fiscales_asignados,true));
+    if ($fiscales_asignados) {
+      return true;
+    }
+    $log::error('Hay delitos atribuídos al sospechoso sin fiscal asignado!');
     return false;
   }
 

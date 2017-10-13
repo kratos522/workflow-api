@@ -87,4 +87,6 @@ $fiscal_asignado->fiscal()->associate($fiscal)
 $fiscal_asignado->delito_atribuido()->associate($delito_atribuido)
 $fiscal_asignado->save()
 
-
+#DO test delitos exists
+$denuncia_ss = DenunciaSS::find(9)
+$denuncia_ss_workflow = new App\DenunciaSSWorkflow
