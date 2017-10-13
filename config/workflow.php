@@ -139,5 +139,33 @@ return [
                 'to'   => 'remitida_ministerio_publico',
             ]
         ]
+    ],
+    'recepcion_documentos'   => [
+        'type'          => 'state_machine',
+        'marking_store' => [
+            'type' => 'single_state',
+            'arguments' => ['workflow_state']
+        ],
+        'supports'      => ['App\Documento'],
+        'places'        => [
+                          	'nuevo',
+                            'recibido',
+                            'dependencia_asignada',
+                            'remitido'
+                          ],
+        'transitions'   => [
+            'recibir_documento' => [
+                'from' => 'nuevo',
+                'to'   => 'recibido',
+            ],
+            'asignar_dependencia' => [
+                'from' => 'recibido',
+                'to'   => 'dependencia_asignada',
+            ],
+            'remitir' => [
+                'from' => 'dependencia_asignada',
+                'to'   => 'remitido',
+            ]
+        ]
     ]
 ];

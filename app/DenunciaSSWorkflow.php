@@ -58,6 +58,17 @@ class DenunciaSSWorkflow
     return $arr;
   }
 
+  public function dependencia(DenunciaSS $denuncia_ss) {
+    $dependencia_id = NULL;
+    $d_ss = DenunciaSS::whereId($denuncia_ss->id)->with('institucion.documento.dependencia')->first();
+    if (is_null($d_ss)) { return $dependencia_id;}
+
+    $doc = $d_ss->institucion()->first()->documento()->first();
+    if (is_null($doc)) {return $dependencia_id;}
+
+    $dependencia_id = $doc->dependencia_id;
+    return $dependencia_id;
+  }
 
   public function actions(DenunciaSS $denuncia_ss) {
     $arr = $this->tools->get_actions($denuncia_ss);
@@ -75,17 +86,17 @@ class DenunciaSSWorkflow
     return (boolean)$result;
   }
 
-  public function owner_users($workflow_state) {
-    $all_emails = $this->users($workflow_state, $this->workflow_owners);
+  public function owner_users($workflow_state, $dependencia_id) {
+    $all_emails = $this->users($workflow_state, $this->workflow_owners, $dependencia_id);
     return $all_emails;
   }
 
-  public function notification_users($workflow_state) {
-    $all_emails = $this->users($workflow_state, $this->workflow_notifications);
+  public function notification_users($workflow_state, $dependencia_id) {
+    $all_emails = $this->users($workflow_state, $this->workflow_notifications, $dependencia_id);
     return $all_emails;
   }
 
-  private function users($workflow_state, $workflow_users) {
+  private function users($workflow_state, $workflow_users,$dependencia_id) {
     //get emails from users for specific workflow_state
     $arr = [];
     $exists = in_array($workflow_state,array_keys($workflow_users));
@@ -99,6 +110,7 @@ class DenunciaSSWorkflow
     $params = new \stdClass;
     foreach($arr as $r) {
       $params->rol_name = $r;
+      $params->dependencia_id = $dependencia_id;
       $res = $passport->emails(json_encode($params));
       if ($res->code == 200) {
         $contents = json_decode($res->contents);

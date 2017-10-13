@@ -33,15 +33,20 @@ class DenunciaSSSubscriber
         $denuncia_ss = DenunciaSS::find($event->denuncia_ss->id);
         $this->logger->alert('[onAfterTransition] to '.$denuncia_ss->workflow_state);
         $denuncia_ss_workflow = new DenunciaSSWorkflow;
-        $users = $denuncia_ss_workflow->notification_users($denuncia_ss->workflow_state);
-        // var_dump($users);
-        foreach($users as $u) {
-          foreach($u->emails as $email) {
-            $user = new \stdClass;
-            $user->email = $email;
-            $rol = $u->rol;
-            $this->logger->alert('[Notify] email: '.$email);
-            \Mail::to($user)->send(new NotifyTransition($denuncia_ss, $rol, $user->email));
+        $dependencia_id = $denuncia_ss_workflow->dependencia($denuncia_ss);
+        if (!is_null($dependencia_id)) {
+          $users = $denuncia_ss_workflow->notification_users($denuncia_ss->workflow_state, $dependencia_id);
+          // var_dump($users);
+          if (!is_null($users)) {
+            foreach($users as $u) {
+              foreach($u->emails as $email) {
+                $user = new \stdClass;
+                $user->email = $email;
+                $rol = $u->rol;
+                $this->logger->alert('[Notify] email: '.$email);
+                \Mail::to($user)->send(new NotifyTransition($denuncia_ss, $rol, $user->email));
+              }
+            }
           }
         }
     }

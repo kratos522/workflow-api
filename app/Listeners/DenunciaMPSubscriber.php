@@ -39,21 +39,6 @@ class DenunciaMPSubscriber
 
     public function onBeforeTransition($event) {
         $this->logger->alert('[onBeforeTransition]');
-        // $res = false;
-        // $original = $event->denuncia_mp->getOriginal();
-        // // dd($original);
-        // // $this->logger->alert("intended workflow state is " . $event->denuncia_mp->workflow_state);
-        // $workflow_state = $event->denuncia_mp->workflow_state;
-        // $condition = (in_array($workflow_state,$this->actionable_before_states));
-        // if ($condition) {
-        //   $this->logger->alert('[onBeforeTransition]->[Actionable State] '. $original["workflow_state"]);
-        //   $function_name = "\App\Listeners\DenunciaMPSubscriber::onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
-        //   $condition = (in_array($function_name,$this->actionable_functions));
-        //   if ($condition) {
-        //     $res = $function_name($event->denuncia_mp);
-        //   }
-        // }
-        // return $res;
     }
 
     public function onAfterTransition($event) {
@@ -61,15 +46,20 @@ class DenunciaMPSubscriber
         $denuncia_mp = DenunciaMP::find($event->denuncia_mp->id);
         $this->logger->alert('[onAfterTransition] to '.$denuncia_mp->workflow_state);
         $denuncia_mp_workflow = new DenunciaMPWorkflow;
-        $users = $denuncia_mp_workflow->notification_users($denuncia_mp->workflow_state);
-        // var_dump($users);
-        foreach($users as $u) {
-          foreach($u->emails as $email) {
-            $user = new \stdClass;
-            $user->email = $email;
-            $rol = $u->rol;
-            $this->logger->alert('[Notify] email: '.$email);
-            \Mail::to($user)->send(new NotifyTransition($denuncia_mp, $rol, $user->email));
+        $dependencia_id = $denuncia_mp_workflow->dependencia($denuncia_mp);
+        if (!is_null($dependencia_id)) {
+          $users = $denuncia_mp_workflow->notification_users($denuncia_mp->workflow_state, $dependencia_id);
+          // var_dump($users);
+          if (!is_null($users)) {
+            foreach($users as $u) {
+              foreach($u->emails as $email) {
+                $user = new \stdClass;
+                $user->email = $email;
+                $rol = $u->rol;
+                $this->logger->alert('[Notify] email: '.$email);
+                \Mail::to($user)->send(new NotifyTransition($denuncia_mp, $rol, $user->email));
+              }
+            }
           }
         }
     }

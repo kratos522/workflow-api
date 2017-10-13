@@ -18,9 +18,14 @@ denuncia_mp:
   entregar_a_maadeh: ['secretaria_fiscal_mrd']
 
 denuncia_ss:
-  recibir_denuncia: [receptor_denuncia_ss]
-  tipificar_delitos: [fiscal_asignado_ss]
-  aceptar_denuncia: [fiscal_asignado_ss]
-  desestimar: [fiscal_asignado_ss]
-  firmar_descripcion_hechos: [receptor_denuncia_ss]
-  remitir_ministerio_publico: [receptor_denuncia_ss]
+  recibir_denuncia: ['receptor_denuncia_ss']
+  tipificar_delitos: ['fiscal_asignado_ss']
+  aceptar_denuncia: ['fiscal_asignado_ss']
+  desestimar: ['fiscal_asignado_ss']
+  firmar_descripcion_hechos: ['receptor_denuncia_ss']
+  remitir_ministerio_publico: ['receptor_denuncia_ss']
+
+recepcion_documentos:
+  recibir_documento: ['receptor_documentos']
+  asignar_dependencia: ['receptor_documentos']
+  remitir: ['receptor_documentos']

@@ -91,17 +91,29 @@ class DenunciaMPWorkflow
     return (boolean)$result;
   }
 
-  public function owner_users($workflow_state) {
-    $all_emails = $this->users($workflow_state, $this->workflow_owners);
+  public function owner_users($workflow_state, $dependencia_id) {
+    $all_emails = $this->users($workflow_state, $this->workflow_owners,$dependencia_id);
     return $all_emails;
   }
 
-  public function notification_users($workflow_state) {
-    $all_emails = $this->users($workflow_state, $this->workflow_notifications);
+  public function dependencia(DenunciaMP $denuncia_mp) {
+    $dependencia_id = NULL;
+    $d_mp = DenunciaMP::whereId($denuncia_mp->id)->with('institucion.documento.dependencia')->first();
+    if (is_null($d_mp)) { return $dependencia_id;}
+
+    $doc = $d_mp->institucion()->first()->documento()->first();
+    if (is_null($doc)) {return $dependencia_id;}
+
+    $dependencia_id = $doc->dependencia_id;
+    return $dependencia_id;
+  }
+
+  public function notification_users($workflow_state,$dependencia_id) {
+    $all_emails = $this->users($workflow_state, $this->workflow_notifications,$dependencia_id);
     return $all_emails;
   }
 
-  private function users($workflow_state, $workflow_users) {
+  private function users($workflow_state, $workflow_users, $dependencia_id) {
     $arr = [];
     $exists = in_array($workflow_state,array_keys($workflow_users));
     if (!($exists)) { return $arr; }
@@ -114,6 +126,7 @@ class DenunciaMPWorkflow
     $params = new \stdClass;
     foreach($arr as $r) {
       $params->rol_name = $r;
+      $params->dependencia_id = $dependencia_id;
       $res = $passport->emails(json_encode($params));
       if ($res->code == 200) {
         $contents = json_decode($res->contents);
