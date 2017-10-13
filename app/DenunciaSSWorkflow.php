@@ -118,8 +118,8 @@ class DenunciaSSWorkflow
     #check fiscales asignados a todos los delitos del imputado en la denuncia
     $denuncia = $denuncia_ss->institucion()->first();
     $id = $denuncia->id;
-    $count_delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('i.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
-    $delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('imputado.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->get();
+    $count_delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('sospechoso.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
+    $delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('sospechoso.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->get();
     $count_fiscales_asignados = 0 ;
     foreach($delitos_atribuidos_denuncia as $dad) {
        $id = $dad->id;

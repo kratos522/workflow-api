@@ -22,6 +22,11 @@ class Delito extends Model
       return $this->hasMany(DelitoImputado::class);
   }
 
+  public function sospechosos()
+  {
+      return $this->hasMany(DelitoSospechoso::class);
+  }
+
   public function fiscalias()
   {
       return $this->hasMany(FiscaliaDelito::class);

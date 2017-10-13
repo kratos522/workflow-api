@@ -29,6 +29,11 @@ class Imputado extends Model
       return $this->hasMany(FiscalAsignado::class);
   }
 
+  public function fiscalias()
+  {
+      return $this->hasMany(FiscaliaAsignada::class);
+  }
+
   public function delitos()
   {
       return $this->hasMany(DelitoAtribuido::class);

@@ -17,4 +17,19 @@ class Sospechoso extends Model
       return $this->belongsTo(Denuncia::class);
   }
 
+  public function fiscales()
+  {
+      return $this->hasMany(FiscalAsignado::class);
+  }
+
+  public function fiscalias()
+  {
+      return $this->hasMany(FiscaliaAsignada::class);
+  }
+
+  public function delitos()
+  {
+      return $this->hasMany(DelitoAtribuido::class);
+  }
+
 }

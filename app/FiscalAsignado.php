@@ -19,6 +19,11 @@ class FiscalAsignado extends Model
         return $this->belongsTo(Imputado::class);
     }
 
+    public function sospechoso()
+    {
+        return $this->belongsTo(Sospechoso::class);
+    }
+
     public function denuncia()
     {
         return $this->belongsTo(Denuncia::class);

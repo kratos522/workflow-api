@@ -8,7 +8,7 @@ class FiscaliaAsignada extends Model
 {
     protected $table = "fiscalias_asignadas";
     protected $attributes = ['fecha_asignacion'=>null];
-    
+
     public function fiscalia()
     {
         return $this->belongsTo(Fiscalia::class);
@@ -17,6 +17,11 @@ class FiscaliaAsignada extends Model
     public function imputado()
     {
         return $this->belongsTo(Imputado::class);
+    }
+
+    public function sospechoso()
+    {
+        return $this->belongsTo(Sospechoso::class);
     }
 
     public function denuncia()

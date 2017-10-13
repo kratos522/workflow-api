@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LugarMP extends Model
 {
-  protected $table = "lugares_mp";
+
   public function institucion(){
       return $this->morphOne('Lugar', 'institucionable');
   }

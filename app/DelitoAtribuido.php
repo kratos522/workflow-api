@@ -18,6 +18,11 @@ class DelitoAtribuido extends Model
         return $this->belongsTo(Imputado::class);
     }
 
+    public function sospechoso()
+    {
+        return $this->belongsTo(Sospechoso::class);
+    }
+
     public function delito()
     {
         return $this->belongsTo(Delito::class);
