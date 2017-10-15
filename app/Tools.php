@@ -244,4 +244,24 @@ class Tools
 
   }
 
+  public function parse_request($request){
+    $_request = $request->all();
+    $this->log::alert($_request);
+    $arr = json_decode($_request[0], true );
+
+    $this->log::alert($arr);
+
+    $input = json_decode($_request[0]) ;//$arr //$request->all();
+    if (property_exists($input, 'password')){
+      $input->password = bcrypt($input->password);
+    }
+    $input_encoded = json_encode($input);
+    $arr_input = json_decode($input_encoded, true);
+    // $this->logger->alert($arr);
+    $result = array();
+    $result[] = $arr_input;
+    $result[] = $arr;
+    return $result;
+  }
+
 }

@@ -2,16 +2,11 @@
 
 use Illuminate\Http\Request;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::post('apply_transition', 'API\WorkflowController@apply_transition');
+Route::post('user_actions', 'API\WorkflowController@user_actions');
+Route::post('workflow_actions', 'API\WorkflowController@workflow_actions');
+Route::post('workflow_transition_owners', 'API\WorkflowController@workflow_transition_owners');
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

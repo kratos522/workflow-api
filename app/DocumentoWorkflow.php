@@ -17,21 +17,30 @@ class DocumentoWorkflow
   private $workflow_notifications;
   private $log;
 
-  const OWNERS_YAML = 'config/workflow_owners.yml';
-  const NOTIFICATIONS_YAML = 'config/workflow_notifications.yml';
+  const OWNERS_YAML = '../config/workflow_owners.yml';
+  const NOTIFICATIONS_YAML = '../config/workflow_notifications.yml';
 
-  public function __construct()
+  public function __construct($remove_root=false)
   {
       $this->log = new \Log;
       $this->state = 'nuevo';
       $this->tools = new Tools;
       $this->workflow_name = 'recepcion_documento';
-      $this->workflow_owners = Yaml::parse(file_get_contents(self::OWNERS_YAML))[$this->workflow_name];
-      $this->workflow_notifications = Yaml::parse(file_get_contents(self::NOTIFICATIONS_YAML))[$this->workflow_name];
+      $owners_path = self::OWNERS_YAML;
+      $notifications_path = self::NOTIFICATIONS_YAML;
+      if ($remove_root) {
+          $owners_path = str_replace('../','',$owners_path);
+          $notifications_path = str_replace('../','',$notifications_path);
+      }
+      $this->log::alert("owners path is ".$owners_path);
+      $this->log::alert('notifications path is '. $notifications_path);
+      $this->workflow_owners = Yaml::parse(file_get_contents($owners_path))[$this->workflow_name];
+      $this->workflow_notifications = Yaml::parse(file_get_contents($notifications_path))[$this->workflow_name];
   }
 
   public function apply(Documento $documento, $action, $user_email) {
     # set enabled transitions
+    $result = new \stdClass;
     try {
       $arr = $this->tools->get_workflow_transitions($documento, $action, $user_email);
 
@@ -44,18 +53,25 @@ class DocumentoWorkflow
 
       # update $documento
       $documento->save();
-      return true;
+      $result->success = true;
+      $result->message = $documento;
+      return $result;
     } catch (\Exception $e) {
       unset($documento["enabled_transitions"]);
       unset($documento["user_email"]);
-      return $e;
+      $result->success = false;
+      $result->message = $e;
+      return $result;
     }
   }
 
   public function user_actions(Documento $documento, $user_email) {
     # set enabled transitions
+    $result = new \stdClass;
+    $result->success = true;
     $arr = $this->tools->allowed_actions($documento, $this->workflow_name, $user_email);
-    return $arr;
+    $result->message = $arr;
+    return $result;
   }
 
   public function dependencia(Documento $documento) {
@@ -65,13 +81,19 @@ class DocumentoWorkflow
   }
 
   public function actions(Documento $documento) {
+    $result = new \stdClass;
+    $result->success = true;
     $arr = $this->tools->get_actions($documento);
-    return $arr;
+    $result->message = $arr;
+    return $result;
   }
 
-  public function owner_users($workflow_state, $dependencia_id) {
-    $all_emails = $this->users($workflow_state, $this->workflow_owners, $dependencia_id);
-    return $all_emails;
+  public function owner_users($workflow_transition, $dependencia_id) {
+    $result = new \stdClass;
+    $result->success = true;
+    $all_emails = $this->users($workflow_transition, $this->workflow_owners, $dependencia_id);
+    $result->message = $all_emails;
+    return $result;
   }
 
   public function notification_users($workflow_state, $dependencia_id) {

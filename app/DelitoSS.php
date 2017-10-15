@@ -9,6 +9,6 @@ class DelitoSS extends Model
   protected $table = "delitos_ss";
 
   public function institucion(){
-      return $this->morphOne('Delito', 'institucionable');
-  }    
+      return $this->morphOne(Delito::class, 'institucionable');
+  }
 }

@@ -10,7 +10,7 @@ class DenunciaFuenteNoFormal extends Model
   protected $attributes =  ['fuente_informacion'=>null];
 
   public function denuncia(){
-      return $this->morphOne('DenunciaSS', 'formable');
+      return $this->morphOne(DenunciaSS::class, 'formable');
   }
 
   public function actividades() {

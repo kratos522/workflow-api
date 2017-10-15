@@ -8,7 +8,7 @@ class LugarMP extends Model
 {
 
   public function institucion(){
-      return $this->morphOne('Lugar', 'institucionable');
+      return $this->morphOne(Lugar::class, 'institucionable');
   }
 
   public function persona_natural()

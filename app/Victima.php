@@ -9,7 +9,7 @@ class Victima extends Model
   protected $attributes = ['residente'=>null];
 
   public function rol(){
-      return $this->morphOne('Rol', 'rolable');
+      return $this->morphOne(Rol::class, 'rolable');
   }
 
   public function denuncia()

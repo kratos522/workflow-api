@@ -11,7 +11,7 @@ class Ofendido extends Model
   }
 
   public function rol(){
-      return $this->morphOne('Rol', 'rolable');
+      return $this->morphOne(Rol::class, 'rolable');
   }
 
   public function denuncia()

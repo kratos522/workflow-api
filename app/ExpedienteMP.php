@@ -10,7 +10,7 @@ class ExpedienteMP extends Model
   protected $attributes = ['numero_expediente'=>null, 'numero_expediente_policial'=>null, 'numero_expediente_judicial'=>null, 'numero_expediente_sedi'=>null];
 
   public function institucion(){
-      return $this->morphOne('Expediente', 'institucionable');
+      return $this->morphOne(Expediente::class, 'institucionable');
   }
 
 }

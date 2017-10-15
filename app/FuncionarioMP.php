@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class FuncionarioMP extends Model
 {
 
-  protected $table = "funcionarios_mp";  
+  protected $table = "funcionarios_mp";
   public function institucion(){
-      return $this->morphOne('Funcionario', 'institucionable');
+      return $this->morphOne(Funcionario::class, 'institucionable');
   }
 }

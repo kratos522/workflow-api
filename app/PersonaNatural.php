@@ -47,7 +47,7 @@ class PersonaNatural extends Model
   ];
 
   public function persona(){
-      return $this->morphOne('Persona', 'personable');
+      return $this->morphOne(Persona::class, 'personable');
   }
 
   public function institucionable(){

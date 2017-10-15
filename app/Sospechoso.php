@@ -9,7 +9,7 @@ class Sospechoso extends Model
   protected $attributes = ['detenido'=>null, 'remitido'=>null];
 
   public function rol(){
-      return $this->morphOne('Rol', 'rolable');
+      return $this->morphOne(Rol::class, 'rolable');
   }
 
   public function denuncia()

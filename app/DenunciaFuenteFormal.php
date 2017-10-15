@@ -9,7 +9,7 @@ class DenunciaFuenteFormal extends Model
   protected $table = "denuncias_fuentes_formales";
 
   public function denuncia(){
-      return $this->morphOne('DenunciaSS', 'formable');
+      return $this->morphOne(DenunciaSS::class, 'formable');
   }
 
   public function dependencia()

@@ -10,6 +10,6 @@ class PersonaJuridica extends Model
   protected $attributes = ['tipo_persona_juridica' =>null];
 
   public function persona(){
-      return $this->morphOne('Persona', 'personable');
+      return $this->morphOne(Persona::class, 'personable');
   }
 }

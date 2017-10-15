@@ -13,7 +13,7 @@ class Denuncia extends Model
   }
 
   public function documento(){
-      return $this->morphOne('Documento', 'documentable');
+      return $this->morphOne(Documento::class, 'documentable');
   }
 
   public function anexos() {

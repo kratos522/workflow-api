@@ -9,7 +9,7 @@ class Fiscal extends Model
   protected $table = "fiscales";
 
   public function rol(){
-      return $this->morphOne('Rol', 'rolable');
+      return $this->morphOne(Rol::class, 'rolable');
   }
 
   public function fiscalia()

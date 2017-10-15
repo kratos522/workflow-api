@@ -16,7 +16,7 @@ class PersonaNaturalMP extends Model
   ];
 
   public function institucion(){
-      return $this->morphOne('PersonaNatural', 'institucionable');
+      return $this->morphOne(PersonaNatural::class, 'institucionable');
   }
 
   public function direcciones()

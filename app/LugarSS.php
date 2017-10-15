@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class LugarSS extends Model
 {
   protected $table = "lugares_ss";
-    
+
   public function institucion(){
-      return $this->morphOne('Lugar', 'institucionable');
+      return $this->morphOne(Lugar::class, 'institucionable');
   }
 
   public function persona_natural()

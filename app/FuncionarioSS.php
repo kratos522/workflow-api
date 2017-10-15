@@ -10,7 +10,7 @@ class FuncionarioSS extends Model
   protected $attributes = ['placa'=>null];
 
   public function institucion(){
-      return $this->morphOne('Funcionario', 'institucionable');
+      return $this->morphOne(Funcionario::clss, 'institucionable');
   }
 
   public function departamento()

@@ -14,6 +14,6 @@ class Suicidio extends Model
   ];
 
   public function tipoable(){
-      return $this->morphOne('Ofendido', 'tipoable');
+      return $this->morphOne(Ofendido::class, 'tipoable');
   }
 }

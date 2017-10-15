@@ -17,21 +17,31 @@ class DenunciaSSWorkflow
   private $workflow_notifications;
   private $log;
 
-  const OWNERS_YAML = 'config/workflow_owners.yml';
-  const NOTIFICATIONS_YAML = 'config/workflow_notifications.yml';
+  const OWNERS_YAML = '../config/workflow_owners.yml';
+  const NOTIFICATIONS_YAML = '../config/workflow_notifications.yml';
 
-  public function __construct()
+  public function __construct($remove_root=false)
   {
       $this->log = new \Log;
       $this->state = 'nueva';
       $this->tools = new Tools;
       $this->workflow_name = "denuncia_ss";
-      $this->workflow_owners = Yaml::parse(file_get_contents(self::OWNERS_YAML))[$this->workflow_name];
-      $this->workflow_notifications = Yaml::parse(file_get_contents(self::NOTIFICATIONS_YAML))[$this->workflow_name];
+      $owners_path = self::OWNERS_YAML;
+      $notifications_path = self::NOTIFICATIONS_YAML;
+      if ($remove_root) {
+          $owners_path = str_replace('../','',$owners_path);
+          $notifications_path = str_replace('../','',$notifications_path);
+      }
+      $this->log::alert("owners path is ".$owners_path);
+      $this->log::alert('notifications path is '. $notifications_path);
+      $this->workflow_owners = Yaml::parse(file_get_contents($owners_path))[$this->workflow_name];
+      $this->workflow_notifications = Yaml::parse(file_get_contents($notifications_path))[$this->workflow_name];
+
   }
 
   public function apply(DenunciaSS $denuncia_ss, $action, $user_email) {
     # set enabled transitions
+    $result = new \stdClass;
     try {
       $arr = $this->tools->get_workflow_transitions($denuncia_ss, $action, $user_email);
 
@@ -44,18 +54,26 @@ class DenunciaSSWorkflow
 
       # update $denuncia_ss
       $denuncia_ss->save();
-      return true;
+      $result->success = true ;
+      $result->message = $denuncia_ss;
+      return $result;
     } catch (\Exception $e) {
       unset($denuncia_ss["enabled_transitions"]);
       unset($denuncia_ss["user_email"]);
-      return $e;
+      $result->success = false ;
+      $result->message = $e;
+      $this->log::alert($e);
+      return $result;
     }
   }
 
   public function user_actions(DenunciaSS $denuncia_ss, $user_email) {
     # set enabled transitions
+    $result = new \stdClass;
+    $result->success = true;
     $arr = $this->tools->allowed_actions($denuncia_ss, $this->workflow_name, $user_email);
-    return $arr;
+    $result->message = $arr;
+    return $result;
   }
 
   public function dependencia(DenunciaSS $denuncia_ss) {
@@ -71,8 +89,11 @@ class DenunciaSSWorkflow
   }
 
   public function actions(DenunciaSS $denuncia_ss) {
+    $result = new \stdClass;
+    $result->success = true;
     $arr = $this->tools->get_actions($denuncia_ss);
-    return $arr;
+    $result->message = $arr;
+    return $result;
   }
 
   public function delitos_asignados(DenunciaSS $denuncia_ss) {
@@ -86,9 +107,14 @@ class DenunciaSSWorkflow
     return (boolean)$result;
   }
 
-  public function owner_users($workflow_state, $dependencia_id) {
-    $all_emails = $this->users($workflow_state, $this->workflow_owners, $dependencia_id);
-    return $all_emails;
+  public function owner_users($workflow_transition, $dependencia_id) {
+    $result =  new \stdClass;
+    $result->success = true;
+    $this->log::alert('workflow owners are '.json_encode($this->workflow_owners));
+    $this->log::alert('For workflow state = '.$workflow_transition.' and dependencia_id is '.$dependencia_id);
+    $all_emails = $this->users($workflow_transition, $this->workflow_owners, $dependencia_id);
+    $result->message = $all_emails;
+    return $result;
   }
 
   public function notification_users($workflow_state, $dependencia_id) {

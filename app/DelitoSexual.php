@@ -14,6 +14,6 @@ class DelitoSexual extends Model
                             'cantidad_hijos'=>null];
 
   public function tipoable(){
-      return $this->morphOne('Ofendido', 'tipoable');
+      return $this->morphOne(Ofendido::class, 'tipoable');
   }
 }

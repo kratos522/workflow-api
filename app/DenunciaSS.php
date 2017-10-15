@@ -13,7 +13,7 @@ class DenunciaSS extends Model
   protected $attributes =  ['numero_denuncia'=>null,'workflow_state'=>null];
 
   public function institucion(){
-      return $this->morphOne('Denuncia', 'institucionable');
+      return $this->morphOne(Denuncia::class, 'institucionable');
   }
 
   public function formable(){

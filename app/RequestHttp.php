@@ -10,7 +10,7 @@ use GuzzleHttp\Exception\RequestException;
 class RequestHttp
 {
 
-  const ENDPOINTS_YAML = 'config/endpoints.yml';
+  const ENDPOINTS_YAML = '../config/endpoints.yml';
   protected $endpoints;
   protected $client;
 

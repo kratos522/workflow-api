@@ -11,6 +11,6 @@ class ActividadConfirmacion extends Model
 
   public function denuncia()
   {
-      return $this->belongsTo(DenunciaFuenteNoFormal::class, 'denuncia_fuente_no_formal_id');
+      return $this->belongsTo(App\DenunciaFuenteNoFormal::class, 'denuncia_fuente_no_formal_id');
   }
 }
