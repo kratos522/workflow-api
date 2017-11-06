@@ -95,3 +95,8 @@ $fiscal_asignado->delito_atribuido()->associate($delito_atribuido)
 $fiscal_asignado->save()
 
 
+$string = file_get_contents('/Users/jimmyfigueroa/Sites/rii/bus-servicios/endpoints/msgs/new_mp_denuncia_params.json')
+$json_a = json_decode($string,true)
+$res = $client->request('POST', 'http://localhost:8200/api/DenunciaMP', ['json'=> json_encode($json_a) ])
+
+
