@@ -1,4 +1,4 @@
-passport-api:
+passport-api-old:
   login: http://localhost:8000/api/login
   register: http://localhost:8000/api/user
   update_user: http://localhost:8000/api/user
@@ -11,3 +11,17 @@ passport-api:
   auth_workflow_action: http://localhost:8000/api/auth_workflow_action
   user_workflow_actions: http://localhost:8000/api/user_workflow_actions
   emails: http://localhost:8000/api/emails
+
+passport-api:
+  login: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/login
+  register: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/user
+  update_user: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/user
+  users: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/user
+  details: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/details
+  create_rol: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/rol
+  update_rol: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/update_rol
+  assign_rol: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/assign_rol
+  change_password: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/change_password
+  auth_workflow_action: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/auth_workflow_action
+  user_workflow_actions: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/user_workflow_actions
+  emails: http://ec2-34-208-91-136.us-west-2.compute.amazonaws.com/api/emails
