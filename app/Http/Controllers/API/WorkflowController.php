@@ -34,9 +34,10 @@ class WorkflowController extends Controller
 
     public function apply_transition(Request $request) {
       # parsing
-      $parsed_request = $this->tools->parse_request($request);
-      $arr = $parsed_request[1];
-
+      // $parsed_request = $this->tools->parse_request($request);
+      // $arr = $parsed_request[1];
+      $arr = $request->all();
+      
        $validator = Validator::make($arr   , [
          "subject_id" => "required|numeric|min:1",
          "action" => "required",
