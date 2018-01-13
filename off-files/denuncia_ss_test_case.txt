@@ -1,0 +1,92 @@
+## DO
+$denuncia_ss = DenunciaSS::find(9)
+$denuncia_ss->workflow_state = "nueva"
+$denuncia_ss->save()
+$denuncia_ss_workflow = new App\DenunciaSSWorkflow
+$denuncia_ss_workflow->apply($denuncia_ss, "recibir_denuncia", "burley98@example.net")
+$denuncia_ss
+DenunciaSS::find(9)
+
+## FAIL
+$denuncia_ss = DenunciaSS::find(9)
+$denuncia_ss->workflow_state = "nueva"
+$denuncia_ss->save()
+$denuncia_ss_workflow = new App\DenunciaSSWorkflow
+$denuncia_ss_workflow->apply($denuncia_ss, "recibir_denuncia", "perry.emard@example.com")
+$denuncia_ss
+DenunciaSS::find(9)
+
+#DO TEST TIPIFICAR DELITOS
+$denuncia_ss = DenunciaSS::find(9)
+$denuncia_ss_workflow = new App\DenunciaSSWorkflow
+$denuncia_ss_workflow->apply($denuncia_ss, "tipificar_delitos", "perry.emard@example.com")
+$denuncia_ss->save()
+$denuncia_ss
+DenunciaSS::find(9)
+
+#DO TEST DESESTIMAR
+$denuncia_ss = DenunciaSS::find(9)
+$denuncia_ss_workflow = new App\DenunciaSSWorkflow
+$denuncia_ss_workflow->apply($denuncia_ss, "desestimar", "perry.emard@example.com")
+$denuncia_ss->save()
+$denuncia_ss
+DenunciaSS::find(9)
+
+#DO
+$denuncia_ss = DenunciaSS::find(9)
+$denuncia_ss_workflow = new App\DenunciaSSWorkflow
+$denuncia_ss_workflow->apply($denuncia_ss, "aceptar_denuncia", "perry.emard@example.com")
+$denuncia_ss->save()
+$denuncia_ss
+DenunciaSS::find(9)
+
+#$DO
+$denuncia_ss = DenunciaSS::find(9)
+$denuncia_ss_workflow = new App\DenunciaSSWorkflow
+$denuncia_ss_workflow->apply($denuncia_ss, "firmar_descripcion_hechos", "burley98@example.net")
+$denuncia_ss->save()
+$denuncia_ss
+DenunciaSS::find(9)
+
+#DO
+$denuncia_ss = DenunciaSS::find(9)
+$denuncia_ss_workflow = new App\DenunciaSSWorkflow
+$denuncia_ss_workflow->apply($denuncia_ss, "remitir_ministerio_publico", "burley98@example.net")
+$denuncia_ss->save()
+$denuncia_ss
+DenunciaSS::find(9)
+
+#DO add delito
+$delito_atribuido = DelitoAtribuido::whereDenunciaId(9)->first()
+$delito_atribuido->delete()
+$denuncia = Denuncia::find(9)
+$sospechoso = Sospechoso::find(9)
+$delito = Delito::find(8) ##???
+$delito_atribuido = new DelitoAtribuido
+$delito_atribuido->sospechoso()->associate($sospechoso)
+$delito_atribuido->denuncia()->associate($denuncia)
+$delito_atribuido->delito()->associate($delito)
+$delito_atribuido->save()
+
+
+#DO test has fiscal asignado for all delitos
+$last_fiscal =  FiscalAsignado::orderBy('id','desc')->take(1)->first()
+$last_fiscal->delete()
+$fiscal = Fiscal::find(25)
+$denuncia = Denuncia::find(22)
+$fiscalia = Fiscalia::find(40)
+$fiscalia_asignada = FiscaliaAsignada::find(11)
+$imputado = Imputado::find(3)
+$delito_atribuido = DelitoAtribuido::find(13)
+$fiscal_asignado = new FiscalAsignado
+$fiscal_asignado->fecha_asignacion = date(now())
+$fiscal_asignado->fiscalia()->associate($fiscalia_asignada)
+$fiscal_asignado->denuncia()->associate($denuncia)
+$fiscal_asignado->imputado()->associate($imputado)
+$fiscal_asignado->fiscal()->associate($fiscal)
+$fiscal_asignado->delito_atribuido()->associate($delito_atribuido)
+$fiscal_asignado->save()
+
+#DO test delitos exists
+$denuncia_ss = DenunciaSS::find(9)
+$denuncia_ss_workflow = new App\DenunciaSSWorkflow

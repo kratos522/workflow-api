@@ -1,0 +1,26 @@
+## DO
+$documento = Documento::find(15)
+$documento->dependencia_id = 43
+$documento->workflow_state = "nuevo"
+$documento->save()
+$documento_workflow = new App\DocumentoWorkflow
+$documento_workflow->apply($documento, "recibir_documento", "emorar@example.com")
+$documento
+Documento::find(15)
+
+#DO
+$documento = Documento::find(15)
+$documento_workflow = new App\DocumentoWorkflow
+$documento_workflow->apply($documento, "asignar_dependencia", "emorar@example.com")
+$documento
+Documento::find(15)
+
+#FAIL
+$documento = Documento::find(15)
+$documento->dependencia_id = NULL
+$documento->save 
+$documento_workflow = new App\DocumentoWorkflow
+$documento_workflow->apply($documento, "asignar_dependencia", "emorar@example.com")
+$documento
+Documento::find(15)
+
