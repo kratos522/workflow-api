@@ -383,7 +383,7 @@ return [
                           	'orden_captura_recibida',
                             'captura_realizada',
                             'captura_registrada',
-                            'informe_captura_enviado'
+                            'informe_captura_enviado',
                             'capturado_remitido_ministerio_publico',
                             'informe_remision_enviado',
                             'informe_final_enviado'
@@ -486,7 +486,7 @@ return [
                             'escena_crimen_procesada',
                             'evidencias_encontradas_registradas',
                             'evidencias_remitidas_ministerio_publico',
-                            'informe_remision_enviado'
+                            'informe_remision_enviado',
                             'infiltracion_finalizada',
                             'informe_final_enviado',
                           ],
@@ -1753,15 +1753,15 @@ return [
             'contestacion_realizada' => [
                 'from' => 'proceso_informacion',
                 'to'   => 'realizo_contestacion',
-            ]
+            ],
             'autorizacion_jefe' => [
                 'from' => 'realizo_contestacion',
                 'to'   => 'recibio_autorizacion_jefe',
-            ]
+            ],
             'envia_contestacion' => [
                 'from' => 'recibio_autorizacion_jefe',
                 'to'   => 'envio_contestacion',
-            ]
+            ],
             'enviado' => [
                 'from' => 'envio_contestacion',
                 'to'   => 'contestacion_enviada',
@@ -2678,11 +2678,11 @@ return [
             'redactar_solicitud_ciudadano' => [
                 'from' => 'recepcion_esquela_identidad',
                 'to'   => 'redaccion_solicitud_datos_ciudadano',
-            ]
+            ],
             'enviar_solicitud' => [
                 'from' => 'redaccion_solicitud_datos_ciudadano',
                 'to'   => 'envio_solicitud',
-            ]
+            ],
             'enviado_solicitud' => [
                 'from' => 'envio_solicitud',
                 'to'   => 'solicitud_enviada',
