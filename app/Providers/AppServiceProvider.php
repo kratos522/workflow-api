@@ -17,7 +17,7 @@ use App\InfiltrarOrganizacionCriminal;
 use App\IntervencionComunicacion;
 use App\InvestigarDelito;
 use App\AlbumFotografico;
-use App\DitamenVehicular;
+use App\DictamenVehicular;
 use App\VigilanciaSeguimiento;
 use App\RegistroArma;
 use App\ReseniaFotografica;
@@ -379,7 +379,7 @@ class AppServiceProvider extends ServiceProvider
              $res = $this->after_object($event_name, $album_fotografico);
         });
 
-        DitamenVehicular::saving(function ($dictamen_vehicular) {
+        DictamenVehicular::saving(function ($dictamen_vehicular) {
              // check has delitos asignados
              $res = $this->tools->DitamenVehicularonBeforeTransition($dictamen_vehicular);
              $this->log::alert('$res@::saving is .. ' . var_export($res, true));
@@ -390,7 +390,7 @@ class AppServiceProvider extends ServiceProvider
              }
              return $res;
         });
-        DitamenVehicular::saved(function ($dictamen_vehicular) {
+        DictamenVehicular::saved(function ($dictamen_vehicular) {
              $event_name = "realizar_dictamen_vehicular_after_transition";
              $res = $this->after_object($event_name, $dictamen_vehicular);
         });

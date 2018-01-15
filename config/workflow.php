@@ -672,7 +672,7 @@ return [
             'type' => 'single_state',
             'arguments' => ['workflow_state']
         ],
-        'supports'      => ['App\DitamenVehicular'],
+        'supports'      => ['App\DictamenVehicular'],
         'places'        => [
                           	'nuevo',
                             'requerimiento_recepcionado',

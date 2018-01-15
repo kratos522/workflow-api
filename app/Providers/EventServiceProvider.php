@@ -122,10 +122,10 @@ class EventServiceProvider extends ServiceProvider
          ],
 
          'App\Events\RealizarDictamenVehicularAfterTransition' => [
-             'App\Listeners\DitamenVehicularSubscriber',
+             'App\Listeners\DictamenVehicularSubscriber',
          ],
          'App\Events\RealizarDictamenVehicularBeforeTransition' => [
-             'App\Listeners\DitamenVehicularSubscriber',
+             'App\Listeners\DictamenVehicularSubscriber',
          ],
 
          'App\Events\RealizarEntregaVigiladaAfterTransition' => [
@@ -231,7 +231,7 @@ class EventServiceProvider extends ServiceProvider
          'App\Listeners\IntervencionComunicacionSubscriber',
          'App\Listeners\InvestigarDelitoSubscriber',
          'App\Listeners\AlbumFotograficoSubscriber',
-         'App\Listeners\DitamenVehicularSubscriber',
+         'App\Listeners\DictamenVehicularSubscriber',
          'App\Listeners\VigilanciaSeguimientoSubscriber',
          'App\Listeners\RegistroArmaSubscriber',
          'App\Listeners\ReseniaFotograficaSubscriber',

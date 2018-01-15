@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use Gate;
-use App\DitamenVehicular;
+use App\DictamenVehicular;
 // estos 2 se modifican cuando se llegue a los ultimos pasos
 //use App\ObjetoWorkflow;
 //use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class DitamenVehicularSubscriber
+class DictamenVehicularSubscriber
 {
     public function __construct(LoggerInterface $logger)
     {
@@ -29,7 +29,7 @@ class DitamenVehicularSubscriber
 
     public function onAfterTransition($event) {
         // dd($event);
-        $dictamen_vehicular = DitamenVehicular::find($event->dictamen_vehicular->id);
+        $dictamen_vehicular = DictamenVehicular::find($event->dictamen_vehicular->id);
         $this->logger->alert('[onAfterTransition] to '.$dictamen_vehicular->workflow_state);
         $dictamen_vehicular_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
         $dependencia_id = $dictamen_vehicular_workflow->dependencia($dictamen_vehicular);
@@ -54,12 +54,12 @@ class DitamenVehicularSubscriber
     {
         $events->listen(
             'App\Events\RealizarDictamenVehicularAfterTransition',
-            'App\Listeners\DitamenVehicularSubscriber@onAfterTransition'
+            'App\Listeners\DictamenVehicularSubscriber@onAfterTransition'
         );
 
         $events->listen(
             'App\Events\RealizarDictamenVehicularBeforeTransition',
-            'App\Listeners\DitamenVehicularSubscriber@onBeforeTransition'
+            'App\Listeners\DictamenVehicularSubscriber@onBeforeTransition'
         );
     }
 }
