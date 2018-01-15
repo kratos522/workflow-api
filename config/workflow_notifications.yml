@@ -33,7 +33,7 @@ recepcion_documento:
   dependencia_asignada: ['receptor_documentos']
   remitido: ['receptor_documentos']
 
-analizar_informacion_criminal:
+analizar_informacion_criminal_ss:
   nueva: ['analista_ss']
   informacion_clasificada: ['analista_ss']
   informacion_solicitada: ['analista_ss']
@@ -53,7 +53,7 @@ aprehencion_menor_infractor:
   informe_final_remitido: ['fiscal','juez_juzgado_niñez']
   remitido_centro_especializado: ['policia_infancia_adolescensia', 'juez_juzgado_niñez']
 
-atender_lesionados_victimas_agresion_sexual:
+atender_lesionado_victima_agresion_sexual_ss:
   nuevo: ['investigador']
   victima_ubicada: ['investigador']
   victima_remitida_medicina_forense: ['perito_medicina_forense']
@@ -63,7 +63,7 @@ atender_lesionados_victimas_agresion_sexual:
   escena_crimen_procesada: ['investigador']
   informe_final_enviado: ['fiscal']
 
-solicitud_consulta:
+solicitud_consulta_ss:
   nueva: ['investigador']
   informacion_recibida: ['investigador']
   peticion_imposible_cumplir_informada: ['investigador']
@@ -72,7 +72,7 @@ solicitud_consulta:
   requerimiento_respondido: ['investigador']
   informe_entregado: ['investigador']
 
-captura_fines_extradicion:
+captura_fin_extradicion:
   orden_captura_recibida: ['departamento_localizacion_captura']
   captura_realizada: ['funcionario_policia']
   captura_registrada: ['funcionario_policia']
@@ -88,12 +88,12 @@ cotejamiento_dactilar:
   cotejamiento_realizado: ['investigador']
   informe_cotejamiento_enviado: ['investigador']
 
-extraccion_informacion_telefonos_moviles:
+extraccion_informacion_telefono_movil:
   nueva: ['policia_tecnico']
   solicitud_recibida: ['policia_tecnico']
   informe_entregado: ['investigador']
 
-infiltrar_organizaciones_criminales:
+infiltrar_organizacion_criminal:
   nueva: ['investigador']
   fiscal_notificado: ['fiscal']
   infiltracion_realizada: ['investigador', 'fiscal']
@@ -112,7 +112,7 @@ intervencion_comunicacion:
   informe_diligencias_enviado: ['investigador']
   intervencion_finalizada: ['policia_tecnico', 'investigador']
 
-investigar_delitos:
+investigar_delito_ss:
   nuevo: ['investigador']
   informacion_hecho_recibida: ['investigador']
   proceso_denuncia_ejecutado: ['investigador']
@@ -156,7 +156,7 @@ realizar_entrega_vigilada:
   citacion_audiencia_enviada: ['fiscal','jefe_departamento']
   informe_audiencia_presentado: ['jefe_departamento']
 
-realizar_registro_armas:
+realizar_registro_arma:
   nuevo: ['investigador']
   antecedentes_verificados: ['policia_tecnico']
   propietario_capturado: ['investigador', 'fiscal']
@@ -170,7 +170,7 @@ realizar_reseña_fotografica:
   solicitud_recibida: ['auxiliar_administrativo']
   reseña_fotografica_enviada: ['investigador']
 
-recepcionar_declaraciones:
+recepcionar_declaracion_ss:
   nueva: ['fiscal', 'investigador']
   solicitud_recepcionada: ['investigador']
   tipo_solicitud_verificada: ['investigador']
@@ -183,7 +183,7 @@ recepcionar_declaraciones:
   resultados_declaracion_cotejados: ['investigador', 'fiscal']
   informe_enviado: ['fiscal']
 
-reconocimiento_rueda_personas:
+reconocimiento_rueda_persona_ss:
   nuevo: ['fiscal']
   requerimiento_fiscal_recibido: ['investigador']
   partes_citadas: ['investigador', 'fiscal']
@@ -193,7 +193,7 @@ reconocimiento_rueda_personas:
   escena_crimen_procesada: ['investigador', 'fiscal']
   informe_enviado: ['fiscal']
 
-registrar_ordenes_judiciales:
+registrar_orden_judicial_ss:
   nueva: ['investigador']
   orden_recepcionada: ['investigador', 'jefe_departamento']
   correccion_informacion_faltante_coordinada: ['investigador']
@@ -266,7 +266,7 @@ realizar_vigilancia_seguimiento:
   delitos_procesados: ['fiscal']
   informe_final_enviado: ['jefe_departamento', 'fiscal']
 
-retencion_nota_roja:
+unidad_retrato_hablado:
   nuevo: ['fiscal', 'investigador']
   solicitud_recibida: ['retratista']
   tipo_solicitud_verificada: ['retratista']

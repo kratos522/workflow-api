@@ -25,7 +25,7 @@ class VictimaAgresionSexualWorkflow
       $this->log = new \Log;
       $this->state = 'nuevo';
       $this->tools = new Tools;
-      $this->workflow_name = "atender_lesionados_victimas_agresion_sexual_ss";
+      $this->workflow_name = "atender_lesionado_victima_agresion_sexual_ss";
       $owners_path = self::OWNERS_YAML;
       $notifications_path = self::NOTIFICATIONS_YAML;
       if ($remove_root) {

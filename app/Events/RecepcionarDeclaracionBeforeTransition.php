@@ -20,9 +20,9 @@ class RecepcionarDeclaracionBeforeTransition
      *
      * @return void
      */
-    public function __construct(RecepcionarDeclaracion $recepcionar_declaraciones_ss)
+    public function __construct(RecepcionarDeclaracion $recepcionar_declaracion_ss)
     {
-        $this->recepcionar_declaraciones_ss = $recepcionar_declaraciones_ss;
+        $this->recepcionar_declaracion_ss = $recepcionar_declaracion_ss;
     }
 
     /**

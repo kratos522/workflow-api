@@ -20,9 +20,9 @@ class ReconocimientoRuedaPersonaBeforeTransition
      *
      * @return void
      */
-    public function __construct(ReconocimientoRuedaPersona $reconocimiento_rueda_personas_ss)
+    public function __construct(ReconocimientoRuedaPersona $reconocimiento_rueda_persona_ss)
     {
-        $this->reconocimiento_rueda_personas_ss = $reconocimiento_rueda_personas_ss;
+        $this->reconocimiento_rueda_persona_ss = $reconocimiento_rueda_persona_ss;
     }
 
     /**

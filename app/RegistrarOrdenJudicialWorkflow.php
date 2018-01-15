@@ -25,7 +25,7 @@ class RegistrarOrdenJudicialWorkflow
       $this->log = new \Log;
       $this->state = 'nueva';
       $this->tools = new Tools;
-      $this->workflow_name = "registrar_ordenes_judiciales_ss";
+      $this->workflow_name = "registrar_orden_judicial_ss";
       $owners_path = self::OWNERS_YAML;
       $notifications_path = self::NOTIFICATIONS_YAML;
       if ($remove_root) {

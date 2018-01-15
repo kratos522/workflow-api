@@ -20,9 +20,9 @@ class InfiltrarOrganizacionCriminalBeforeTransition
      *
      * @return void
      */
-    public function __construct(InfiltrarOrganizacionCriminal $infiltrar_organizaciones_criminales)
+    public function __construct(InfiltrarOrganizacionCriminal $infiltrar_organizacion_criminal)
     {
-        $this->infiltrar_organizaciones_criminales = $infiltrar_organizaciones_criminales;
+        $this->infiltrar_organizacion_criminal = $infiltrar_organizacion_criminal;
     }
 
     /**

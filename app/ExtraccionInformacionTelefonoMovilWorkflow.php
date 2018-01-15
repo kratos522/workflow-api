@@ -25,7 +25,7 @@ class ExtraccionInformacionTelefonoMovilWorkflow
       $this->log = new \Log;
       $this->state = 'nueva';
       $this->tools = new Tools;
-      $this->workflow_name = "extraccion_informacion_telefonos_moviles";
+      $this->workflow_name = "extraccion_informacion_telefono_movil";
       $owners_path = self::OWNERS_YAML;
       $notifications_path = self::NOTIFICATIONS_YAML;
       if ($remove_root) {

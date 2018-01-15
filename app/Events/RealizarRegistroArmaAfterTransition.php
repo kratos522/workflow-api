@@ -20,9 +20,9 @@ class RealizarRegistroArmaAfterTransition
      *
      * @return void
      */
-    public function __construct(RegistroArma $realizar_registro_armas)
+    public function __construct(RegistroArma $realizar_registro_arma)
     {
-        $this->realizar_registro_armas = $realizar_registro_armas;
+        $this->realizar_registro_arma = $realizar_registro_arma;
     }
 
     /**

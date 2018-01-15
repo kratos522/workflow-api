@@ -20,9 +20,9 @@ class AtenderLesionadoVictimaAgresionSexualBeforeTransition
      *
      * @return void
      */
-    public function __construct(VictimaAgresionSexual $atender_lesionados_victimas_agresion_sexual_ss)
+    public function __construct(VictimaAgresionSexual $atender_lesionado_victima_agresion_sexual_ss)
     {
-        $this->atender_lesionados_victimas_agresion_sexual_ss = $atender_lesionados_victimas_agresion_sexual_ss;
+        $this->atender_lesionado_victima_agresion_sexual_ss = $atender_lesionado_victima_agresion_sexual_ss;
     }
 
     /**

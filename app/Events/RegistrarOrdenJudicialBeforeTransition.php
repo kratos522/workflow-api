@@ -20,9 +20,9 @@ class RegistrarOrdenJudicialBeforeTransition
      *
      * @return void
      */
-    public function __construct(RegistrarOrdenJudicial $registrar_ordenes_judiciales_ss)
+    public function __construct(RegistrarOrdenJudicial $registrar_orden_judicial_ss)
     {
-        $this->registrar_ordenes_judiciales_ss = $registrar_ordenes_judiciales_ss;
+        $this->registrar_orden_judicial_ss = $registrar_orden_judicial_ss;
     }
 
     /**

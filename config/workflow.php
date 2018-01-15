@@ -269,7 +269,7 @@ return [
             ]
         ]
     ],
-    'atender_lesionados_victimas_agresion_sexual_ss'   => [
+    'atender_lesionado_victima_agresion_sexual_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -372,7 +372,7 @@ return [
             ]
         ]
     ],
-    'captura_fines_extradicion'   => [
+    'captura_fin_extradicion'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -448,7 +448,7 @@ return [
             ]
         ]
     ],
-    'extraccion_informacion_telefonos_moviles'   => [
+    'extraccion_informacion_telefono_movil'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -471,7 +471,7 @@ return [
             ]
         ]
     ],
-    'infiltrar_organizaciones_criminales'   => [
+    'infiltrar_organizacion_criminal'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -566,7 +566,7 @@ return [
             ]
         ]
     ],
-    'investigar_delitos_ss'   => [
+    'investigar_delito_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -810,7 +810,7 @@ return [
             ]
         ]
     ],
-    'realizar_registro_armas'   => [
+    'realizar_registro_arma'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -876,7 +876,7 @@ return [
             ]
         ]
     ],
-    'recepcionar_declaraciones_ss'   => [
+    'recepcionar_declaracion_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -947,7 +947,7 @@ return [
             ]
         ]
     ],
-    'reconocimiento_rueda_personas_ss'   => [
+    'reconocimiento_rueda_persona_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -1003,7 +1003,7 @@ return [
             ]
         ]
     ],
-    'registrar_ordenes_judiciales_ss'   => [
+    'registrar_orden_judicial_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',

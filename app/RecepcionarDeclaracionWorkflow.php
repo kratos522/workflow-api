@@ -25,7 +25,7 @@ class RecepcionarDeclaracionWorkflow
       $this->log = new \Log;
       $this->state = 'nueva';
       $this->tools = new Tools;
-      $this->workflow_name = "recepcionar_declaraciones_ss";
+      $this->workflow_name = "recepcionar_declaracion_ss";
       $owners_path = self::OWNERS_YAML;
       $notifications_path = self::NOTIFICATIONS_YAML;
       if ($remove_root) {

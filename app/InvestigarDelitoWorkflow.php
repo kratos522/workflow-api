@@ -25,7 +25,7 @@ class InvestigarDelitoWorkflow
       $this->log = new \Log;
       $this->state = 'nuevo';
       $this->tools = new Tools;
-      $this->workflow_name = "investigar_delitos_ss";
+      $this->workflow_name = "investigar_delito_ss";
       $owners_path = self::OWNERS_YAML;
       $notifications_path = self::NOTIFICATIONS_YAML;
       if ($remove_root) {

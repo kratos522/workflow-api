@@ -30,7 +30,7 @@ recepcion_documento:
   asignar_dependencia: ['receptor_documentos']
   remitir: ['receptor_documentos']
 
-analizar_informacion_criminal:
+analizar_informacion_criminal_ss:
   clasificar_documento: ['analista_ss']
   solicitar_documento: ['analista_ss']
   elaborar_producto: ['analista_ss']
@@ -49,7 +49,7 @@ aprehencion_menor_infractor:
     elaborar_informe: ['policia_infancia_adolescensia']
     traslado_centro_especializado: ['policia_infancia_adolescensia']
 
-atender_lesionados_victimas_agresion_sexual:
+atender_lesionado_victima_agresion_sexual_ss:
       ubicar_victima: ['investigador']
       trasladar_victima: ['investigador']
       solicitar_toma_muestras: ['investigador']
@@ -59,7 +59,7 @@ atender_lesionados_victimas_agresion_sexual:
       procesar_escena_crimen: ['policia_tecnico']
       enviar_informe: ['investigador']
 
-solicitud_consulta:
+solicitud_consulta_ss:
       recibir_documento: ['investigador']
       peticion_denegada: ['investigador']
       buscar_informacion: ['investigador']
@@ -69,7 +69,7 @@ solicitud_consulta:
       contestar_requerimiento: ['investigador']
       enviar_informe: ['investigador']
 
-captura_fines_extradicion:
+captura_fin_extradicion:
       ejecutar_captura: ['funcionario_policia']
       registrar_captura: ['funcionario_policia']
       enviar_informe_captura: ['funcionario_policia']
@@ -83,11 +83,11 @@ cotejamiento_dactilar:
       aceptar_solicitud: ['perito_dactiloscopia']
       informe_cotejamiento_realizado: ['perito_dactiloscopia']
 
-extraccion_informacion_telefonos_moviles:
+extraccion_informacion_telefono_movil:
       recibir_solicitud: ['policia_tecnico']
       entregar_informe: ['policia_tecnico']
 
-infiltrar_organizaciones_criminales:
+infiltrar_organizacion_criminal:
       notificar_fiscal: ['investigador']
       realizar_infiltracion: ['investigador']
       terminar_infiltracion: ['investigador']
@@ -105,7 +105,7 @@ intervencion_comunicacion:
       enviar_informe: ['investigador']
       finalizar_intervencion: ['investigador']
 
-investigar_delitos:
+investigar_delito_ss:
       informacion_recibida: ['investigador']
       ejecutar_proceso_denuncia: ['investigador']
       requerimiento_recibido: ['jefe_departamento']
@@ -153,7 +153,7 @@ realizar_entrega_vigilada:
       enviar_citacion_audiencia: ['investigador']
       realizar_informe_audiencia: ['investigador']
 
-realizar_registro_armas:
+realizar_registro_arma:
       verificar_antecedentes: ['policia_tecnico']
       capturar_propietario: ['policia_tecnico']
       enviar_informe_captura: ['policia_tecnico']
@@ -165,7 +165,7 @@ realizar_reseña_fotografica:
       recibir_solicitud: ['auxiliar_administrativo']
       enviar_reseña_fotografica: ['auxiliar_administrativo']
 
-recepcionar_declaraciones:
+recepcionar_declaracion_ss:
       recepcionar_solicitud: ['investigador']
       verificar_solicitud: ['investigador']
       solicitar_fiscal_niñez: ['investigador']
@@ -179,7 +179,7 @@ recepcionar_declaraciones:
       cotejar_resultados_declaracion: ['investigador']
       enviar_informe: ['investigador']
 
-reconocimiento_rueda_personas:
+reconocimiento_rueda_persona_ss:
       recibir_requerimiento_fiscal: ['investigador']
       citar_partes: ['investigador']
       realizar_reconocimiento: ['investigador']
@@ -190,7 +190,7 @@ reconocimiento_rueda_personas:
       ejecutar_procesamiento_escena_crimen: ['policia_tecnico']
       enviar_informe: ['investigador']
 
-registrar_ordenes_judiciales:
+registrar_orden_judicial_ss:
       recibir_orden: ['investigador']
       completar_informacion_faltante: ['investigador']
       registrar_datos_orden: ['investigador']

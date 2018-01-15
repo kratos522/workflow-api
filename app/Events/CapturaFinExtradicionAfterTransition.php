@@ -20,9 +20,9 @@ class CapturaFinExtradicionAfterTransition
      *
      * @return void
      */
-    public function __construct(CapturaFinExtradicion $captura_fines_extradicion)
+    public function __construct(CapturaFinExtradicion $captura_fin_extradicion)
     {
-        $this->captura_fines_extradicion = $captura_fines_extradicion;
+        $this->captura_fin_extradicion = $captura_fin_extradicion;
     }
 
     /**

@@ -20,9 +20,9 @@ class InvestigarDelitoAfterTransition
      *
      * @return void
      */
-    public function __construct(InvestigarDelito $investigar_delitos_ss)
+    public function __construct(InvestigarDelito $investigar_delito_ss)
     {
-        $this->investigar_delitos_ss = $investigar_delitos_ss;
+        $this->investigar_delito_ss = $investigar_delito_ss;
     }
 
     /**

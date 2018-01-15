@@ -25,7 +25,7 @@ class ReconocimientoRuedaPersonaWorkflow
       $this->log = new \Log;
       $this->state = 'nuevo';
       $this->tools = new Tools;
-      $this->workflow_name = "reconocimiento_rueda_personas_ss";
+      $this->workflow_name = "reconocimiento_rueda_persona_ss";
       $owners_path = self::OWNERS_YAML;
       $notifications_path = self::NOTIFICATIONS_YAML;
       if ($remove_root) {

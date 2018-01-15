@@ -25,7 +25,7 @@ class RegistroArmaWorkflow
       $this->log = new \Log;
       $this->state = 'nuevo';
       $this->tools = new Tools;
-      $this->workflow_name = "realizar_registro_armas";
+      $this->workflow_name = "realizar_registro_arma";
       $owners_path = self::OWNERS_YAML;
       $notifications_path = self::NOTIFICATIONS_YAML;
       if ($remove_root) {

@@ -25,7 +25,7 @@ class InfiltrarOrganizacionCriminalWorkflow
       $this->log = new \Log;
       $this->state = 'nueva';
       $this->tools = new Tools;
-      $this->workflow_name = "infiltrar_organizaciones_criminales";
+      $this->workflow_name = "infiltrar_organizacion_criminal";
       $owners_path = self::OWNERS_YAML;
       $notifications_path = self::NOTIFICATIONS_YAML;
       if ($remove_root) {

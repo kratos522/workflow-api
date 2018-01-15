@@ -20,9 +20,9 @@ class ExtraccionInformacionTelefonoMovilBeforeTransition
      *
      * @return void
      */
-    public function __construct(ExtraccionInformacionTelefonoMovil $extraccion_informacion_telefonos_moviles)
+    public function __construct(ExtraccionInformacionTelefonoMovil $extraccion_informacion_telefono_movil)
     {
-        $this->extraccion_informacion_telefonos_moviles = $extraccion_informacion_telefonos_moviles;
+        $this->extraccion_informacion_telefono_movil = $extraccion_informacion_telefono_movil;
     }
 
     /**

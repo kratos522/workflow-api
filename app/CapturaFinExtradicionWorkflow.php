@@ -25,7 +25,7 @@ class CapturaFinExtradicionWorkflow
       $this->log = new \Log;
       $this->state = 'orden_captura_recibida';
       $this->tools = new Tools;
-      $this->workflow_name = "captura_fines_extradicion";
+      $this->workflow_name = "captura_fin_extradicion";
       $owners_path = self::OWNERS_YAML;
       $notifications_path = self::NOTIFICATIONS_YAML;
       if ($remove_root) {
