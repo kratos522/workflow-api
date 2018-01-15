@@ -1442,7 +1442,7 @@ return [
         ]
     ],
 ////////////////////////////////////////////////////////////////////////////////
-    'notificaciones_internas_ss'   => [
+    'notificacion_interna_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -1467,15 +1467,15 @@ return [
                 'from' => 'elaboro_acto_solicitado',
                 'to'   => 'redacto_acuerdo',
             ],
-            'firma_acuerdo' => [
+            'firmar_acuerdo' => [
                 'from' => 'redacto_acuerdo',
                 'to'   => 'firmo_acuerdo',
             ],
-            'entrega_notificacion' => [
+            'entregar_notificacion' => [
                 'from' => 'firmo_acuerdo',
                 'to'   => 'entrego_notificacion',
             ],
-            'actualizacion_bd' => [
+            'actualizar_bd' => [
                 'from' => 'entrego_notificacion',
                 'to'   => 'actualizo_bd',
             ],
@@ -1486,7 +1486,7 @@ return [
         ]
     ],
 
-    'extraer_datos_sistema_ss'   => [
+    'extraer_dato_sistema_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -1502,19 +1502,19 @@ return [
                             'control_estadistico_digital_impreso'
                           ],
         'transitions'   => [
-            'recepciona_acuerdo' => [
+            'recepcionar_acuerdo' => [
                 'from' => 'nueva_instruccion',
                 'to'   => 'recepcion_acuerdo_cancelacion',
             ],
-            'baja_persona' => [
+            'bajar_persona' => [
                 'from' => 'recepcion_acuerdo_cancelacion',
                 'to'   => 'realizo_baja_persona',
             ],
-            'genera_respuesta' => [
+            'generar_respuesta' => [
                 'from' => 'realizo_baja_persona',
                 'to'   => 'genero_respuesta',
             ],
-            'envia_archivo' => [
+            'enviar_archivo' => [
                 'from' => 'genero_respuesta',
                 'to'   => 'archivo',
             ],
@@ -1525,7 +1525,7 @@ return [
         ]
     ],
 
-    'delitos_contra_propiedad_ss'   => [
+    'delito_contra_propiedad_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -1554,19 +1554,19 @@ return [
                             'informe_enviado'
                           ],
         'transitions'   => [
-            'solicitud_nota_informacion' => [
+            'recibir_nota_informacion' => [
                 'from' => 'nueva_denuncia',
                 'to'   => 'recibio_solicitud_nota_informacion',
             ],
-            'solicitud_peritaje_vehiculo' => [
+            'recibir_peritaje_vehiculo' => [
                 'from' => 'nueva_denuncia',
                 'to'   => 'recibio_solicitud_peritaje_vehiculo',
             ],
-            'solicitud_requerimiento' => [
+            'recibir_solicitud_requerimiento' => [
                 'from' => 'nueva_denuncia',
                 'to'   => 'recibio_solicitud_requerimiento',
             ],
-            'solicitud_datos_estadisticos' => [
+            'recibir_datos_estadisticos' => [
                 'from' => 'nueva_denuncia',
                 'to'   => 'recibio_solicitud_datos_estadisticos',
             ],
@@ -1574,7 +1574,7 @@ return [
                 'from' => 'recibio_solicitud_nota_informacion',
                 'to'   => 'obtuvo_informacion_bd',
             ],
-            'registra_vehiculo' => [
+            'registrar_vehiculo' => [
                 'from' => 'recibio_solicitud_peritaje_vehiculo',
                 'to'   => 'verifica_registra_vehiculo_bd',
             ],
@@ -1582,39 +1582,39 @@ return [
                 'from' => 'recibio_solicitud_requerimiento',
                 'to'   => 'asigno_diligencias',
             ],
-            'registro_actividades' => [
+            'registrar_actividades_mensual' => [
                 'from' => 'recibio_solicitud_datos_estadisticos',
                 'to'   => 'registro_mensual_actividades_unidad',
             ],
-            'nuevo_informe_propuesta' => [
+            'generar_informe_propuesta' => [
                 'from' => 'obtuvo_informacion_bd',
                 'to'   => 'genero_informe_propuesta',
             ],
-            'nueva_acta_inspeccion' => [
+            'generar_acta_inspeccion' => [
                 'from' => 'verifica_registra_vehiculo_bd',
                 'to'   => 'genero_acta_inspeccion',
             ],
-            'nuevo_informe_diligencias' => [
+            'generar_informe_diligencias' => [
                 'from' => 'asigno_diligencias',
                 'to'   => 'genero_informe_diligencias',
             ],
-            'nuevo_informe_periodico' => [
+            'generar_informe_periodico' => [
                 'from' => 'registro_mensual_actividades_unidad',
                 'to'   => 'genero_informe_periodico_casos',
             ],
-            'informe_fna' => [
+            'remitir_informe_fna' => [
                 'from' => 'genero_informe_propuesta',
                 'to'   => 'remitio_informe_fna',
             ],
-            'informe_medicina_forense' => [
+            'remitir_informe_forense' => [
                 'from' => 'genero_acta_inspeccion',
                 'to'   => 'remitio_informe_medicina_forense_mp',
             ],
-            'informe_mp' => [
+            'remitir_informe_mp' => [
                 'from' => 'genero_informe_diligencias',
                 'to'   => 'remitio_informe_fiscal_mp',
             ],
-            'informe_estadistico' => [
+            'remitir_informe_estadistico' => [
                 'from' => 'genero_informe_periodico_casos',
                 'to'   => 'remitio_informe_estadistica_planeacion',
             ],
@@ -1633,7 +1633,7 @@ return [
         ]
     ],
 
-    'informes_logisticos'   => [
+    'informe_logistico_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -1655,15 +1655,15 @@ return [
                 'from' => 'nueva_solicitud_materiales',
                 'to'   => 'verifico_existencia_material',
             ],
-            'solicitud_unidad_administrativa' => [
+            'generar_unidad_administrativa' => [
                 'from' => 'verifico_existencia_material',
                 'to'   => 'genero_solicitud_unidad_administrativa',
             ],
-            'nuevo_informe_avisos' => [
+            'generar_informe_avisos' => [
                 'from' => 'verifico_existencia_material',
                 'to'   => 'genero_informe_avisos',
             ],
-            'solicitud_enviada' => [
+            'enviar_solicitud' => [
                 'from' => 'genero_solicitud_unidad_administrativa',
                 'to'   => 'envio_solicitud',
             ],
@@ -1671,22 +1671,22 @@ return [
                 'from' => 'genero_informe_avisos',
                 'to'   => 'envio_respuesta',
             ],
-            'informe_respectivos' => [
+            'generar_informe_respectivos' => [
                 'from' => 'envio_solicitud',
                 'to'   => 'genero_informe_respectivos',
             ],
-            'nuevo_informe_avisos' => [
+            'generar_informe_avisos' => [
                 'from' => 'envio_respuesta',
                 'to'   => 'genero_informe_respectivos',
             ],
-            'informes_entregados' => [
+            'entregar_informes' => [
                 'from' => 'genero_informe_respectivos',
                 'to'   => 'informes_respectivos_entregados',
             ]
         ]
     ],
 
-    'nuevas_promociones_ss'   => [
+    'nueva_promocion_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -1706,7 +1706,7 @@ return [
                 'from' => 'recibe_solicitud_oficial',
                 'to'   => 'obtuvo_listados_copias_id',
             ],
-            'solicitud_informacion' => [
+            'solicitar_informacion' => [
                 'from' => 'obtuvo_listados_copias_id',
                 'to'   => 'solicito_informacion_secretario_general',
             ],
@@ -1714,18 +1714,18 @@ return [
                 'from' => 'solicito_informacion_secretario_general',
                 'to'   => 'recibe_informacion_solicitada',
             ],
-            'estructura_presupuestaria' => [
+            'extender_estructura_presupuestaria' => [
                 'from' => 'recibe_informacion_solicitada',
                 'to'   => 'extiende_estructura_presupuestaria',
             ],
-            'extendida_estructura' => [
+            'estructura_extendida' => [
                 'from' => 'extiende_estructura_presupuestaria',
                 'to'   => 'estructura_presupuestaria_extendida',
             ]
         ]
     ],
 
-    'contestacion_oficios_ss'   => [
+    'contestacion_oficio_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -1742,27 +1742,27 @@ return [
                             'contestacion_enviada'
                           ],
         'transitions'   => [
-            'nueva_solicitud' => [
+            'ingresar_solicitud' => [
                 'from' => 'nueva_solicitud_requerimiento_fiscal',
                 'to'   => 'ingreso_solicitud',
             ],
-            'procesamiento_informacion' => [
+            'procesar_informacion' => [
                 'from' => 'ingreso_solicitud',
                 'to'   => 'proceso_informacion',
             ],
-            'contestacion_realizada' => [
+            'realizar_contestacion' => [
                 'from' => 'proceso_informacion',
                 'to'   => 'realizo_contestacion',
             ],
-            'autorizacion_jefe' => [
+            'recibir_autorizacion_jefe' => [
                 'from' => 'realizo_contestacion',
                 'to'   => 'recibio_autorizacion_jefe',
             ],
-            'envia_contestacion' => [
+            'enviar_contestacion' => [
                 'from' => 'recibio_autorizacion_jefe',
                 'to'   => 'envio_contestacion',
             ],
-            'enviado' => [
+            'contestacion_enviado' => [
                 'from' => 'envio_contestacion',
                 'to'   => 'contestacion_enviada',
             ]
@@ -1794,46 +1794,46 @@ return [
                 'from' => 'nueva_solicitud',
                 'to'   => 'reviso_expediente_carencias',
             ],
-            'analisis_expediente' => [
+            'analizar_expediente' => [
                 'from' => 'reviso_expediente_carencias',
                 'to'   => 'analizo_expediente_sugerencias',
             ],
-            'individualizacion' => [
+            'individualizar' => [
                 'from' => 'analizo_expediente_sugerencias',
                 'to'   => 'individualizacion_victima_sospechoso',
             ],
-            'registro' => [
+            'registrar' => [
                 'from' => 'individualizacion_victima_sospechoso',
                 'to'   => 'registro_identificacion_victima_sospechoso',
             ],
-            'matriz_vinculacion_proceso' => [
+            'generar_matriz_vinculacion' => [
                 'from' => 'registro_identificacion_victima_sospechoso',
                 'to'   => 'genero_matriz_vinculacion',
             ],
-            'matriz_vinculacion_nuevo' => [
+            'generar_matriz_vinculacion_nuevo' => [
                 'from' => 'nueva_solicitud',
                 'to'   => 'genero_matriz_vinculacion',
             ],
-            'estudios' => [
+            'realizar_estudios' => [
                 'from' => 'genero_matriz_vinculacion',
                 'to'   => 'realizo_estudios',
             ],
-            'antecedentes' => [
+            'generar_antecedentes' => [
                 'from' => 'realizo_estudios',
                 'to'   => 'genero_antecedetes_victima_sospechoso',
             ],
-            'informe_final' => [
+            'generar_informe_final' => [
                 'from' => 'genero_antecedetes_victima_sospechoso',
                 'to'   => 'genero_informe_final',
             ],
-            'informe_entregado' => [
+            'informe_final_entregado' => [
                 'from' => 'genero_informe_final',
                 'to'   => 'informe_final_entregado',
             ]
         ]
     ],
 
-    'informe_disciplinarios_ss'   => [
+    'informe_disciplinario_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -1855,23 +1855,23 @@ return [
                             'informe_generado'
                           ],
         'transitions'   => [
-            'procesamiento' => [
+            'procesar_informacion' => [
                 'from' => 'recibio_informe_inicial',
                 'to'   => 'proceso_informacion',
             ],
-            'informe_investigativo' => [
+            'redactar_informe_investigativo' => [
                 'from' => 'proceso_informacion',
                 'to'   => 'redacto_informe_investigativo',
             ],
-            'notificacion_personal' => [
+            'notificar_personal' => [
                 'from' => 'redacto_informe_investigativo',
                 'to'   => 'notifico_personal',
             ],
-            'informe_final' => [
+            'generar_informe_final' => [
                 'from' => 'notifico_personal',
                 'to'   => 'genero_informe_final',
             ],
-            'envia_informe' => [
+            'enviar_informe' => [
                 'from' => 'genero_informe_final',
                 'to'   => 'envio_informe_secretario_ejecutivo',
             ],
@@ -1879,11 +1879,11 @@ return [
                 'from' => 'genero_informe_final',
                 'to'   => 'nueva_resolucion',
             ],
-            'envia_secretario' => [
+            'enviar_secretario' => [
                 'from' => 'envio_informe_secretario_ejecutivo',
                 'to'   => 'informe_enviado_secretario',
             ],
-            'archiva_resolucion' => [
+            'archivar_resolucion' => [
                 'from' => 'nueva_resolucion',
                 'to'   => 'archivo',
             ],
@@ -1891,11 +1891,11 @@ return [
                 'from' => 'archivo',
                 'to'   => 'resolucion_archivada',
             ],
-            'sancion' => [
+            'ejecutar_sancion' => [
                 'from' => 'nueva_resolucion',
                 'to'   => 'ejecuto_sancion',
             ],
-            'genera_informe' => [
+            'generar_informe' => [
                 'from' => 'ejecuto_sancion',
                 'to'   => 'genero_informe',
             ],
@@ -1906,7 +1906,7 @@ return [
         ]
     ],
 
-    'informe_homicidios_ss'   => [
+    'informe_homicidio_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -1937,47 +1937,47 @@ return [
                             'orden_captura_ejecutada'
                           ],
         'transitions'   => [
-            'informe_pericial' => [
+            'redactar_informe_pericial' => [
                 'from' => 'nuevo_homicidio',
                 'to'   => 'redacto_informe_pericial',
             ],
-            'dictamen_forense' => [
+            'recibir_dictamen_forense' => [
                 'from' => 'redacto_informe_pericial',
                 'to'   => 'recibio_dictamen_forense',
             ],
-            'actas' => [
+            'elaborar_actas' => [
                 'from' => 'recibio_dictamen_forense',
                 'to'   => 'elaboro_actas',
             ],
-            'remite_caso_mp' => [
+            'remitir_caso_mp' => [
                 'from' => 'elaboro_actas',
                 'to'   => 'remitio_caso_fiscal_instruccion_mp',
             ],
-            'auto_requerimiento_investigativo' => [
+            'recibir_requerimiento_investigativo' => [
                 'from' => 'remitio_caso_fiscal_instruccion_mp',
                 'to'   => 'recibio_requerimiento_investigativo',
             ],
-            'informe_interrogatorio' => [
+            'redactar_informe_interrogatorio' => [
                 'from' => 'recibio_requerimiento_investigativo',
                 'to'   => 'redacto_informe_interrogatorio',
             ],
-            'perfilacion_criminal' => [
+            'generar_perfil_sospechoso' => [
                 'from' => 'redacto_informe_interrogatorio',
                 'to'   => 'genero_perfil_sospechoso',
             ],
-            'reporte_muestra' => [
+            'redactar_reporte_muestra' => [
                 'from' => 'genero_perfil_sospechoso',
                 'to'   => 'redacto_reporte_muestra',
             ],
-            'dictamen_forense' => [
+            'solicitar_dictamen' => [
                 'from' => 'redacto_reporte_muestra',
                 'to'   => 'solicito_dictamen',
             ],
-            'reporte_medicina_forense' => [
+            'adjuntar_reporte_forense' => [
                 'from' => 'solicito_dictamen',
                 'to'   => 'adjunto_reporte_medicina_forense',
             ],
-            'informe_avances' => [
+            'redactar_informe_avances' => [
                 'from' => 'adjunto_reporte_medicina_forense',
                 'to'   => 'redacto_informe_avances',
             ],
@@ -1985,7 +1985,7 @@ return [
                 'from' => 'redacto_informe_avances',
                 'to'   => 'remitio_informe_avances_fiscal_instruccion_mp',
             ],
-            'informe_preliminar' => [
+            'redactar_informe_preliminar' => [
                 'from' => 'remitio_informe_avances_fiscal_instruccion_mp',
                 'to'   => 'redacto_informe_preliminar',
             ],
@@ -1993,7 +1993,7 @@ return [
                 'from' => 'redacto_informe_preliminar',
                 'to'   => 'remitio_informe_preliminar_fiscal_instruccion_mp',
             ],
-            'informe_final' => [
+            'redactar_informe_final' => [
                 'from' => 'remitio_informe_preliminar_fiscal_instruccion_mp',
                 'to'   => 'redacto_informe_final',
             ],
@@ -2001,7 +2001,7 @@ return [
                 'from' => 'redacto_informe_final',
                 'to'   => 'remitio_informe_final_fiscal_instruccion_mp',
             ],
-            'orden_captura' => [
+            'generar_orden_captura' => [
                 'from' => 'remitio_informe_final_fiscal_instruccion_mp',
                 'to'   => 'nueva_orden_captura_juez_pj',
             ],
@@ -2013,7 +2013,7 @@ return [
                 'from' => 'ejecuto_orden',
                 'to'   => 'remitio_detenido_juez_pj',
             ],
-            'orden ejecutada' => [
+            'orden_ejecutada' => [
                 'from' => 'remitio_detenido_juez_pj',
                 'to'   => 'orden_captura_ejecutada',
             ]
@@ -2052,39 +2052,39 @@ return [
                             'manual_difundido'
                           ],
         'transitions'   => [
-            'manual_nuevo' => [
+            'generar_manual_nuevo' => [
                 'from' => 'nueva_solicitud',
                 'to'   => 'nuevo_manual',
             ],
-            'actualizacion_instructivo' => [
+            'generar_actualizacion_instructivo' => [
                 'from' => 'nueva_solicitud',
                 'to'   => 'nueva_actualizacion_instructivo',
             ],
-            'nuevo_boletin' => [
+            'generar_nuevo_boletin' => [
                 'from' => 'nueva_solicitud',
                 'to'   => 'nuevo_boletin_doctrinal_juridico',
             ],
-            'presenta_manual' => [
+            'presentar_manual' => [
                 'from' => 'nuevo_manual',
                 'to'   => 'presento_manual',
             ],
-            'necesidades' => [
+            'presentar_necesidades' => [
                 'from' => 'nueva_actualizacion_instructivo',
                 'to'   => 'necesidades_cambio',
             ],
-            'tema_seleccionado' => [
+            'seleccionar_tema' => [
                 'from' => 'nuevo_boletin_doctrinal_juridico',
                 'to'   => 'selecciono_tema',
             ],
-            'aprobacion_manual' => [
+            'aprobar_manual' => [
                 'from' => 'presento_manual',
                 'to'   => 'manual_aprobado',
             ],
-            'cronograma' => [
+            'realizar_cronograma' => [
                 'from' => 'necesidades_cambio',
                 'to'   => 'realizo_cronograma',
             ],
-            'boletin' => [
+            'elaborar_boletin' => [
                 'from' => 'selecciono_tema',
                 'to'   => 'elaboro_boletin',
             ],
@@ -2092,47 +2092,47 @@ return [
                 'from' => 'manual_aprobado',
                 'to'   => 'difundio_manual',
             ],
-            'actualizacion_documento' => [
+            'actualizar_documento' => [
                 'from' => 'realizo_cronograma',
                 'to'   => 'actualizo_documento',
             ],
-            'revision_boletin' => [
+            'revisar_boletin' => [
                 'from' => 'elaboro_boletin',
                 'to'   => 'reviso_boletin',
             ],
-            'presentacion_instructivo' => [
+            'presentar_instructivo' => [
                 'from' => 'actualizo_documento',
                 'to'   => 'presento_instructivo',
             ],
-            'presentacion_boletin' => [
+            'presentar_boletin' => [
                 'from' => 'reviso_boletin',
                 'to'   => 'presento_boletin',
             ],
-            'difundido_manual' => [
+            'difundir_manual' => [
                 'from' => 'difundio_manual',
                 'to'   => 'manual_difundido',
             ],
-            'aprobacion_instructivo' => [
+            'aprobar_instructivo' => [
                 'from' => 'presento_instructivo',
                 'to'   => 'instructivo_aprobado',
             ],
-            'aprobacion_boletin' => [
+            'aprobar_boletin' => [
                 'from' => 'presento_boletin',
                 'to'   => 'aprobo_boletin',
             ],
-            'instructivo_socializado' => [
+            'socializar_instructivo' => [
                 'from' => 'instructivo_aprobado',
                 'to'   => 'socializado',
             ],
-            'boletin_difundido' => [
+            'difundir_boletin' => [
                 'from' => 'aprobo_boletin',
                 'to'   => 'difundio_boletin',
             ],
-            'socializacion_manual' => [
+            'socializar_manual' => [
                 'from' => 'socializado',
                 'to'   => 'manual_socializado',
             ],
-            'difundacion_manual' => [
+            'difundir_manual' => [
                 'from' => 'difundio_boletin',
                 'to'   => 'manual_difundido',
             ]
@@ -2164,51 +2164,51 @@ return [
                             'orden_ejecutada'
                           ],
         'transitions'   => [
-            'escena_crimen' => [
+            'procesar_escena' => [
                 'from' => 'nueva_denuncia',
                 'to'   => 'proceso_escena_crimen',
             ],
-            'envio_indicios' => [
+            'enviar_indicios' => [
                 'from' => 'proceso_escena_crimen',
                 'to'   => 'envio_indicios_laboratorio',
             ],
-            'entrega_fotografias' => [
+            'entregar_fotografias' => [
                 'from' => 'proceso_escena_crimen',
                 'to'   => 'entrego_fografias',
             ],
-            'recepcion_resultados' => [
+            'recibir_resultados' => [
                 'from' => 'envio_indicios_laboratorio',
                 'to'   => 'recibio_resultados_laboratorio',
             ],
-            'informe_pericial_fotografia' => [
+            'redactar_informe_pericial_fotografia' => [
                 'from' => 'entrego_fografias',
                 'to'   => 'redaccion_informe_pericial',
             ],
-            'informe_pericial_laboratorio' => [
+            'redactar_informe_pericial_laboratorio' => [
                 'from' => 'recibio_resultados_laboratorio',
                 'to'   => 'redaccion_informe_pericial',
             ],
-            'generacion_informe_final' => [
+            'generar_informe_final' => [
                 'from' => 'redaccion_informe_pericial',
                 'to'   => 'genero_informe_final',
             ],
-            'cansulta_bd' => [
+            'consultar_bd' => [
                 'from' => 'proceso_escena_crimen',
                 'to'   => 'consulto_bd',
             ],
-            'perfilacion_sospechoso' => [
+            'generar_perfil_sospechoso' => [
                 'from' => 'consulto_bd',
                 'to'   => 'genero_perfil_sospechoso',
             ],
-            'perfilacion_victima' => [
+            'generar_perfil_victima' => [
                 'from' => 'consulto_bd',
                 'to'   => 'genero_perfil_victima',
             ],
-            'informe_final_sospechoso' => [
+            'generar_informe_final_sospechoso' => [
                 'from' => 'genero_perfil_sospechoso',
                 'to'   => 'genero_informe_final',
             ],
-            'informe_final_victima' => [
+            'generar_informe_final_victima' => [
                 'from' => 'genero_perfil_victima',
                 'to'   => 'genero_informe_final',
             ],
@@ -2216,11 +2216,11 @@ return [
                 'from' => 'genero_informe_final',
                 'to'   => 'remitio_informe_investigador_fiscal_instruccion_mp',
             ],
-            'orden_captura' => [
+            'recibir_orden_captura' => [
                 'from' => 'remitio_informe_investigador_fiscal_instruccion_mp',
                 'to'   => 'recibio_nueva_orden_captura_juez_pj',
             ],
-            'orden_captura_ejecutada' => [
+            'ejecutar_orden_captura' => [
                 'from' => 'recibio_nueva_orden_captura_juez_pj',
                 'to'   => 'ejecuto_orden',
             ],
@@ -2277,95 +2277,91 @@ return [
                             'orden_ejecutada'
                           ],
         'transitions'   => [
-            'denuncia_infraganti' => [
+            'registrar_denuncia_infraganti' => [
                 'from' => 'nueva_denuncia',
                 'to'   => 'registro_denuncia_infraganti',
             ],
-            'denuncia_ordinaria' => [
+            'verificar_identidad_denunciante' => [
                 'from' => 'nueva_denuncia',
                 'to'   => 'verifico_identidad_denunciante',
             ],
-            'identidad_detenido_ordinario' => [
+            'verificar_identidad_detenido' => [
                 'from' => 'registro_denuncia_infraganti',
                 'to'   => 'verifico_identidad_detenido',
             ],
-            'identidad_detenido_infraganti' => [
+            'verificar_identidad_detenido_infraganti' => [
                 'from' => 'verifico_identidad_detenido',
                 'to'   => 'verifico_identidad_denunciante',
             ],
-            'solicitud_defensa_publica' => [
+            'remitir_solicitud_defensa_publica' => [
                 'from' => 'verifico_identidad_detenido',
                 'to'   => 'remite_solicitud_defensor_defensa_publica_pj',
             ],
-            'tipificacion_delito' => [
+            'tipificar_delito' => [
                 'from' => 'verifico_identidad_denunciante',
                 'to'   => 'tipifico_delito',
             ],
-            'defensa_publica' => [
+            'defensa_publica_remitido' => [
                 'from' => 'remite_solicitud_defensor_defensa_publica_pj',
                 'to'   => 'remitido_defensa_publica',
             ],
-            'autorizacion_delito' => [
+            'autorizar_delito' => [
                 'from' => 'tipifico_delito',
                 'to'   => 'autorizo_delito',
             ],
-            'transcripcion_denuncia' => [
+            'transcribir_denuncia' => [
                 'from' => 'autorizo_delito',
                 'to'   => 'transcribio_denuncia',
             ],
-            'denuncia_no_aceptada' => [
+            'notificar_denuncia_no_aceptada' => [
                 'from' => 'autorizo_delito',
                 'to'   => 'notifico_denunciante_denuncia_no_aceptada',
             ],
-            'notificacion_entregada_no_aceptada' => [
+            'entregar_notificacion_no_aceptada' => [
                 'from' => 'notifico_denunciante_denuncia_no_aceptada',
                 'to'   => 'entrego_notificacion_denunciante',
             ],
-            'denuncia_firmada' => [
+            'generar_denuncia_firmada' => [
                 'from' => 'transcribio_denuncia',
                 'to'   => 'genero_reporte_denuncia_firmado',
             ],
-            'remite_quien_corresponde' => [
+            'remitir_quien_corresponde' => [
                 'from' => 'genero_reporte_denuncia_firmado',
                 'to'   => 'remitio_donde_corresponde',
             ],
-            'verificacion_denuncias_similares' => [
+            'verificar_denuncias_similares' => [
                 'from' => 'genero_reporte_denuncia_firmado',
                 'to'   => 'verifico_denuncias_similares',
             ],
-            'agrupacion_denuncias_similares_remitidas' => [
+            'agrupar_denuncias_similares' => [
                 'from' => 'remitio_donde_corresponde',
                 'to'   => 'agrupo_denuncias_similares',
             ],
-            'agrupacion_denuncias_similares_verificadas' => [
+            'agrupar_denuncias_similares' => [
                 'from' => 'verifico_denuncias_similares',
                 'to'   => 'agrupo_denuncias_similares',
             ],
-            'impresion_denuncia' => [
+            'imprimir_denuncia' => [
                 'from' => 'agrupo_denuncias_similares',
                 'to'   => 'imprimio_denuncia_individual',
             ],
-            'denuncia_remitida_mrd_mp' => [
+            'remitir_denuncia_mrd_mp' => [
                 'from' => 'imprimio_denuncia_individual',
                 'to'   => 'remitio_denuncia_mrd_mp',
             ],
-            'resultados_informe_flagrancia' => [
+            'realizar_informe_flagrancia' => [
                 'from' => 'imprimio_denuncia_individual',
                 'to'   => 'realizo_informe_flagrancia_resultados',
             ],
-            'auto_requerimietno_investigativo' => [
+            'recibir_requerimiento_investigativo' => [
                 'from' => 'remitio_denuncia_mrd_mp',
                 'to'   => 'recibio_requerimiento_investigativo',
             ],
-            'asignacion_investigador' => [
+            'asignar_investigador' => [
                 'from' => 'recibio_requerimiento_investigativo',
                 'to'   => 'asigno_investigador_especializado',
             ],
-            'informe_flagrancia_resultados' => [
-                'from' => 'imprimio_denuncia_individual',
-                'to'   => 'realizo_informe_flagrancia_resultados',
-            ],
-            'informe_avances' => [
+            'generar_informe_avances' => [
                 'from' => 'asigno_investigador_especializado',
                 'to'   => 'genero_informe_avances',
             ],
@@ -2381,7 +2377,7 @@ return [
                 'from' => 'remite_informe_investigador_fiscal_instruccion_mp',
                 'to'   => 'informe_investigador_remitido',
             ],
-            'informe_preliminar' => [
+            'generar_informe_preliminar' => [
                 'from' => 'remitio_informe_avances_fiscal_instruccion_mp',
                 'to'   => 'genero_informe_preliminar',
             ],
@@ -2389,7 +2385,7 @@ return [
                 'from' => 'genero_informe_preliminar',
                 'to'   => 'remitio_informe_preliminar_fiscal_instruccion_mp',
             ],
-            'Informe_final' => [
+            'generar_informe_final' => [
                 'from' => 'remitio_informe_preliminar_fiscal_instruccion_mp',
                 'to'   => 'genero_informe_especializado_final',
             ],
@@ -2397,11 +2393,11 @@ return [
                 'from' => 'genero_informe_especializado_final',
                 'to'   => 'remitio_informe_especializado_final_mp',
             ],
-            'orden_captura' => [
+            'recibir_orden_captura' => [
                 'from' => 'remitio_informe_especializado_final_mp',
                 'to'   => 'recibio_nueva_orden_captura_juez_pj',
             ],
-            'ejecucion_orden' => [
+            'ejecutar_orden' => [
                 'from' => 'recibio_nueva_orden_captura_juez_pj',
                 'to'   => 'ejecuto_orden',
             ],
@@ -2416,7 +2412,7 @@ return [
         ]
     ],
 
-    'informe_cuadros_estadisticos_ss'   => [
+    'informe_cuadro_estadistico_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -2433,23 +2429,23 @@ return [
                             'informe_estadistico_elaborado'
                           ],
         'transitions'   => [
-            'ingreso_informacion' => [
+            'ingresar_informacion' => [
                 'from' => 'nueva_autorizacion_informe',
                 'to'   => 'ingreso_informacion_recibida',
             ],
-            'consolidacion_informacion' => [
+            'consolidar_informacion' => [
                 'from' => 'ingreso_informacion_recibida',
                 'to'   => 'consolido_informacion',
             ],
-            'consulta_bd' => [
+            'consultar_bd' => [
                 'from' => 'consolido_informacion',
                 'to'   => 'consulto_bd',
             ],
-            'obtencion_resultado' => [
+            'obtener_resultado' => [
                 'from' => 'consulto_bd',
                 'to'   => 'obtuvo_resultado',
             ],
-            'elaboracion_informe_estadistico' => [
+            'elaborar_informe_estadistico' => [
                 'from' => 'obtuvo_resultado',
                 'to'   => 'elaboro_informe_estadistico',
             ],
@@ -2460,7 +2456,7 @@ return [
         ]
     ],
 
-    'solicitud_revelado_fotografias_ss'   => [
+    'solicitud_revelado_fotografia_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -2477,23 +2473,23 @@ return [
                             'material_entregado_policia_tecnico'
                           ],
         'transitions'   => [
-            'recepcion_fotografias' => [
+            'recepcionar_fotografias' => [
                 'from' => 'nueva_solicitud_revelado',
                 'to'   => 'recepciono_fotografias',
             ],
-            'clasificacion_depuracion_material' => [
+            'clasificar_depurar_material' => [
                 'from' => 'recepciono_fotografias',
                 'to'   => 'clasifico_depuro_abastecimiento_material',
             ],
-            'revelado_fisico_fotografia' => [
+            'revelar_fotografia_fisica' => [
                 'from' => 'clasifico_depuro_abastecimiento_material',
                 'to'   => 'revelado_fisico',
             ],
-            'registro_fisico_fotografia' => [
+            'registrar_fotografia_fisica' => [
                 'from' => 'revelado_fisico',
                 'to'   => 'registro_fisico',
             ],
-            'entrega_material' => [
+            'entregar_material' => [
                 'from' => 'registro_fisico',
                 'to'   => 'entrego_material_policia_tecnico',
             ],
@@ -2523,23 +2519,23 @@ return [
                             'reporte_entregado_director_general'
                           ],
         'transitions'   => [
-            'verificacion_datos' => [
+            'verificar_datos' => [
                 'from' => 'nueva_solicitud',
                 'to'   => 'verifico_datos_bd',
             ],
-            'confirmacion_datos' => [
+            'confirmar_datos' => [
                 'from' => 'verifico_datos_bd',
                 'to'   => 'confirmo_datos_correctos',
             ],
-            'correccion_datos' => [
+            'corregir_datos' => [
                 'from' => 'verifico_datos_bd',
                 'to'   => 'corrigio_datos',
             ],
-            'personal_duplicado_correctos' => [
+            'reportar_personal_duplicado_correctos' => [
                 'from' => 'confirmo_datos_correctos',
                 'to'   => 'reporto_personal_duplicado',
             ],
-            'personal_duplicado_corregidos' => [
+            'reportar_personal_duplicado_corregidos' => [
                 'from' => 'corrigio_datos',
                 'to'   => 'reporto_personal_duplicado',
             ],
@@ -2547,11 +2543,11 @@ return [
                 'from' => 'reporto_personal_duplicado',
                 'to'   => 'filtro_lista_depurada',
             ],
-            'elaboracion_reporte' => [
+            'elaborar_reporte' => [
                 'from' => 'filtro_lista_depurada',
                 'to'   => 'elaboro_reporte_correspondeinte',
             ],
-            'entrega_reporte' => [
+            'entregar_reporte' => [
                 'from' => 'elaboro_reporte_correspondeinte',
                 'to'   => 'entrego_reporte_director_general',
             ],
@@ -2562,7 +2558,7 @@ return [
         ]
     ],
 
-    'solicitud_estructuras_criminales_ss'   => [
+    'solicitud_estructura_criminal_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -2582,11 +2578,11 @@ return [
                             'solicitud_entregada'
                           ],
         'transitions'   => [
-            'registro_ordeno_solicitud' => [
+            'verificar_registro_ordeno_solicitud' => [
                 'from' => 'nueva_solicitud',
                 'to'   => 'verifico_registro_ordeno_solicitud',
             ],
-            'recepcion_informacion' => [
+            'recepcionar_informacion' => [
                 'from' => 'verifico_registro_ordeno_solicitud',
                 'to'   => 'recepciono_informacion_investigada',
             ],
@@ -2594,7 +2590,7 @@ return [
                 'from' => 'recepciono_informacion_investigada',
                 'to'   => 'clasificacion_informacion_bd',
             ],
-            'busqueda_informacion' => [
+            'buscar_informacion' => [
                 'from' => 'clasificacion_informacion_bd',
                 'to'   => 'busqueda_informacion_sistema',
             ],
@@ -2621,13 +2617,13 @@ return [
         ]
     ],
 
-    'solicitud_record_historiales'   => [
+    'solicitud_record_historial'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
             'arguments' => ['workflow_state']
         ],
-        'supports'      => ['App\SolicitudRecordHistoriales'],
+        'supports'      => ['App\SolicitudRecordHistorial'],
         'places'        => [
                           	'nueva_solicitud',
                             'verifico_requisitos_datos_ciudadano',
@@ -2655,7 +2651,7 @@ return [
                 'from' => 'verifico_requisitos_datos_ciudadano',
                 'to'   => 'aviso_requisitos_necesarios',
             ],
-            'elaboracion_respuesta' => [
+            'elaborar_respuesta' => [
                 'from' => 'verifico_requisitos_datos_ciudadano',
                 'to'   => 'elaboro_respuesta',
             ],
@@ -2724,7 +2720,7 @@ return [
         ]
     ],
 
-    'solicitud_antecedentes_ss'   => [
+    'solicitud_antecedente_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
             'type' => 'single_state',
@@ -2779,7 +2775,7 @@ return [
                 'from' => 'registro_solicitud',
                 'to'   => 'verifica_antecedentes',
             ],
-            'registra_solicitud' => [
+            'registrar_solicitud' => [
                 'from' => 'verifico_solicitud',
                 'to'   => 'registro_solicitud',
             ],
@@ -2803,7 +2799,7 @@ return [
                 'from' => 'verifica_antecedentes',
                 'to'   => 'registro_record',
             ],
-            'orden_captura' => [
+            'enviar_orden_captura' => [
                 'from' => 'verifica_antecedentes',
                 'to'   => 'envio_solicitud_orden_captura',
             ],
@@ -2852,7 +2848,7 @@ return [
                 'from' => 'nuevo_requerimiento_investigativo_fiscal',
                 'to'   => 'toma_declaraciones',
             ],
-            'informe_pericial' => [
+            'generar_informe_pericial' => [
                 'from' => 'toma_declaraciones',
                 'to'   => 'nuevo_informe_pericial',
             ],

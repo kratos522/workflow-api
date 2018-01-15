@@ -283,7 +283,7 @@ retencion_nota_roja:
 
 ///////////////////////////////////////////////////////////////////////
 
-notificaciones_internas_ss:
+notificacion_interna_ss:
   nuevo_solicitud_acuerdo: ['depto_rrhh']
   elaboro_acto_solicitado: ['depto_rrhh']
   redacto_acuerdo: ['depto_rrhh']
@@ -292,7 +292,7 @@ notificaciones_internas_ss:
   actualizo_bd: ['depto_rrhh']
   bd_actualizada: ['depto_rrhh']
 
-extraer_datos_sistema_ss:
+extraer_dato_sistema_ss:
   nueva_instruccion: ['secretario_general']
   recepcion_acuerdo_cancelacion: ['secretario_general']
   realizo_baja_persona: ['secretario_general']
@@ -300,7 +300,7 @@ extraer_datos_sistema_ss:
   archivo: ['secretario_general']
   control_estadistico_digital_impreso: ['secretario_general']
 
-delitos_contra_propiedad_ss:
+delito_contra_propiedad_ss:
   nueva_denuncia: ['depto_delito_contra_propiedad']
   recibio_solicitud_nota_informacion: ['depto_delito_contra_propiedad']
   recibio_solicitud_peritaje_vehiculo: ['depto_delito_contra_propiedad']
@@ -321,7 +321,7 @@ delitos_contra_propiedad_ss:
   remitio_informe_estadistica_planeacion: ['depto_delito_contra_propiedad']
   informe_enviado: ['depto_delito_contra_propiedad']
 
-informes_logisticos:
+informe_logistico_ss:
   nueva_solicitud_materiales: ['depto_logistica']
   verifico_existencia_material: ['depto_logistica']
   genero_solicitud_unidad_administrativa: ['depto_logistica']
@@ -331,7 +331,7 @@ informes_logisticos:
   genero_informe_respectivos: ['depto_logistica']
   informes_respectivos_entregado: ['depto_logistica']
 
-nuevas_promociones_ss:
+nueva_promocion_ss:
   recibe_solicitud_oficial: ['jefe_rrhh']
   obtuvo_listados_copias_id: ['jefe_rrhh']
   solicito_informacion_secretario_general: ['jefe_rrhh']
@@ -339,7 +339,7 @@ nuevas_promociones_ss:
   extiende_estructura_presupuestaria: ['jefe_rrhh']
   estructura_presupuestaria_extendida: ['jefe_rrhh']
 
-contestacion_oficios_ss:
+contestacion_oficio_ss:
   nueva_solicitud_requerimiento_fiscal: ['jefe_rrhh']
   ingreso_solicitud: ['jefe_rrhh']
   proceso_informacion: ['jefe_rrhh']
@@ -361,7 +361,7 @@ informe_perfilacion_criminal_ss:
   entrego_informe_final: ['peritos_perfilistas']
   informe_final_entregado: ['peritos_perfilistas']
 
-informe_disciplinarios_ss:
+informe_disciplinario_ss:
   recibio_informe_inicial: ['jefe_rrhh']
   proceso_informacion: ['jefe_rrhh']
   redacto_informe_investigativo: ['jefe_rrhh']
@@ -375,7 +375,7 @@ informe_disciplinarios_ss:
   resolucion_archivada: ['jefe_rrhh']
   informe_generado: ['jefe_rrhh']
 
-informe_homicidios_ss:
+informe_homicidio_ss:
   nuevo_homicidio: ['policia_tecnico']
   redacto_informe_pericial: ['policia_tecnico']
   recibio_dictamen_forense: ['investigador']
@@ -473,7 +473,7 @@ denuncia_proceso_general_ss:
   remitio_detenido_juez_pj: ['investigador_depto_especializado']
   orden_ejecutada: ['investigador_depto_especializado']
 
-informe_cuadros_estadisticos_ss:
+informe_cuadro_estadistico_ss:
   nueva_autorizacion_informe: ['jefe_unidad_informacion_estadistica']
   ingreso_informacion_recibida: ['jefe_unidad_informacion_estadistica']
   consolido_informacion: ['jefe_unidad_informacion_estadistica']
@@ -482,7 +482,7 @@ informe_cuadros_estadisticos_ss:
   elaboro_informe_estadistico: ['jefe_unidad_informacion_estadistica']
   informe_estadistico_elaborado: ['jefe_unidad_informacion_estadistica']
 
-solicitud_revelado_fotografias_ss:
+solicitud_revelado_fotografia_ss:
   nueva_solicitud_revelado: ['depto_fotografias']
   recepciono_fotografias: ['depto_fotografias']
   clasifico_depuro_abastecimiento_material: ['depto_fotografias']
@@ -502,7 +502,7 @@ solicitud_revisar_informacion_digital_ss:
   entrego_reporte_director_general: ['jefe_inmediato']
   reporte_entregado_director_general: ['jefe_inmediato']
 
-solicitud_estructuras_criminales_ss:
+solicitud_estructura_criminal_ss:
   nueva_solicitud: ['depto_analisis_estretegico']
   verifico_registro_ordeno_solicitud: ['depto_analisis_estretegico']
   recepciono_informacion_investigada: ['depto_analisis_estretegico']
@@ -514,7 +514,7 @@ solicitud_estructuras_criminales_ss:
   entrego_solicitud: ['depto_analisis_estretegico']
   solicitud_entregada: ['depto_analisis_estretegico']
 
-solicitud_record_historiales:
+solicitud_record_historial:
   nueva_solicitud: ['depto_infracciones']
   verifico_requisitos_datos_ciudadano: ['depto_infracciones']
   recepcion_esquela_identidad: ['depto_infracciones']
@@ -535,7 +535,7 @@ solicitud_transporte_almacen_general_ss:
   asigno_numero_oficio: ['jefe_transito_evidencias']
   transporto_indicios: ['jefe_transito_evidencias']
 
-solicitud_antecedentes_ss:
+solicitud_antecedente_ss:
   nueva_solicitud_antecedentes: ['depto_antecedentes']
   recibio_solicitud_ciudadano: ['depto_antecedentes']
   recibio_solicitud_juez_fiscal: ['depto_antecedentes']
