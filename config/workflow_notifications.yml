@@ -34,7 +34,7 @@ recepcion_documento:
   remitido: ['receptor_documentos']
 
 analizar_informacion_criminal:
-  nuevo: ['analista_ss']
+  nueva: ['analista_ss']
   informacion_clasificada: ['analista_ss']
   informacion_solicitada: ['analista_ss']
   producto_elaborado: ['analista_ss']
@@ -64,7 +64,7 @@ atender_lesionados_victimas_agresion_sexual:
   informe_final_enviado: ['fiscal']
 
 solicitud_consulta:
-  nuevo: ['investigador']
+  nueva: ['investigador']
   informacion_recibida: ['investigador']
   peticion_imposible_cumplir_informada: ['investigador']
   informacion_necesaria_buscada: ['investigador']
@@ -89,12 +89,12 @@ cotejamiento_dactilar:
   informe_cotejamiento_enviado: ['investigador']
 
 extraccion_informacion_telefonos_moviles:
-  nuevo: ['policia_tecnico']
+  nueva: ['policia_tecnico']
   solicitud_recibida: ['policia_tecnico']
   informe_entregado: ['investigador']
 
 infiltrar_organizaciones_criminales:
-  nuevo: ['investigador']
+  nueva: ['investigador']
   fiscal_notificado: ['fiscal']
   infiltracion_realizada: ['investigador', 'fiscal']
   allanamiento_realizado: ['investigador', 'fiscal']
@@ -106,7 +106,7 @@ infiltrar_organizaciones_criminales:
   informe_final_enviado: ['fiscal']
 
 intervencion_comunicacion:
-  nuevo: ['investigador']
+  nueva: ['investigador']
   solicitud_recibida: ['policia_tecnico']
   comunicacion_intervenida: ['policia_tecnico']
   informe_diligencias_enviado: ['investigador']
@@ -139,7 +139,7 @@ realizar_dictamen_vehicular:
   dictamen_enviado: ['investigador']
 
 realizar_entrega_vigilada:
-  nuevo: ['fiscal', 'jefe_departamento']
+  nueva: ['fiscal', 'jefe_departamento']
   investigador_asignado: ['investigador']
   informacion_caso_evaluada: ['fiscal']
   caso_archivado: ['fiscal']
@@ -166,12 +166,12 @@ realizar_registro_armas:
   arma_registrada: ['persona']
 
 realizar_reseña_fotografica:
-  nuevo: ['investigador']
+  nueva: ['investigador']
   solicitud_recibida: ['auxiliar_administrativo']
   reseña_fotografica_enviada: ['investigador']
 
 recepcionar_declaraciones:
-  nuevo: ['fiscal', 'investigador']
+  nueva: ['fiscal', 'investigador']
   solicitud_recepcionada: ['investigador']
   tipo_solicitud_verificada: ['investigador']
   fiscal_niñez_solicitado: ['fiscal_niñez']
@@ -194,7 +194,7 @@ reconocimiento_rueda_personas:
   informe_enviado: ['fiscal']
 
 registrar_ordenes_judiciales:
-  nuevo: ['investigador']
+  nueva: ['investigador']
   orden_recepcionada: ['investigador', 'jefe_departamento']
   correccion_informacion_faltante_coordinada: ['investigador']
   datos_orden_registrados: ['investigador']
@@ -207,7 +207,7 @@ registrar_ordenes_judiciales:
   orden_decomiso_archivada: ['investigador']
 
 retencion_nota_roja:
-  nuevo: ['fiscal']
+  nueva: ['fiscal']
   nota_roja_recibida: ['departamento_localizacion_captura']
   captura_ejecutada: ['oficial_policia']
   datos_detenido_tomados: ['oficial_policia', 'fiscal']
@@ -231,7 +231,7 @@ realizar_allanamiento:
   informe_remision_evidencias_enviado: ['oficial_policia', 'fiscal']
 
 realizar_captura:
-  nuevo: ['fiscal']
+  nueva: ['fiscal']
   solicitud_recibida: ['departamento_localizacion_captura']
   motivos_captura_verificados: ['oficial_policia']
   captura_fines_extradicion_realizada: ['fiscal']

@@ -177,7 +177,7 @@ return [
         ],
         'supports'      => ['App\AnalizarInformacionCriminal'],
         'places'        => [
-                          	'nuevo',
+                          	'nueva',
                             'informacion_clasificada',
                             'informacion_solicitada',
                             'producto_elaborado',
@@ -185,7 +185,7 @@ return [
                           ],
         'transitions'   => [
             'clasificar_documento' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'informacion_clasificada',
             ],
             'solicitar_documento' => [
@@ -329,7 +329,7 @@ return [
         ],
         'supports'      => ['App\SolicitudConsulta'],
         'places'        => [
-                          	'nuevo',
+                          	'nueva',
                             'informacion_recibida',
                             'peticion_imposible_cumplir_informada',
                             'informacion_necesaria_buscada',
@@ -339,15 +339,15 @@ return [
                           ],
         'transitions'   => [
             'recibir_documento' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'informacion_recibida',
             ],
             'peticion_denegada' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'peticion_imposible_cumplir_informada',
             ],
             'buscar_informacion' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'informacion_necesaria_buscada',
             ],
             'registrar_control' => [
@@ -456,13 +456,13 @@ return [
         ],
         'supports'      => ['App\ExtraccionInformacionTelefonoMovil'],
         'places'        => [
-                          	'nuevo',
+                          	'nueva',
                             'solicitud_recibida',
                             'informe_entregado'
                           ],
         'recibir_solicitud'   => [
             'recibir_documento' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'solicitud_recibida',
             ],
             'entregar_informe' => [
@@ -479,7 +479,7 @@ return [
         ],
         'supports'      => ['App\InfiltrarOrganizacionCriminal'],
         'places'        => [
-                          	'nuevo',
+                          	'nueva',
                             'fiscal_notificado',
                             'infiltracion_realizada',
                             'allanamiento_realizado',
@@ -492,7 +492,7 @@ return [
                           ],
         'transitions'   => [
             'notificar_fiscal' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'fiscal_notificado',
             ],
             'realizar_infiltracion' => [
@@ -541,7 +541,7 @@ return [
         ],
         'supports'      => ['App\IntervencionComunicacion'],
         'places'        => [
-                          	'nuevo',
+                          	'nueva',
                             'solicitud_recibida',
                             'comunicacion_intervenida',
                             'informe_diligencias_enviado',
@@ -549,7 +549,7 @@ return [
                           ],
         'transitions'   => [
             'recibir_solicitud' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'solicitud_recibida',
             ],
             'intervenir_comunicacion' => [
@@ -702,7 +702,7 @@ return [
         ],
         'supports'      => ['App\VigilanciaSeguimiento'],
         'places'        => [
-                          	'nuevo',
+                          	'nueva',
                             'investigador_asignado',
                             'informacion_caso_evaluada',
                             'caso_archivado',
@@ -721,11 +721,11 @@ return [
                           ],
         'transitions'   => [
             'asignar_investigador' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'investigador_asignado',
             ],
             'evaluar_caso' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'informacion_caso_evaluada',
             ],
             'archivar_caso' => [
@@ -861,13 +861,13 @@ return [
         ],
         'supports'      => ['App\ReseniaFotografica'],
         'places'        => [
-                          	'nuevo',
+                          	'nueva',
                             'solicitud_recibida',
                             'reseña_fotografica_enviada'
                           ],
         'transitions'   => [
             'recibir_solicitud' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'solicitud_recibida',
             ],
             'enviar_reseña_fotografica' => [
@@ -884,7 +884,7 @@ return [
         ],
         'supports'      => ['App\RecepcionarDeclaracion'],
         'places'        => [
-                          	'nuevo',
+                          	'nueva',
                             'solicitud_recepcionada',
                             'tipo_solicitud_verificada',
                             'fiscal_niñez_solicitado',
@@ -898,7 +898,7 @@ return [
                           ],
         'transitions'   => [
             'recepcionar_solicitud' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'solicitud_recepcionada',
             ],
             'verificar_solicitud' => [
@@ -1011,7 +1011,7 @@ return [
         ],
         'supports'      => ['App\RegistrarOrdenJudicial'],
         'places'        => [
-                          	'nuevo',
+                          	'nueva',
                             'orden_recepcionada',
                             'correccion_informacion_faltante_coordinada',
                             'datos_orden_registrados',
@@ -1025,7 +1025,7 @@ return [
                           ],
         'transitions'   => [
             'recibir_orden' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'orden_recepcionada',
             ],
             'completar_informacion_faltante' => [
@@ -1078,7 +1078,7 @@ return [
         ],
         'supports'      => ['App\NotaRoja'],
         'places'        => [
-                          	'nuevo',
+                          	'nueva',
                             'nota_roja_recibida',
                             'captura_ejecutada',
                             'datos_detenido_tomados',
@@ -1088,7 +1088,7 @@ return [
                           ],
         'transitions'   => [
             'recibir_nota_roja' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'nota_roja_recibida',
             ],
             'ejecutar_captura' => [
@@ -1194,7 +1194,7 @@ return [
         ],
         'supports'      => ['App\Captura'],
         'places'        => [
-                          	'nuevo',
+                          	'nueva',
                             'solicitud_recibida',
                             'motivos_captura_verificados',
                             'captura_fines_extradicion_realizada',
@@ -1208,7 +1208,7 @@ return [
                           ],
         'transitions'   => [
             'recibir_solicitud' => [
-                'from' => 'nuevo',
+                'from' => 'nueva',
                 'to'   => 'solicitud_recibida',
             ],
             'verificar_motivos_captura' => [
