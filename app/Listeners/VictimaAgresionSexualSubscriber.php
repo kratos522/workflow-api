@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\VictimaAgresionSexual;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\VictimaAgresionSexualWorkflow;
+use App\Mail\VictimaAgresionSexualAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class VictimaAgresionSexualSubscriber
         // dd($event);
         $victima_agresion_sexual = VictimaAgresionSexual::find($event->victima_agresion_sexual->id);
         $this->logger->alert('[onAfterTransition] to '.$victima_agresion_sexual->workflow_state);
-        $victima_agresion_sexual_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $victima_agresion_sexual_workflow = new VictimaAgresionSexualWorkflow;
         $dependencia_id = $victima_agresion_sexual_workflow->dependencia($victima_agresion_sexual);
         if (!is_null($dependencia_id)) {
           $users = $victima_agresion_sexual_workflow->notification_users($victima_agresion_sexual->workflow_state, $dependencia_id);

@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\ReconocimientoRuedaPersona;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\ReconocimientoRuedaPersonaWorkflow;
+use App\Mail\ReconocimientoRuedaPersonaAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class ReconocimientoRuedaPersonaSubscriber
         // dd($event);
         $reconocimiento_rueda_persona = ReconocimientoRuedaPersona::find($event->reconocimiento_rueda_persona->id);
         $this->logger->alert('[onAfterTransition] to '.$reconocimiento_rueda_persona->workflow_state);
-        $reconocimiento_rueda_persona_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $reconocimiento_rueda_persona_workflow = new ReconocimientoRuedaPersonaWorkflow;
         $dependencia_id = $reconocimiento_rueda_persona_workflow->dependencia($reconocimiento_rueda_persona);
         if (!is_null($dependencia_id)) {
           $users = $reconocimiento_rueda_persona_workflow->notification_users($reconocimiento_rueda_persona->workflow_state, $dependencia_id);

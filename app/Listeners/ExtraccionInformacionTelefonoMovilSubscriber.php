@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\ExtraccionInformacionTelefonoMovil;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\ExtraccionInformacionTelefonoMovilWorkflow;
+use App\Mail\ExtraccionInformacionTelefonoMovilAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class ExtraccionInformacionTelefonoMovilSubscriber
         // dd($event);
 $extraccion_informacion_telefono_movil = ExtraccionInformacionTelefonoMovil::find($event->extraccion_informacion_telefono_movil->id);
         $this->logger->alert('[onAfterTransition] to '.$extraccion_informacion_telefono_movil->workflow_state);
-        $extraccion_informacion_telefono_movil_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $extraccion_informacion_telefono_movil_workflow = new ExtraccionInformacionTelefonoMovilWorkflow;
         $dependencia_id = $extraccion_informacion_telefono_movil2_workflow->dependencia($extraccion_informacion_telefono_movil);
         if (!is_null($dependencia_id)) {
           $users = $extraccion_informacion_telefono_movil_workflow->notification_users($extraccion_informacion_telefono_movil->workflow_state, $dependencia_id);

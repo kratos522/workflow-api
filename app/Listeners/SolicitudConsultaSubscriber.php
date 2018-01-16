@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\SolicitudConsulta;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use AppSolicitudConsultaWorkflow;
+use App\Mail\SolicitudConsultaAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class SolicitudConsultaSubscriber
         // dd($event);
         $solicitud_consulta = SolicitudConsulta::find($event->solicitud_consulta->id);
         $this->logger->alert('[onAfterTransition] to '.$solicitud_consulta->workflow_state);
-        $solicitud_consulta_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $solicitud_consulta_workflow = new SolicitudConsultaWorkflow;
         $dependencia_id = $solicitud_consulta2_workflow->dependencia($solicitud_consulta);
         if (!is_null($dependencia_id)) {
           $users = $solicitud_consulta_workflow->notification_users($solicitud_consulta->workflow_state, $dependencia_id);

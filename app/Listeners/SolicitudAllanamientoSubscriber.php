@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\SolicitudAllanamiento;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\SolicitudAllanamientoWorkflow;
+use App\Mail\SolicitudAllanamientoAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class SolicitudAllanamientoSubscriber
         // dd($event);
         $solicitud_allanamiento = SolicitudAllanamiento::find($event->solicitud_allanamiento->id);
         $this->logger->alert('[onAfterTransition] to '.$solicitud_allanamiento->workflow_state);
-        $solicitud_allanamiento_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $solicitud_allanamiento_workflow = new SolicitudAllanamientoWorkflow;
         $dependencia_id = $solicitud_allanamiento_workflow->dependencia($solicitud_allanamiento);
         if (!is_null($dependencia_id)) {
           $users = $solicitud_allanamiento_workflow->notification_users($solicitud_allanamiento->workflow_state, $dependencia_id);

@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\RegistroPersona;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\RegistroPersonaWorkflow;
+use App\Mail\RegistroPersonaAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,8 +30,8 @@ class RegistroPersonaSubscriber
         // dd($event);
         $registro_persona = RegistroPersona::find($event->registro_persona->id);
         $this->logger->alert('[onAfterTransition] to '.$registro_persona->workflow_state);
-        $registro_persona_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
-        $dependencia_id = $$registro_persona_workflow->dependencia($registro_persona);
+        $registro_persona_workflow = new RegistroPersonaWorkflow;
+        $dependencia_id = $registro_persona_workflow->dependencia($registro_persona);
         if (!is_null($dependencia_id)) {
           $users = $registro_persona_workflow->notification_users($registro_persona->workflow_state, $dependencia_id);
           // var_dump($users);

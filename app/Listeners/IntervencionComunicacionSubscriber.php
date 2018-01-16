@@ -4,9 +4,9 @@ namespace App\Listeners;
 
 use Gate;
 use App\IntervencionComunicacion;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+
+use App\IntervencionComunicacionWorkflow;
+use App\Mail\IntervencionComunicacionAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +31,7 @@ class IntervencionComunicacionSubscriber
         // dd($event);
         $intervencion_comunicacion = IntervencionComunicacion::find($event->intervencion_comunicacion->id);
         $this->logger->alert('[onAfterTransition] to '.$intervencion_comunicacion->workflow_state);
-        $intervencion_comunicacion_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $intervencion_comunicacion_workflow = new IntervencionComunicacionWorkflow;
         $dependencia_id = $intervencion_comunicacion_workflow->dependencia($intervencion_comunicacion);
         if (!is_null($dependencia_id)) {
           $users = $intervencion_comunicacion_workflow->notification_users($intervencion_comunicacion->workflow_state, $dependencia_id);

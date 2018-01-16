@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\MenorDetenido;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\MenorDetenidoWorkflow;
+use App\Mail\MenorDetenidoAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class MenorDetenidoSubscriber
         // dd($event);
         $menor_detenido = MenorDetenido::find($event->menor_detenido->id);
         $this->logger->alert('[onAfterTransition] to '.$menor_detenido->workflow_state);
-        $menor_detenido_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $menor_detenido_workflow = new MenorDetenidoWorkflow;
         $dependencia_id = $menor_detenido_workflow->dependencia($menor_detenido);
         if (!is_null($dependencia_id)) {
           $users = $menor_detenido_workflow->notification_users($menor_detenido->workflow_state, $dependencia_id);

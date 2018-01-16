@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\Seguimiento;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\SeguimientoWorkflow;
+use App\Mail\SeguimientoAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class SeguimientoSubscriber
         // dd($event);
         $seguimiento = Seguimiento::find($event->seguimiento->id);
         $this->logger->alert('[onAfterTransition] to '.$seguimiento->workflow_state);
-        $seguimiento_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $seguimiento_workflow = new SeguimientoWorkflow;
         $dependencia_id = $seguimiento_workflow->dependencia($seguimiento);
         if (!is_null($dependencia_id)) {
           $users = $seguimiento_workflow->notification_users($seguimiento->workflow_state, $dependencia_id);

@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\RetratoHablado;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\RetratoHabladoWorkflow;
+use App\Mail\RetratoHabladoAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class RetratoHabladoSubscriber
         // dd($event);
         $retrato_hablado = RetratoHablado::find($event->retrato_hablado->id);
         $this->logger->alert('[onAfterTransition] to '.$retrato_hablado->workflow_state);
-        $retrato_hablado_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $retrato_hablado_workflow = new RetratoHabladoWorkflow;
         $dependencia_id = $retrato_hablado_workflow->dependencia($retrato_hablado);
         if (!is_null($dependencia_id)) {
           $users = $retrato_hablado_workflow->notification_users($retrato_hablado->workflow_state, $dependencia_id);

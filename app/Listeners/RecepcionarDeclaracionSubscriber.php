@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\RecepcionarDeclaracion;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\RecepcionarDeclaracionWorkflow;
+use App\Mail\RecepcionarDeclaracionAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,12 +28,12 @@ class RecepcionarDeclaracionSubscriber
 
     public function onAfterTransition($event) {
         // dd($event);
-        $recepcionar_declaraciones = RecepcionarDeclaracion::find($event->recepcionar_declaraciones->id);
-        $this->logger->alert('[onAfterTransition] to '.$recepcionar_declaraciones->workflow_state);
-        $recepcionar_declaraciones_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
-        $dependencia_id = $recepcionar_declaraciones_workflow->dependencia($recepcionar_declaraciones);
+        $recepcionar_declaracion = RecepcionarDeclaracion::find($event->recepcionar_declaracion->id);
+        $this->logger->alert('[onAfterTransition] to '.$recepcionar_declaracion->workflow_state);
+        $recepcionar_declaracion_workflow = new RecepcionarDeclaracionWorkflow;
+        $dependencia_id = $recepcionar_declaracion_workflow->dependencia($recepcionar_declaracion);
         if (!is_null($dependencia_id)) {
-          $users = $recepcionar_declaraciones_workflow->notification_users($recepcionar_declaraciones->workflow_state, $dependencia_id);
+          $users = $recepcionar_declaracion_workflow->notification_users($recepcionar_declaracion->workflow_state, $dependencia_id);
           // var_dump($users);
           if (!is_null($users)) {
             foreach($users as $u) {
@@ -43,7 +42,7 @@ class RecepcionarDeclaracionSubscriber
                 $user->email = $email;
                 $rol = $u->rol;
                 $this->logger->alert('[Notify] email: '.$email);
-                \Mail::to($user)->send(new NotifyTransition($recepcionar_declaraciones, $rol, $user->email));
+                \Mail::to($user)->send(new NotifyTransition($recepcionar_declaracion, $rol, $user->email));
               }
             }
           }

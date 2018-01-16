@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\RegistroArma;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\RegistroArmaWorkflow;
+use App\Mail\RegistroArmaAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class RegistroArmaSubscriber
         // dd($event);
         $registro_arma = RegistroArma::find($event->registro_arma->id);
         $this->logger->alert('[onAfterTransition] to '.$registro_arma->workflow_state);
-        $registro_arma_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $registro_arma_workflow = new RegistroArmaWorkflow;
         $dependencia_id = $registro_arma_workflow->dependencia($registro_arma);
         if (!is_null($dependencia_id)) {
           $users = $registro_arma_workflow->notification_users($registro_arma->workflow_state, $dependencia_id);

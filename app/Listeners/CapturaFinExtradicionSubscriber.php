@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\CapturaFinExtradicion;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\CapturaFinExtradicionWorkflow;
+use App\Mail\CapturaFinExtradicionAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class CapturaFinExtradicionSubscriber
         // dd($event);
         $captura_fin_extradicion = CapturaFinExtradicion::find($event->captura_fin_extradicion->id);
         $this->logger->alert('[onAfterTransition] to '.$captura_fin_extradicion->workflow_state);
-        $captura_fin_extradicion_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $captura_fin_extradicion_workflow = new CapturaFinExtradicionWorkflow; //modificar esto en los ultimos pasos
         $dependencia_id = $captura_fin_extradicion_workflow->dependencia($captura_fin_extradicion);
         if (!is_null($dependencia_id)) {
           $users = $captura_fin_extradicion_workflow->notification_users($captura_fin_extradicion->workflow_state, $dependencia_id);

@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\ReseniaFotografica;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\ReseniaFotograficaWorkflow;
+use App\Mail\ReseniaFotograficaAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class ReseniaFotograficaSubscriber
         // dd($event);
         $reseña_fotografica = ReseniaFotografica::find($event->reseña_fotografica->id);
         $this->logger->alert('[onAfterTransition] to '.$reseña_fotografica->workflow_state);
-        $reseña_fotografica_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $reseña_fotografica_workflow = new ReseniaFotograficaWorkflow;
         $dependencia_id = $reseña_fotografica_workflow->dependencia($reseña_fotografica);
         if (!is_null($dependencia_id)) {
           $users = $reseña_fotografica_workflow->notification_users($reseña_fotografica->workflow_state, $dependencia_id);

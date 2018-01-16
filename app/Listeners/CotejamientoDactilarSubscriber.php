@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\CotejamientoDactilar;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\CotejamientoDactilarWorkflow;
+use App\Mail\CotejamientoDactilarTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class CotejamientoDactilarSubscriber
         // dd($event);
         $cotejamiento_dactilar = CotejamientoDactilar::find($event->cotejamiento_dactilar->id);
         $this->logger->alert('[onAfterTransition] to '.$cotejamiento_dactilar->workflow_state);
-        $cotejamiento_dactilar_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $cotejamiento_dactilar_workflow = new CotejamientoDactilarWorkflow;
         $dependencia_id = $cotejamiento_dactilar_workflow->dependencia($cotejamiento_dactilar);
         if (!is_null($dependencia_id)) {
           $users = $cotejamiento_dactilar_workflow->notification_users($cotejamiento_dactilar->workflow_state, $dependencia_id);

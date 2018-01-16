@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\NotaRoja;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\NotaRojaWorkflow;
+use App\Mail\NotaRojaAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class NotaRojaSubscriber
         // dd($event);
         $nota_roja = NotaRoja::find($event->nota_roja->id);
         $this->logger->alert('[onAfterTransition] to '.$nota_roja->workflow_state);
-        $nota_roja_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $nota_roja_workflow = new NotaRojaWorkflow;
         $dependencia_id = $nota_roja_workflow->dependencia($nota_roja);
         if (!is_null($dependencia_id)) {
           $users = $nota_roja_workflow->notification_users($nota_roja->workflow_state, $dependencia_id);

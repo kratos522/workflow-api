@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\Captura;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\CapturaWorkflow;
+use App\Mail\CapturaAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class CapturaSubscriber
         // dd($event);
         $captura = Captura::find($event->captura->id);
         $this->logger->alert('[onAfterTransition] to '.$captura->workflow_state);
-        $captura_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $captura_workflow = new CapturaWorkflow;
         $dependencia_id = $captura_workflow->dependencia($captura);
         if (!is_null($dependencia_id)) {
           $users = $captura_workflow->notification_users($captura->workflow_state, $dependencia_id);

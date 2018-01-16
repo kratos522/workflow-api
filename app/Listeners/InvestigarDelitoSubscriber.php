@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\InvestigarDelito;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\InvestigarDelitoWorkflow;
+use App\Mail\InvestigarDelitoAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class InvestigarDelitoSubscriber
         // dd($event);
         $investigar_delito = InvestigarDelito::find($event->investigar_delito->id);
         $this->logger->alert('[onAfterTransition] to '.$investigar_delito->workflow_state);
-        $investigar_delito_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $investigar_delito_workflow = new InvestigarDelitoWorkflow;
         $dependencia_id = $investigar_delito_workflow->dependencia($investigar_delito);
         if (!is_null($dependencia_id)) {
           $users = $investigar_delito_workflow->notification_users($investigar_delito->workflow_state, $dependencia_id);

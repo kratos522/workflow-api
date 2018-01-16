@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\AlbumFotografico;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\AlbumFotograficoWorkflow;
+use App\Mail\AlbumFotograficoAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class AlbumFotograficoSubscriber
         // dd($event);
         $album_fotografico = AlbumFotografico::find($event->album_fotografico->id);
         $this->logger->alert('[onAfterTransition] to '.$album_fotografico->workflow_state);
-        $album_fotografico_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $album_fotografico_workflow = new AlbumFotograficoWorkflow;
         $dependencia_id = $album_fotografico_workflow->dependencia($album_fotografico);
         if (!is_null($dependencia_id)) {
           $users = $album_fotografico_workflow->notification_users($album_fotografico->workflow_state, $dependencia_id);

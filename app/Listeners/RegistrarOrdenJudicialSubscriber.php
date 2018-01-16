@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Gate;
 use App\RegistrarOrdenJudicial;
-// estos 2 se modifican cuando se llegue a los ultimos pasos
-//use App\ObjetoWorkflow;
-//use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+use App\RegistrarOrdenJudicialWorkflow;
+use App\Mail\RegistrarOrdenJudicialAfterTransition as NotifyTransition;
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +30,7 @@ class RegistrarOrdenJudicialSubscriber
         // dd($event);
         $registrar_orden_judicial = RegistrarOrdenJudicial::find($event->registrar_orden_judicial->id);
         $this->logger->alert('[onAfterTransition] to '.$registrar_orden_judicial->workflow_state);
-        $registrar_orden_judicial_workflow = new ObjetoWorkflow; //modificar esto en los ultimos pasos
+        $registrar_orden_judicial_workflow = new RegistrarOrdenJudicialWorkflow;
         $dependencia_id = $registrar_orden_judicial_workflow->dependencia($registrar_orden_judicial);
         if (!is_null($dependencia_id)) {
           $users = $registrar_orden_judicial_workflow->notification_users($registrar_orden_judicial->workflow_state, $dependencia_id);
