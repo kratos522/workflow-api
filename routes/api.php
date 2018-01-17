@@ -9,5 +9,8 @@ Route::post('workflow_transition_owners', 'API\WorkflowController@workflow_trans
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->user(); 
 });
+
+
+//curl ... -d @params.json http://localhost:8100/api/apply_transition

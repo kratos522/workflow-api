@@ -7,7 +7,7 @@ use App\Tools;
 use App\Passport;
 use Symfony\Component\Yaml\Yaml;
 
-class DenunciaMPWorkflow
+class DenunciaMPWorkflow implements iAction
 {
 
   private $state;
@@ -16,12 +16,16 @@ class DenunciaMPWorkflow
   private $workflow_owners;
   private $workflow_notifications;
   private $log;
+  private $response;  
 
   const OWNERS_YAML = '../config/workflow_owners.yml';
   const NOTIFICATIONS_YAML = '../config/workflow_notifications.yml';
 
-  public function __construct($remove_root=false)
-  {
+  public function __construct($remove_root=false){
+
+      $this->response = new \stdClass;
+      $this->response->code = 200;
+      $this->response->message = "";
       $this->log = new \Log;
       $this->state = 'nueva';
       $this->tools = new Tools;
@@ -36,10 +40,32 @@ class DenunciaMPWorkflow
       $this->log::alert('notifications path is '. $notifications_path);
       $this->workflow_owners = Yaml::parse(file_get_contents($owners_path))[$this->workflow_name];
       $this->workflow_notifications = Yaml::parse(file_get_contents($notifications_path))[$this->workflow_name];
-
   }
 
-  public function apply(DenunciaMP $denuncia_mp, $action, $user_email) {
+  public function apply_transition(Array $arr) {
+
+       // $validator = Validator::make($arr   , [
+       //   "subject_id" => "required|numeric|min:1",
+       //   "action" => "required",
+       //   "user_email" => "required",
+       //   "workflow_type" => "required|in:mp,ss,doc",
+       //   "params" => "present|nullable|array"
+       // ]);
+
+       // if ($validator->fails()) {
+       //   return response()->json(['error'=>'No Content due to null or empty parameters'], 403);
+       // }
+
+       return $this->response;    
+  }
+
+  //public function apply(DenunciaMP $denuncia_mp, $action, $user_email) {
+  public function apply(Array $arr) {    
+    $denuncia_mp_id = $arr["object_id"];
+    $action = $arr["action"];
+    $user_email = $arr["user_email"];
+    $denuncia_mp = DenunciaMP::find($denuncia_mp_id);
+
     # set enabled transitions
     $result = new \stdClass;
     try {
@@ -49,8 +75,13 @@ class DenunciaMPWorkflow
       if (is_null($denuncia_mp->workflow_state)) { $denuncia_mp->workflow_state = $this->state;}
 
       # apply workflow transition
-      $res = $this->tools->workflow_apply($denuncia_mp, $action);
-      if (!$res) { return false; }
+      try {
+          $res = $this->tools->workflow_apply($denuncia_mp, $action);
+      } catch (\Exception $e) {
+          return result;
+      }
+
+      // if (!$res) { return false; }
 
       # update $denuncia_mp
       $denuncia_mp->save();
@@ -102,8 +133,20 @@ class DenunciaMPWorkflow
   }
 
   public function delitos_asignados(DenunciaMP $denuncia_mp) {
-    $d = $denuncia_mp::whereId($denuncia_mp->id)->with('institucion')->first();
-    $id = $d->institucion->id; // capturing $denuncia id
+    $this->log::alert(json_encode($denuncia_mp));
+    
+    try {
+      $d = $denuncia_mp::whereId($denuncia_mp->id)->with('institucion.documento.institucion')->first();
+    } catch (Exception $e) {
+      return false;
+    }
+
+    try {
+      $id = $d->institucion->documento->institucion->id; // capturing $denuncia id
+    } catch (Exception $e) {
+      return false;
+    }
+
     $delitos_count = $denuncia_mp::whereId($denuncia_mp->id)->whereHas('institucion.delitos', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
     $this->log::alert('delitos count is '. $delitos_count);
     $result = false;

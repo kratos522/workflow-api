@@ -3,10 +3,12 @@
 namespace App\Listeners;
 
 use Gate;
+
 use App\DenunciaMP;
 use App\DenunciaMPWorkflow;
 // use App\Mail\TaskB as NotifyTaskB;
 use App\Mail\DenunciaMPAfterTransition as NotifyTransition;
+
 use Psr\Log\LoggerInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -63,6 +65,7 @@ class DenunciaMPSubscriber
           }
         }
     }
+
 
     public function subscribe($events)
     {

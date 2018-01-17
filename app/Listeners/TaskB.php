@@ -36,20 +36,9 @@ class TaskB
     }
 
     public function onBeforeB($event) {
-        // decode user from event object
-        // $encoded_msg = json_encode($event->task->attributes, true);
         $encoded_msg = json_encode($event, true);
         $event_msg = json_decode($encoded_msg);
         $this->logger->alert('[onBeforeB]');
-        // $this->logger->alert($event_msg);
-        // $user = User::find($event_user->id);
-        // // var_dump($user->email);
-        // \Mail::to($user)->send(new NuevoUsuario($user));
-        // $this->logger->alert(sprintf(
-        //     'New User with id: "%s", and Email ("%s") was created"',
-        //     $user->id,
-        //     $user->email
-        // ));
     }
 
     public function onAfterB($event) {

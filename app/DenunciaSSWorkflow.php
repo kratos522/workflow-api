@@ -7,7 +7,7 @@ use App\Tools;
 use App\Passport;
 use Symfony\Component\Yaml\Yaml;
 
-class DenunciaSSWorkflow
+class DenunciaSSWorkflow implements iAction
 {
 
   private $state;
@@ -39,7 +39,12 @@ class DenunciaSSWorkflow
 
   }
 
-  public function apply(DenunciaSS $denuncia_ss, $action, $user_email) {
+  public function apply(Array $arr) {
+    $denuncia_ss_id = $arr["object_id"];
+    $action = $arr["action"];
+    $user_email = $arr["user_email"];
+    $denuncia_ss = DenunciaSS::find($denuncia_ss_id);
+
     # set enabled transitions
     $result = new \stdClass;
     try {

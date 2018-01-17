@@ -97,20 +97,23 @@ class Tools
   }
 
   public function DenunciaMPonBeforeTransition($event) {
-      //$this->log::alert('[Tools][DenunciaMPonBeforeTransition]');
       $res = true;
       $denuncia_mp = $event;
-      //$this->log::alert('[Tools][DenunciaMPonBeforeTransition][Actionable State] '. $denuncia_mp->workflow_state);
+
       $workflow_state = $denuncia_mp->workflow_state;
+
       $condition = (in_array($workflow_state,$this->actionable_before_states));
+
       if ($condition) {
         $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
         $condition = (in_array($function_name,$this->actionable_functions));
         if ($condition) {
           $res = (new \App\Tools)->$function_name($denuncia_mp);
-          //$this->log::alert('$res is '. var_export($res, true) );
         }
       }
+
+      $this->log::alert('DenunciaMPonBeforeTransition');
+      $this->log::alert(json_encode($res));
       return $res;
   }
 
