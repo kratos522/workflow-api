@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\NotificacionInternaSS;
+use App\SolicitudRevisarInformacionDigitalSS;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -11,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class NotificacionInternaSSBeforeTransition
+class SolicitudRevisarInformacionDigitalSSBeforeTransition
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,9 +20,9 @@ class NotificacionInternaSSBeforeTransition
      *
      * @return void
      */
-    public function __construct(NotificacionInternaSS $notificacion_interna_ss)
+    public function __construct(SolicitudRevisarInformacionDigitalSS $solicitud_revisar_informacion_digital_ss)
     {
-        $this->notificacion_interna_ss = $notificacion_interna_ss ;
+        $this->solicitud_revisar_informacion_digital_ss = $solicitud_revisar_informacion_digital_ss ;
     }
 
     /**
