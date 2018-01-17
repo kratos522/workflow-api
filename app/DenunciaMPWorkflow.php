@@ -98,7 +98,11 @@ class DenunciaMPWorkflow implements iAction
     }
   }
 
-  public function user_actions(DenunciaMP $denuncia_mp, $user_email) {
+  public function user_actions(Array $arr) {
+    $denuncia_mp_id = $arr["object_id"];
+    $user_email = $arr["user_email"];
+    $denuncia_mp = DenunciaMP::find($denuncia_mp_id);
+
     # set enabled transitions
     $result = new \stdClass;
     $result->success = true ;
@@ -124,7 +128,10 @@ class DenunciaMPWorkflow implements iAction
     return false;
   }
 
-  public function actions(DenunciaMP $denuncia_mp) {
+  public function actions(Array $arr) {
+    $denuncia_mp_id = $arr["object_id"];
+    $denuncia_mp = DenunciaMP::find($denuncia_mp_id);
+
     $result = new \stdClass;
     $result->success = true ;
     $arr = $this->tools->get_actions($denuncia_mp);
@@ -155,7 +162,10 @@ class DenunciaMPWorkflow implements iAction
     return (boolean)$result;
   }
 
-  public function owner_users($workflow_transition, $dependencia_id) {
+  public function owner_users(Array $arr) {
+    $dependencia_id = $arr["dependencia_id"];
+    $workflow_transition = $arr["workflow_transition"];
+
     $result = new \stdClass;
     $result->success = true ;
     $all_emails = $this->users($workflow_transition, $this->workflow_owners,$dependencia_id);

@@ -7,12 +7,12 @@ use Psr\Log\LoggerInterface;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\DenunciaMP;
-use App\DenunciaSS;
-use App\Documento;
-use App\DenunciaMPWorkflow;
-use App\DenunciaSSWorkflow;
-use App\DocumentoWorkflow;
+// use App\DenunciaMP;
+// use App\DenunciaSS;
+// use App\Documento;
+// use App\DenunciaMPWorkflow;
+// use App\DenunciaSSWorkflow;
+// use App\DocumentoWorkflow;
 use App\Workflow;
 use App\DefaultWorkflow;
 use App\PolyBaseFactory;
@@ -65,28 +65,6 @@ class WorkflowController extends Controller
             $workflow_type = new DefaultWorkflow();
        }
 
-       // #find denuncia
-       // switch ($arr["workflow_type"]) {
-       //         case 'mp':
-       //             $subject = DenunciaMP::find($arr["subject_id"]);
-       //             $subject_workflow = new DenunciaMPWorkflow($this->root);
-       //             break;
-       //         case 'ss':
-       //             $subject = DenunciaSS::find($arr["subject_id"]);
-       //             $subject_workflow = new DenunciaSSWorkflow($this->root);
-       //             break;
-       //         case 'doc':
-       //             $subject = Documento::find($arr["subject_id"]);
-       //             $subject_workflow = new DocumentoWorkflow($this->root);
-       //             break;               
-       // }
-
-
-       // # chek for nulls
-       // if (is_null($subject)) {
-       //   return response()->json(['error'=>'Subject with ID '. $arr["subject_id"]. ' not found!'], 403);
-       // }
-
        # apply workflow transition
        $res = $workflow->apply($workflow_type);
 
@@ -109,38 +87,26 @@ class WorkflowController extends Controller
       $arr = $parsed_request[1];
 
        $validator = Validator::make($arr   , [
-         "subject_id" => "required|numeric|min:1",
+         "object_id" => "required|numeric|min:1",
          "user_email" => "required",
-         "workflow_type" => "required|in:mp,ss,doc"
+         "workflow_type" => "required"
        ]);
 
        if ($validator->fails()) {
          return response()->json(['error'=>'No Content due to null or empty parameters'], 403);
        }
 
-       #find denuncia
-       switch ($arr["workflow_type"]) {
-               case 'mp':
-                   $subject = DenunciaMP::find($arr["subject_id"]);
-                   $subject_workflow = new DenunciaMPWorkflow($this->root);
-                   break;
-               case 'ss':
-                   $subject = DenunciaSS::find($arr["subject_id"]);
-                   $subject_workflow = new DenunciaSSWorkflow($this->root);
-                   break;
-               case 'doc':
-                   $subject = Documento::find($arr["subject_id"]);
-                   $subject_workflow = new DocumentoWorkflow($this->root);
-                   break;
+       $workflow = new Workflow($arr);
+       try {
+            $workflow_type = PolyBaseFactory::getWorkflow($arr["workflow_type"]);
        }
-
-       # chek for nulls
-       if (is_null($subject)) {
-         return response()->json(['error'=>'Subject with ID '. $arr["subject_id"]. ' not found!'], 403);
+       catch (Exception $e) {
+            $workflow_type = new DefaultWorkflow();
        }
 
        # apply workflow transition
-       $res = $subject_workflow->user_actions($subject, $arr["user_email"]);
+       $res = $workflow->user_actions($workflow_type);
+       //$res = $subject_workflow->user_actions($subject, $arr["user_email"]);
        if (is_null($res)) {
          return response()->json(['error'=>'Could not get user actions'], 403);
        }
@@ -159,37 +125,27 @@ class WorkflowController extends Controller
       $arr = $parsed_request[1];
 
        $validator = Validator::make($arr   , [
-         "subject_id" => "required|numeric|min:1",
-         "workflow_type" => "required|in:mp,ss,doc"
+         "object_id" => "required|numeric|min:1",
+         "workflow_type" => "required"
        ]);
 
        if ($validator->fails()) {
          return response()->json(['error'=>'No Content due to null or empty parameters'], 403);
        }
 
-       #find denuncia
-       switch ($arr["workflow_type"]) {
-               case 'mp':
-                   $subject = DenunciaMP::find($arr["subject_id"]);
-                   $subject_workflow = new DenunciaMPWorkflow($this->root);
-                   break;
-               case 'ss':
-                   $subject = DenunciaSS::find($arr["subject_id"]);
-                   $subject_workflow = new DenunciaSSWorkflow($this->root);
-                   break;
-               case 'doc':
-                   $subject = Documento::find($arr["subject_id"]);
-                   $subject_workflow = new DocumentoWorkflow($this->root);
-                   break;
+       $workflow = new Workflow($arr);
+       try {
+            $workflow_type = PolyBaseFactory::getWorkflow($arr["workflow_type"]);
        }
-
-       # chek for nulls
-       if (is_null($subject)) {
-         return response()->json(['error'=>'Subject with ID '. $arr["subject_id"]. ' not found!'], 403);
+       catch (Exception $e) {
+            $workflow_type = new DefaultWorkflow();
        }
 
        # apply workflow transition
-       $res = $subject_workflow->actions($subject);
+       $res = $workflow->actions($workflow_type);
+
+       # apply workflow transition
+       // $res = $subject_workflow->actions($subject);
        if (is_null($res)) {
          return response()->json(['error'=>'Could not get workflow actions'], 403);
        }
@@ -210,28 +166,23 @@ class WorkflowController extends Controller
        $validator = Validator::make($arr   , [
          "dependencia_id" => "required",
          "action" => "required",
-         "workflow_type" => "required|in:mp,ss,doc"
+         "workflow_type" => "required"
        ]);
 
        if ($validator->fails()) {
          return response()->json(['error'=>'No Content due to null or empty parameters'], 403);
        }
 
-       #find denuncia
-       switch ($arr["workflow_type"]) {
-               case 'mp':
-                   $subject_workflow = new DenunciaMPWorkflow($this->root);
-                   break;
-               case 'ss':
-                   $subject_workflow = new DenunciaSSWorkflow($this->root);
-                   break;
-               case 'doc':
-                   $subject_workflow = new DocumentoWorkflow($this->root);
-                   break;
+       $workflow = new Workflow($arr);
+       try {
+            $workflow_type = PolyBaseFactory::getWorkflow($arr["workflow_type"]);
+       }
+       catch (Exception $e) {
+            $workflow_type = new DefaultWorkflow();
        }
 
        # apply workflow transition
-       $res = $subject_workflow->owner_users($arr["action"], $arr["dependencia_id"]);
+       $res = $workflow->owner_users($workflow_type);
        if (is_null($res)) {
          return response()->json(['error'=>'Could not get workflow actions'], 403);
        }

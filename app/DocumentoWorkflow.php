@@ -7,7 +7,7 @@ use App\Tools;
 use App\Passport;
 use Symfony\Component\Yaml\Yaml;
 
-class DocumentoWorkflow
+class DocumentoWorkflow implements iAction
 {
 
   private $state;
@@ -38,7 +38,12 @@ class DocumentoWorkflow
       $this->workflow_notifications = Yaml::parse(file_get_contents($notifications_path))[$this->workflow_name];
   }
 
-  public function apply(Documento $documento, $action, $user_email) {
+  public function apply(Array $arr) {
+    $documento_id = $arr["object_id"];
+    $action = $arr["action"];
+    $user_email = $arr["user_email"];
+    $documento = Documento::find($documento_id);
+
     # set enabled transitions
     $result = new \stdClass;
     try {
@@ -65,7 +70,11 @@ class DocumentoWorkflow
     }
   }
 
-  public function user_actions(Documento $documento, $user_email) {
+  public function user_actions(Array $arr) {
+    $documento_id = $arr["object_id"];
+    $user_email = $arr["user_email"];
+    $documento = Documento::find($documento_id);
+
     # set enabled transitions
     $result = new \stdClass;
     $result->success = true;
@@ -80,7 +89,10 @@ class DocumentoWorkflow
     return true;
   }
 
-  public function actions(Documento $documento) {
+  public function actions(Array $arr) {
+    $documento_id = $arr["object_id"];
+    $documento = Documento::find($documento_id);
+
     $result = new \stdClass;
     $result->success = true;
     $arr = $this->tools->get_actions($documento);
@@ -88,7 +100,10 @@ class DocumentoWorkflow
     return $result;
   }
 
-  public function owner_users($workflow_transition, $dependencia_id) {
+  public function owner_users(Array $arr) {
+    $dependencia_id = $arr["dependencia_id"];
+    $workflow_transition = $arr["workflow_transition"];
+
     $result = new \stdClass;
     $result->success = true;
     $all_emails = $this->users($workflow_transition, $this->workflow_owners, $dependencia_id);

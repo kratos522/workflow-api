@@ -19,4 +19,19 @@ Class DefaultWorkflow implements iAction {
     # set enabled transitions
     return $this->response;
   }  
+
+  public function user_actions(Array $arr) {
+    # set enabled transitions
+    return $this->response;
+  }    
+
+  public function actions(Array $arr) {
+    # set enabled transitions
+    return $this->response;
+  }      
+
+  public function owner_users(Array $arr) {
+    # set enabled transitions
+    return $this->response;
+  }      
 }

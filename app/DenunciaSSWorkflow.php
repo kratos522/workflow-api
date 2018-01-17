@@ -72,7 +72,11 @@ class DenunciaSSWorkflow implements iAction
     }
   }
 
-  public function user_actions(DenunciaSS $denuncia_ss, $user_email) {
+  public function user_actions(Array $arr) {
+    $denuncia_ss_id = $arr["object_id"];
+    $user_email = $arr["user_email"];
+    $denuncia_ss = DenunciaSS::find($denuncia_ss_id);    
+
     # set enabled transitions
     $result = new \stdClass;
     $result->success = true;
@@ -93,7 +97,10 @@ class DenunciaSSWorkflow implements iAction
     return $dependencia_id;
   }
 
-  public function actions(DenunciaSS $denuncia_ss) {
+  public function actions(Array $arr) {
+    $denuncia_ss_id = $arr["object_id"];
+    $denuncia_ss = DenunciaSS::find($denuncia_ss_id);
+
     $result = new \stdClass;
     $result->success = true;
     $arr = $this->tools->get_actions($denuncia_ss);
@@ -112,7 +119,10 @@ class DenunciaSSWorkflow implements iAction
     return (boolean)$result;
   }
 
-  public function owner_users($workflow_transition, $dependencia_id) {
+  public function owner_users(Array $arr) {
+    $dependencia_id = $arr["dependencia_id"];
+    $workflow_transition = $arr["workflow_transition"];
+
     $result =  new \stdClass;
     $result->success = true;
     $this->log::alert('workflow owners are '.json_encode($this->workflow_owners));
