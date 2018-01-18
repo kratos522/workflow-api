@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Brexis\LaravelWorkflow\Traits\WorkflowTrait;
 
 class CapturaFinExtradicion extends Model
 {
+
+use WorkflowTrait;
 
 protected $table = "captura_fines_extradicion";
 

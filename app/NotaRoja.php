@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Brexis\LaravelWorkflow\Traits\WorkflowTrait;
 
 class NotaRoja extends Model
 {
+use WorkflowTrait;
+
   protected $table = "notas_rojas";
 
   public function persona()

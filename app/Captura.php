@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Brexis\LaravelWorkflow\Traits\WorkflowTrait;
 
 class Captura extends Model
 {
+use WorkflowTrait;
+  
   public function orden_captura()
   {
       return $this->hasOne(Orden::class, 'id_orden');
