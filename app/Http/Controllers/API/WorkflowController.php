@@ -73,6 +73,9 @@ class WorkflowController extends Controller
          return response()->json(['error'=>'Could not apply workflow transition'], 403);
        }
 
+       $this->log::alert('$res in workflow controller is...');
+       $this->log::alert(json_encode($res));
+
        if (!$res->success) {
          return response()->json(['error'=>'Exception found '.$res->message], 403);
        }

@@ -40,13 +40,19 @@ class WorkflowSubscribers
         $params->action = $originalEvent->getTransition()->getName();
         $params->enabled_transitions = $originalEvent->getSubject()->getAttributes()["enabled_transitions"];
 
+        $this->logger->alert('onGuard params is ...');
+        $this->logger->alert(json_encode($params));
+
         # check if user is authorized to perform workflow's action
         if (in_array($params->action,$params->enabled_transitions)) {
           $passport = new \App\Passport;
           $res = $passport->auth_workflow_action(json_encode($params));
           $jres = json_decode($res->contents);
+          $this->logger->alert('res in passport is ...');
+          $this->logger->alert(json_encode($res));
+
           if (!property_exists($jres, "success")){
-            $this->logger->alert("action is NOT allowed!");
+            $this->logger->alert("use is not authorize to perform the action!");
             $originalEvent->setBlocked(true);
           }
           else {

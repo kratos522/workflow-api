@@ -1,4 +1,4 @@
-passport-api-old:
+passport-api-test:
   login: http://localhost:8000/api/login
   register: http://localhost:8000/api/user
   update_user: http://localhost:8000/api/user

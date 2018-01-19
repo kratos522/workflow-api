@@ -44,23 +44,14 @@ class DenunciaMPWorkflow implements iAction
 
   public function apply_transition(Array $arr) {
 
-       // $validator = Validator::make($arr   , [
-       //   "subject_id" => "required|numeric|min:1",
-       //   "action" => "required",
-       //   "user_email" => "required",
-       //   "workflow_type" => "required|in:mp,ss,doc",
-       //   "params" => "present|nullable|array"
-       // ]);
-
-       // if ($validator->fails()) {
-       //   return response()->json(['error'=>'No Content due to null or empty parameters'], 403);
-       // }
-
        return $this->response;    
   }
 
   //public function apply(DenunciaMP $denuncia_mp, $action, $user_email) {
   public function apply(Array $arr) {    
+    // $this->log::alert('denunciampworkflow...');
+    // $this->log::alert($arr);
+
     $denuncia_mp_id = $arr["object_id"];
     $action = $arr["action"];
     $user_email = $arr["user_email"];
@@ -75,19 +66,20 @@ class DenunciaMPWorkflow implements iAction
       if (is_null($denuncia_mp->workflow_state)) { $denuncia_mp->workflow_state = $this->state;}
 
       # apply workflow transition
-      try {
-          $res = $this->tools->workflow_apply($denuncia_mp, $action);
-      } catch (\Exception $e) {
-          return result;
-      }
-
-      // if (!$res) { return false; }
+      $res = $this->tools->workflow_apply($denuncia_mp, $action);
 
       # update $denuncia_mp
-      $denuncia_mp->save();
+      if (!$denuncia_mp->save()) {
+         $this->log::alert('Workflow Transition Failed!');
+         $result->success = false;
+         $result->message = "acción/transición no permitida en el flujo"; 
+         return $result;
+      }
+
       $result->success = true;
       $result->message = $denuncia_mp;
       return $result;
+
     } catch (\Exception $e) {
       unset($denuncia_mp["enabled_transitions"]);
       unset($denuncia_mp["user_email"]);
@@ -154,7 +146,17 @@ class DenunciaMPWorkflow implements iAction
       return false;
     }
 
-    $delitos_count = $denuncia_mp::whereId($denuncia_mp->id)->whereHas('institucion.delitos', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
+    $this->log::alert('$id is ...');
+    $this->log::alert($id);
+    $this->log::alert('denuncia_mp_id is ...');
+    $this->log::alert($denuncia_mp->id);
+    $this->log::alert(json_encode($denuncia_mp));
+
+    $denuncia = $denuncia_mp->institucion()->first();
+    $d_id = $denuncia->id;
+
+    $delitos_count = $denuncia_mp::whereId($denuncia_mp->id)->whereHas('institucion.delitos', function($d) use($d_id) {$d->where('denuncia_id',$d_id);})->count();
+
     $this->log::alert('delitos count is '. $delitos_count);
     $result = false;
     if ($delitos_count > 0) { $result = true;}

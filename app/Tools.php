@@ -181,6 +181,10 @@ class Tools
 
   public function workflow_apply($objeto, $action) {
     # workflow apply
+    $this->log::alert(json_encode($objeto));
+    $this->log::alert('but action is ....');
+    $this->log::alert($action);
+
     try {
       $res = $objeto->workflow_apply($action);
     } catch (\Exception $e) {
