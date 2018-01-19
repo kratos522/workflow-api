@@ -97,7 +97,7 @@ infiltrar_organizacion_criminal:
       trasladar_evidencias: ['policia_tecnico']
       enviar_informe_remision_evidencias: ['policia_tecnico']
       finalizar_infiltracion: ['investigador']
-      enviar_informe_final: ['investigador]
+      enviar_informe_final: ['investigador']
 
 intervencion_comunicacion:
       recibir_solicitud: ['investigador']
@@ -115,7 +115,7 @@ investigar_delito_ss:
       realizar_diligencias: ['investigador']
       realizar_diligencias_investigativas: ['investigador']
       presentar_informe_investigativo: ['investigador']
-      ejecutar_requerimiento_fiscal: ['investigador]
+      ejecutar_requerimiento_fiscal: ['investigador']
 
 realizar_album_reconocimiento_fotografico:
       recibir_solicitud: ['investigador']
@@ -139,17 +139,17 @@ realizar_entrega_vigilada:
       registrar_captura: ['investigador']
       enviar_informe_captura: ['investigador']
       realizar_diligencias_investigativas: ['investigador']
-      procesar_escena_crimen: ['policia_tecnico]
+      procesar_escena_crimen: ['policia_tecnico']
       procesamiento_escena_crimen: ['policia_tecnico']
       ejecutar_procesamiento_escena_crimen: ['policia_tecnico']
       procesar_escena: ['policia_tecnico']
       solicitar_autorizacion_retitar_indicios: ['policia_tecnico']
-      aprobar_solicitud_retiro_indicios: ['investigador]
+      aprobar_solicitud_retiro_indicios: ['investigador']
       enviar_informe_retiro_indicios: ['policia_tecnico']
       enviar_informe_entrega_evidencias: ['policia_tecnico']
       enviar_informe_investigativo: ['investigador']
       enviar_informe_diligencias: ['investigador']
-      enviar_informe_investigativo: ['investigador]
+      enviar_informe_investigativo: ['investigador']
       enviar_citacion_audiencia: ['investigador']
       realizar_informe_audiencia: ['investigador']
 
@@ -274,7 +274,7 @@ unidad_retrato_hablado:
       archivar_retrato_hablado_original: ['retratista']
       entregar_copia_retrato_hablado: ['retratista']
 
-/////////////////////////////////////////////////////////////////////
+
 
 notificaciones_internas_ss:
   elaborar_acto: ['depto_rrhh']

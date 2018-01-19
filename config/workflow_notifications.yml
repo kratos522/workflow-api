@@ -281,7 +281,7 @@ unidad_retrato_hablado:
   retrato_original_archivado: ['retratista']
   copia_retrato_hablado_entregado: ['fical', 'investigador']
 
-///////////////////////////////////////////////////////////////////////
+
 
 notificaciones_internas_ss:
   nuevo_solicitud_acuerdo: ['depto_rrhh']

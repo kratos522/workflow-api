@@ -47,12 +47,12 @@ class WorkflowController extends Controller
          "object_id" => "required|numeric|min:1",
          "action" => "required",
          "user_email" => "required",
-         "workflow_type" => "required" 
+         "workflow_type" => "required"
        ]);
 
        // $this->log::alert(json_encode($arr));
        // $this->log::alert($arr["workflow_type"]);
-       
+
        if ($validator->fails()) {
          return response()->json(['error'=>'No Content due to null or empty parameters'], 403);
        }

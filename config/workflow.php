@@ -168,7 +168,7 @@ return [
             ]
         ]
     ],
-/////////////////////////////////////////////////////////
+
     'analizar_informacion_criminal_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -1441,7 +1441,7 @@ return [
             ]
         ]
     ],
-////////////////////////////////////////////////////////////////////////////////
+
     'notificaciones_internas_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [

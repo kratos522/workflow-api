@@ -7,6 +7,8 @@ use App\DenunciaMP;
 use App\DenunciaSS;
 use App\DenunciaMPWorkflow;
 use App\DenunciaSSWorkflow;
+use App\CapturaFinExtradicion;
+use App\CapturaFinExtradicionWorkflow;
 
 class Tools
 {
@@ -22,14 +24,16 @@ class Tools
                                               "fiscales_asignados",
                                               "delitos_tipificados",
                                               "pendiente_revision",
-                                              "dependencia_asignada"
+                                              "dependencia_asignada",
+                                              "captura_realizada"
                                             );
       $this->actionable_functions = Array(
                                           "onBeforeTransitionDelitosAsignados",
                                           "onBeforeTransitionFiscalesAsignados",
                                           "onBeforeTransitionDelitosTipificados",
                                           "onBeforeTransitionPendienteRevision",
-                                          "onBeforeTransitionDependenciaAsignada"
+                                          "onBeforeTransitionDependenciaAsignada",
+                                          "onBeforeTransitionCapturaRealizada"
                                           );
   }
 
@@ -267,4 +271,35 @@ class Tools
     return $result;
   }
 
+  public function CapturaFinExtradiciononBeforeTransition($event) {
+      //$this->log::alert('[Tools][DenunciaMPonBeforeTransition]');
+      $res = true;
+      $captura_fin_extradicion = $event;
+      //$this->log::alert('[Tools][DenunciaMPonBeforeTransition][Actionable State] '. $denuncia_mp->workflow_state);
+      $workflow_state = $captura_fin_extradicion->workflow_state;
+      $condition = (in_array($workflow_state,$this->actionable_before_states));
+      if ($condition) {
+        $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+        $condition = (in_array($function_name,$this->actionable_functions));
+        if ($condition) {
+          $res = (new \App\Tools)->$function_name($captura_fin_extradicion);
+          //$this->log::alert('$res is '. var_export($res, true) );
+        }
+      }
+      return $res;
+  }
+
+  private function onBeforeTransitionCapturaRealizada(CapturaFinExtradicion $captura_fin_extradicion){
+    $log = new \Log;
+    $log::alert('onBeforeTransitionCapturaRealizada called');
+    $captura_fin_extradicion_workflow = new CapturaFinExtradicion;
+    $fiscales_asignados = $captura_fin_extradicion_workflow->users($captura_fin_extradicion);
+    $log::alert('$fiscales_asignados is '. var_export($fiscales_asignados,true));
+    if ($fiscales_asignados) {
+      return true;
+    }
+    $log::error('Hay delitos atribuídos al sospechoso sin fiscal asignado!');
+    return false;
+
+}
 }
