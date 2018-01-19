@@ -146,11 +146,11 @@ class DenunciaMPWorkflow implements iAction
       return false;
     }
 
-    $this->log::alert('$id is ...');
-    $this->log::alert($id);
-    $this->log::alert('denuncia_mp_id is ...');
-    $this->log::alert($denuncia_mp->id);
-    $this->log::alert(json_encode($denuncia_mp));
+    // $this->log::alert('$id is ...');
+    // $this->log::alert($id);
+    // $this->log::alert('denuncia_mp_id is ...');
+    // $this->log::alert($denuncia_mp->id);
+    // $this->log::alert(json_encode($denuncia_mp));
 
     $denuncia = $denuncia_mp->institucion()->first();
     $d_id = $denuncia->id;
