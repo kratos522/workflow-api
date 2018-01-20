@@ -5,9 +5,11 @@ namespace App;
 Class Workflow {
 
 	public $arr;
+	private $log;
 
     public function  __construct($arr) {
         $this->arr = $arr;
+        $this->log = new \Log;
     }
 
 	public function apply(iAction $workflow) {
@@ -25,4 +27,5 @@ Class Workflow {
 	public function owner_users(iAction $workflow) {
 		return $workflow->owner_users($this->arr);
 	}		
+
 }
