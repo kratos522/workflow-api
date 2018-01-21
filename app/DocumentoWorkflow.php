@@ -16,12 +16,16 @@ class DocumentoWorkflow implements iAction
   private $workflow_owners;
   private $workflow_notifications;
   private $log;
+  private $response;  
 
   const OWNERS_YAML = '../config/workflow_owners.yml';
   const NOTIFICATIONS_YAML = '../config/workflow_notifications.yml';
 
   public function __construct($remove_root=false)
   {
+      $this->response = new \stdClass;
+      $this->response->code = 200;
+      $this->response->message = "";    
       $this->log = new \Log;
       $this->state = 'nuevo';
       $this->tools = new Tools;
@@ -36,6 +40,11 @@ class DocumentoWorkflow implements iAction
       $this->log::alert('notifications path is '. $notifications_path);
       $this->workflow_owners = Yaml::parse(file_get_contents($owners_path))[$this->workflow_name];
       $this->workflow_notifications = Yaml::parse(file_get_contents($notifications_path))[$this->workflow_name];
+  }
+
+  public function apply_transition(Array $arr) {
+
+       return $this->response;    
   }
 
   public function apply(Array $arr) {

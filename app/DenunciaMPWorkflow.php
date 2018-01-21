@@ -123,23 +123,6 @@ class DenunciaMPWorkflow implements iAction
     return false;
   }
 
-  // public function fiscales_asignados(DenunciaMP $denuncia_mp) {
-  //   #check fiscales asignados a todos los delitos del imputado en la denuncia
-  //   $denuncia = $denuncia_mp->institucion()->first();
-  //   $id = $denuncia->id;
-  //   $count_delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('imputado.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
-  //   $delitos_atribuidos_denuncia = DelitoAtribuido::whereHas('imputado.denuncia', function($d) use($id) {$d->where('denuncia_id',$id);})->get();
-  //   $count_fiscales_asignados = 0 ;
-  //   foreach($delitos_atribuidos_denuncia as $dad) {
-  //      $id = $dad->id;
-  //      $count_fiscales_asignados += $dad::whereId($dad->id)->whereHas('fiscales_asignados', function($f) use($id) {$f->where('delito_atribuido_id',$id);})->count();
-  //   }
-  //   $this->log::alert('count_fiscales_asignados = ' . $count_fiscales_asignados . ' count_delitos_atribuidos_denuncia ' . $count_delitos_atribuidos_denuncia);
-  //   $condition = ($count_fiscales_asignados >= $count_delitos_atribuidos_denuncia) and ($count_fiscales_asignados > 0);
-  //   if ($condition) { return true;}
-  //   return false;
-  // }
-
   public function actions(Array $arr) {
     $denuncia_mp_id = $arr["object_id"];
     $denuncia_mp = DenunciaMP::find($denuncia_mp_id);
