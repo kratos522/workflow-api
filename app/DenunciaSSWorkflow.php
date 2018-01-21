@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App;
 
 use App\DenunciaSS;
@@ -16,12 +16,16 @@ class DenunciaSSWorkflow implements iAction
   private $workflow_owners;
   private $workflow_notifications;
   private $log;
+  private $response;  
 
   const OWNERS_YAML = '../config/workflow_owners.yml';
   const NOTIFICATIONS_YAML = '../config/workflow_notifications.yml';
 
   public function __construct($remove_root=false)
   {
+      $this->response = new \stdClass;
+      $this->response->code = 200;
+      $this->response->message = "";
       $this->log = new \Log;
       $this->state = 'nueva';
       $this->tools = new Tools;
@@ -72,6 +76,10 @@ class DenunciaSSWorkflow implements iAction
     }
   }
 
+  public function apply_transition(Array $arr) {
+       return $this->response;    
+  }
+
   public function user_actions(Array $arr) {
     $denuncia_ss_id = $arr["object_id"];
     $user_email = $arr["user_email"];
@@ -109,6 +117,7 @@ class DenunciaSSWorkflow implements iAction
   }
 
   public function delitos_asignados(DenunciaSS $denuncia_ss) {
+    $this->log::alert(json_encode($denuncia_ss));
     $d = $denuncia_ss::whereId($denuncia_ss->id)->with('institucion')->first();
     $id = $d->institucion->id; // capturing $denuncia id
     $delitos_count = $denuncia_ss::whereId($denuncia_ss->id)->whereHas('institucion.delitos', function($d) use($id) {$d->where('denuncia_id',$id);})->count();
