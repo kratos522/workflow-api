@@ -91,6 +91,9 @@ class DenunciaMPWorkflow implements iAction
   }
 
   public function user_actions(Array $arr) {
+    $this->log::alert('DenunciaMPWorkflow->user_actions');
+    $this->log::alert(json_encode($arr));
+
     $denuncia_mp_id = $arr["object_id"];
     $user_email = $arr["user_email"];
     $denuncia_mp = DenunciaMP::find($denuncia_mp_id);

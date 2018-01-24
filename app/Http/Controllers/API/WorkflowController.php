@@ -59,9 +59,11 @@ class WorkflowController extends Controller
 
        $workflow = new Workflow($arr);
        try {
+            $this->log::alert('PolyBaseFactory..');
             $workflow_type = PolyBaseFactory::getWorkflow($arr["workflow_type"]);
        }
        catch (Exception $e) {
+            $this->log::alert('DefaultWorkflow');
             $workflow_type = new DefaultWorkflow();
        }
 
@@ -88,6 +90,7 @@ class WorkflowController extends Controller
       # parsing
       $parsed_request = $this->tools->parse_request($request);
       $arr = $parsed_request[1];
+      // $arr = $request->all();
 
        $validator = Validator::make($arr   , [
          "object_id" => "required|numeric|min:1",
@@ -101,14 +104,17 @@ class WorkflowController extends Controller
 
        $workflow = new Workflow($arr);
        try {
+            $this->log::alert('PolyBaseFactory..');
             $workflow_type = PolyBaseFactory::getWorkflow($arr["workflow_type"]);
        }
        catch (Exception $e) {
+            $this->log::alert('DefaultWorkflow..');        
             $workflow_type = new DefaultWorkflow();
        }
 
        # apply workflow transition
        $res = $workflow->user_actions($workflow_type);
+       
        //$res = $subject_workflow->user_actions($subject, $arr["user_email"]);
        if (is_null($res)) {
          return response()->json(['error'=>'Could not get user actions'], 403);
