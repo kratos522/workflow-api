@@ -280,6 +280,8 @@ return [
                           	'nuevo',
                             'victima_ubicada',
                             'victima_remitida_medicina_forense',
+                            'declaraciones_testigos_tomada',
+                            'sospechosos_individualizados',
                             'toma_muestras_solicitada',
                             'perito_medicina_forense_solicitado',
                             'resultados_recepcionados',
@@ -294,6 +296,18 @@ return [
             'trasladar_victima' => [
                 'from' => 'victima_ubicada',
                 'to'   => 'victima_remitida_medicina_forense',
+            ],
+            'individualizar_sospechosos' => [
+                'from' => 'victima_remitida_medicina_forense',
+                'to'   => 'sospechosos_individualizados',
+            ],
+            'tomar_declaraciones' => [
+                'from' => 'victima_remitida_medicina_forense',
+                'to'   => 'declaraciones_testigos_tomada',
+            ],
+            'individualizar_sospechoso' => [
+                'from' => 'declaraciones_testigos_tomada',
+                'to'   => 'sospechosos_individualizados',
             ],
             'solicitar_toma_muestras' => [
                 'from' => 'victima_remitida_medicina_forense',
@@ -1330,7 +1344,12 @@ return [
                             'vigilancia_seguimiento_ejecutado',
                             'escena_crimen_procesada',
                             'informe_vigilancia_seguimiento_entregado',
+                            'pruebas_entregadas',
+                            'mensaje_validacion_operacion_enviado',
+                            'operacion_validada',
+                            'operacion_ejecutada',
                             'delitos_procesados',
+                            'diligencias_finales_realizadas',
                             'informe_final_enviado',
                           ],
         'transitions'   => [
@@ -1358,12 +1377,36 @@ return [
                 'from' => 'vigilancia_seguimiento_ejecutado',
                 'to'   => 'informe_vigilancia_seguimiento_entregado',
             ],
-            'procesar_delitos' => [
+            'entregar_pruebas' => [
                 'from' => 'informe_vigilancia_seguimiento_entregado',
+                'to'   => 'pruebas_entregadas',
+            ],
+            'validar_operacion' => [
+                'from' => 'pruebas_entregadas',
+                'to'   => 'mensaje_validacion_operacion_enviado',
+            ],
+            'responder_validacion' => [
+                'from' => 'mensaje_validacion_operacion_enviado',
+                'to'   => 'operacion_validada',
+            ],
+            'ejecutar_operacion' => [
+                'from' => 'operacion_validada',
+                'to'   => 'operacion_ejecutada',
+            ],
+            'realizar_diligencias_complementarias' => [
+                'from' => 'operacion_ejecutada',
+                'to'   => 'diligencias_finales_realizdas',
+            ],
+            'procesar_delitos' => [
+                'from' => 'operacion_ejecutada',
                 'to'   => 'delitos_procesados',
             ],
-            'enviar_informe_final' => [
+            'realizar_diligencias_finales' => [
                 'from' => 'delitos_procesados',
+                'to'   => 'diligencias_finales_realizadas',
+            ],
+            'enviar_informe_final' => [
+                'from' => 'diligencias_finales_realizadas',
                 'to'   => 'informe_final_enviado',
             ]
         ]
@@ -1388,7 +1431,7 @@ return [
                             'lugar_retrato_definido',
                             'retrato_hablado_realizado',
                             'retrato_original_archivado',
-                            'copia_retrato_hablado_entregado',
+                            'copia_retrato_hablado_entregado'
                           ],
         'transitions'   => [
             'recibir_solicitud' => [
@@ -1441,6 +1484,266 @@ return [
             ]
         ]
     ],
+    'flagrancia'   => [
+        'type'          => 'state_machine',
+        'marking_store' => [
+            'type' => 'single_state',
+            'arguments' => ['workflow_state']
+        ],
+        'supports'      => ['App\Flagrancia'],
+        'places'        => [
+                          	'nueva',
+                            'denuncia_recibida',
+                            'captura_realizada',
+                            'captura_informada',
+                            'datos_detenido_verificados',
+                            'datos_detenido_registrados',
+                            'fiscal_informado',
+                            'investigador_informado',
+                            'detenido_remitido_ministerio_publico',
+                            'informe_remision_enviado',
+                            'informe_captura_realizado',
+                            'informe_captura_enviado',
+                            'informe_captura_recibido',
+                            'fiscal_notificado',
+                            'inspeccion_escena_crimen_asignada',
+                            'diligencias_asignadas',
+                            'diligencias_realizadas',
+                            'escena_crimen_procesada',
+                            'evidencias_registradas',
+                            'evidencias_remitidas_ministerio_publico',
+                            'informe_procesamiento_escena_enviado',
+                            'informe_procesamiento_escena_recibido',
+                            'informe_final_realizado',
+                            'sospechoso_remitido_ministerio_publico',
+                            'informe_remision_enviado',
+                            'informe_final_enviado'
+                          ],
+        'transitions'   => [
+            'recibir_denuncia' => [
+                'from' => 'nueva',
+                'to'   => 'denuncia_recibida',
+            ],
+            'realizar_captura' => [
+                'from' => 'nueva',
+                'to'   => 'captura_realizada',
+            ],
+            'ejecutar_captura' => [
+                'from' => 'denuncia_recibida',
+                'to'   => 'captura_realizada',
+            ],
+            'informar_captura' => [
+                'from' => 'captura_realizada',
+                'to'   => 'captura_informada',
+            ],
+            'verificar_datos_sospechoso' => [
+                'from' => 'captura_informada',
+                'to'   => 'datos_detenido_verificados',
+            ],
+            'registrar_detenido' => [
+                'from' => 'datos_detenido_verificados',
+                'to'   => 'datos_detenido_registrados',
+            ],
+            'informar_fiscal' => [
+                'from' => 'datos_detenido_verificados',
+                'to'   => 'fiscal_informado',
+            ],
+            'informar_investigador' => [
+                'from' => 'datos_detenido_registrados',
+                'to'   => 'investigador_informado',
+            ],
+            'remitir_detenido_ministerio_publico' => [
+                'from' => 'fiscal_informado',
+                'to'   => 'detenido_remitido_ministerio_publico',
+            ],
+            'enviar_informe_remision' => [
+                'from' => 'detenido_remitido_ministerio_publico',
+                'to'   => 'informe_remision_enviado',
+            ],
+            'realizar_informe_captura' => [
+                'from' => 'captura_informada',
+                'to'   => 'informe_captura_realizado',
+            ],
+            'enviar_informe_captura' => [
+                'from' => 'informe_captura_realizado',
+                'to'   => 'informe_captura_enviado',
+            ],
+            'recibir_informe_captura' => [
+                'from' => 'informe_captura_enviado',
+                'to'   => 'informe_captura_recibido',
+            ],
+            'notificar_fiscal' => [
+                'from' => 'informe_captura_recibido',
+                'to'   => 'fiscal_notificado',
+            ],
+            'asignar_procesamiento_escena_crimen' => [
+                'from' => 'informe_captura_recibido',
+                'to'   => 'inspeccion_escena_crimen_asignada',
+            ],
+            'asignar_diligencia' => [
+                'from' => 'fiscal_notificado',
+                'to'   => 'diligencias_asignadas',
+            ],
+            'realizar_diligencias' => [
+                'from' => 'diligencias_asignadas',
+                'to'   => 'diligencias_realizadas',
+            ],
+            'procesar_escena_crimen' => [
+                'from' => 'inspeccion_escena_crimen_asignada',
+                'to'   => 'escena_crimen_procesada',
+            ],
+            'registrar_evidencias' => [
+                'from' => 'escena_crimen_procesada',
+                'to'   => 'evidencias_registradas',
+            ],
+            'remitir_evidencias_ministerio_publico' => [
+                'from' => 'evidencias_registradas',
+                'to'   => 'evidencias_remitidas_ministerio_publico',
+            ],
+            'enviar_informe_procesamiento_escena_crimen' => [
+                'from' => 'evidencias_remitidas_ministerio_publico',
+                'to'   => 'informe_procesamiento_escena_enviado',
+            ],
+            'remitir_informe_procesamiento_escena_crimen' => [
+                'from' => 'escena_crimen_procesada',
+                'to'   => 'informe_procesamiento_escena_enviado',
+            ],
+            'recibir_informe_procesamiento_escena_crimen' => [
+                'from' => 'informe_procesamiento_escena_enviado',
+                'to'   => 'informe_procesamiento_escena_recibido',
+            ],
+            'realizar_informe_final' => [
+                'from' => 'informe_procesamiento_escena_recibido',
+                'to'   => 'informe_final_realizado',
+            ],
+            'remitir_sospechoso_ministerio_publico' => [
+                'from' => 'informe_final_realizado',
+                'to'   => 'sospechoso_remitido_ministerio_publico',
+            ],
+            'enviar_informe_remision' => [
+                'from' => 'sospechoso_remitido_ministerio_publico',
+                'to'   => 'informe_remision_enviado',
+            ],
+            'enviar_informe_final' => [
+                'from' => 'informe_remision_enviado',
+                'to'   => 'informe_final_enviado',
+            ]
+        ]
+    ],
+    'solicitud_analisis'   => [
+        'type'          => 'state_machine',
+        'marking_store' => [
+            'type' => 'single_state',
+            'arguments' => ['workflow_state']
+        ],
+        'supports'      => ['App\SolicitudAnalisis'],
+        'places'        => [
+                          	'nueva',
+                            'evidencias_recibidas',
+                            'evidencias_verificadas',
+                            'evidencias_devueltas',
+                            'evidencias_registradas',
+                            'evidencias_almacenadas',
+                            'orden_trabajo_generada',
+                            'orden_trabajo_enviada',
+                            'orden_trabajo_recibida',
+                            'orden_trabajo_revisada',
+                            'orden_trabajo_rechazada',
+                            'orden_trabajo_aceptada',
+                            'evidencias_recepcionadas',
+                            'evidencias_revisadas',
+                            'evidencias_rechazadas',
+                            'fijacion_fotografica_realizada',
+                            'analisis_realizado',
+                            'informe_pericial_elaborado',
+                            'informe_pericial_enviado',
+                            'informe_pericial_recibido',
+                            'informe_pericial_entregado'
+                          ],
+        'transitions'   => [
+            'recibir_evidencias' => [
+                'from' => 'nueva',
+                'to'   => 'evidencias_recibidas',
+            ],
+            'verificar_evidencias' => [
+                'from' => 'evidencias_recibidas',
+                'to'   => 'evidencias_verificadas',
+            ],
+            'devolver_evidencias' => [
+                'from' => 'evidencias_verificadas',
+                'to'   => 'evidencias_devueltas',
+            ],
+            'registrar_evidencias' => [
+                'from' => 'evidencias_verificadas',
+                'to'   => 'evidencias_registradas',
+            ],
+            'almacenar_evidencias' => [
+                'from' => 'evidencias_registradas',
+                'to'   => 'evidencias_almacenadas',
+            ],
+            'generar_orden_trabajo' => [
+                'from' => 'evidencias_almacenadas',
+                'to'   => 'orden_trabajo_generada',
+            ],
+            'enviar_orden_trabajo' => [
+                'from' => 'orden_trabajo_generada',
+                'to'   => 'orden_trabajo_enviada',
+            ],
+            'recibir_orden_trabajo' => [
+                'from' => 'orden_trabajo_enviada',
+                'to'   => 'orden_trabajo_recibida',
+            ],
+            'revisar_orden_trabajo' => [
+                'from' => 'orden_trabajo_recibida',
+                'to'   => 'orden_trabajo_revisada',
+            ],
+            'rechazar_orden_trabajo' => [
+                'from' => 'orden_trabajo_revisada',
+                'to'   => 'orden_trabajo_rechazada',
+            ],
+            'aceptar_orden_trabajo' => [
+                'from' => 'orden_trabajo_revisada',
+                'to'   => 'orden_trabajo_aceptada',
+            ],
+            'recepcionar_evidencias' => [
+                'from' => 'orden_trabajo_aceptada',
+                'to'   => 'evidencias_recepcionadas',
+            ],
+            'revisar_evidencias' => [
+                'from' => 'evidencias_recepcionadas',
+                'to'   => 'evidencias_revisadas',
+            ],
+            'rechazar_evidencias' => [
+                'from' => 'evidencias_revisadas',
+                'to'   => 'evidencias_rechazadas',
+            ],
+            'realizar_fijacion_fotografica' => [
+                'from' => 'evidencias_revisadas',
+                'to'   => 'fijacion_fotografica_realizada',
+            ],
+            'realizar_analisis' => [
+                'from' => 'fijacion_fotografica_realizada',
+                'to'   => 'analisis_realizado',
+            ],
+            'elaborar_informe_pericial' => [
+                'from' => 'analisis_realizado',
+                'to'   => 'informe_pericial_elaborado',
+            ],
+            'enviar_informe_pericial' => [
+                'from' => 'informe_pericial_elaborado',
+                'to'   => 'informe_pericial_enviado',
+            ],
+            'recibir_informe_pericial' => [
+                'from' => 'informe_pericial_enviado',
+                'to'   => 'informe_pericial_recibido',
+            ],
+            'remitir_informe_pericial' => [
+                'from' => 'informe_pericial_recibido',
+                'to'   => 'informe_pericial_entregado',
+            ]
+        ]
+    ],
+
 
     'notificaciones_internas_ss'   => [
         'type'          => 'state_machine',
