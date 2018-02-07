@@ -502,7 +502,7 @@ return [
                             'evidencias_remitidas_ministerio_publico',
                             'informe_remision_enviado',
                             'infiltracion_finalizada',
-                            'informe_final_enviado',
+                            'informe_final_enviado'
                           ],
         'transitions'   => [
             'notificar_fiscal' => [
@@ -597,7 +597,7 @@ return [
                             'informe_investigativo_presentado',
                             'requerimiento_fiscal_asignado',
                             'requerimiento_fiscal_ejecutado',
-                            'informe_final_enviado',
+                            'informe_final_enviado'
                           ],
         'transitions'   => [
             'informacion_recibida' => [
@@ -731,7 +731,7 @@ return [
                             'informe_entrega_evidencias_enviado',
                             'informe_enviado',
                             'citacion_audiencia_enviada',
-                            'informe_audiencia_presentado',
+                            'informe_audiencia_presentado'
                           ],
         'transitions'   => [
             'asignar_investigador' => [
@@ -838,7 +838,7 @@ return [
                             'informe_captura_enviado',
                             'propietario_remitido_asesoria_legal',
                             'enviar_informe_decomiso',
-                            'arma_registrada',
+                            'arma_registrada'
                           ],
         'transitions'   => [
             'verificar_antecedentes' => [
@@ -1098,7 +1098,7 @@ return [
                             'datos_detenido_tomados',
                             'informe_captura_enviado',
                             'informe_extradicion_enviado',
-                            'acta_libertad_enviada',
+                            'acta_libertad_enviada'
                           ],
         'transitions'   => [
             'recibir_nota_roja' => [
@@ -1147,7 +1147,7 @@ return [
                             'informe_evidencia_encontrada_enviado',
                             'acta_allanamiento_enviada',
                             'informe_allanamiento_enviado',
-                            'informe_remision_evidencias_enviado',
+                            'informe_remision_evidencias_enviado'
                           ],
         'transitions'   => [
             'recibir_solicitud' => [
@@ -1350,7 +1350,7 @@ return [
                             'operacion_ejecutada',
                             'delitos_procesados',
                             'diligencias_finales_realizadas',
-                            'informe_final_enviado',
+                            'informe_final_enviado'
                           ],
         'transitions'   => [
             'verificar_informacion' => [
@@ -1788,7 +1788,6 @@ return [
             ]
         ]
     ],
-
     'extraer_datos_sistema_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -1827,7 +1826,6 @@ return [
             ]
         ]
     ],
-
     'delitos_contra_propiedad_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -1935,7 +1933,6 @@ return [
             ]
         ]
     ],
-
     'informes_logisticos'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -1988,7 +1985,6 @@ return [
             ]
         ]
     ],
-
     'nuevas_promociones_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -2027,7 +2023,6 @@ return [
             ]
         ]
     ],
-
     'contestacion_oficios_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -2135,7 +2130,6 @@ return [
             ]
         ]
     ],
-
     'informe_disciplinarios_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -2208,7 +2202,6 @@ return [
             ]
         ]
     ],
-
     'informe_homicidios_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -2322,7 +2315,6 @@ return [
             ]
         ]
     ],
-
     'estandarizacion_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -2718,7 +2710,6 @@ return [
             ]
         ]
     ],
-
     'informe_cuadros_estadisticos_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -2762,7 +2753,6 @@ return [
             ]
         ]
     ],
-
     'solicitud_revelado_fotografias_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -2806,7 +2796,6 @@ return [
             ]
         ]
     ],
-
     'solicitud_revisar_informacion_digital_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -2864,7 +2853,6 @@ return [
             ]
         ]
     ],
-
     'solicitud_estructuras_criminales_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -2923,7 +2911,6 @@ return [
             ]
         ]
     ],
-
     'solicitud_record_historiales'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -2992,7 +2979,6 @@ return [
             ]
         ]
     ],
-
     'solicitud_transporte_almacen_general_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -3026,7 +3012,6 @@ return [
             ]
         ]
     ],
-
     'solicitud_antecedentes_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [
@@ -3128,7 +3113,6 @@ return [
             ]
         ]
     ],
-
     'informe_urid_ss'   => [
         'type'          => 'state_machine',
         'marking_store' => [

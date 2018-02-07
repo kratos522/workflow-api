@@ -211,6 +211,20 @@ class EventServiceProvider extends ServiceProvider
          'App\Events\UnidadRetratoHabladoBeforeTransition' => [
              'App\Listeners\RetratoHabladoSubscriber',
          ],
+
+         'App\Events\FlagranciaAfterTransition' => [
+             'App\Listeners\FlagranciaSubscriber',
+         ],
+         'App\Events\FlagranciaBeforeTransition' => [
+             'App\Listeners\FlagranciaSubscriber',
+         ],
+
+         'App\Events\SolicitudAnalisisAfterTransition' => [
+             'App\Listeners\SolicitudAnalisisSubscriber',
+         ],
+         'App\Events\SolicitudAnalisisBeforeTransition' => [
+             'App\Listeners\SolicitudAnalisisSubscriber',
+         ],
      ];
 
      protected $subscribe = [
@@ -244,6 +258,8 @@ class EventServiceProvider extends ServiceProvider
          'App\Listeners\RegistroPersonaSubscriber',
          'App\Listeners\SeguimientoSubscriber',
          'App\Listeners\RetratoHabladoSubscriber',
+         'App\Listeners\FlagranciaSubscriber',
+         'App\Listeners\SolicitudAnalisisSubscriber',
      ];
 
     /**

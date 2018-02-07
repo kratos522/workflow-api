@@ -30,6 +30,8 @@ use App\Captura;
 use App\RegistroPersona;
 use App\Seguimiento;
 use App\RetratoHablado;
+use App\Flagrancia;
+use App\SolicitudAnalisis;
 use App\Tools;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -99,7 +101,11 @@ class AppServiceProvider extends ServiceProvider
                                         "App\Events\\RealizarVigilanciaSeguimientoAfterTransition",
                                         "App\Events\\RealizarVigilanciaSeguimientoBeforeTransition",
                                         "App\Events\\UnidadRetratoHabladoAfterTransition",
-                                        "App\Events\\UnidadRetratoHabladoBeforeTransition"
+                                        "App\Events\\UnidadRetratoHabladoBeforeTransition",
+                                        "App\Events\\FlagranciaAfterTransition",
+                                        "App\Events\\FlagranciaBeforeTransition",
+                                        "App\Events\\SolicitudAnalisisAfterTransition",
+                                        "App\Events\\SolicitudAnalisisBeforeTransition"
                                       );
         $this->tools = new Tools;
         $this->log = new \Log;
@@ -585,6 +591,38 @@ class AppServiceProvider extends ServiceProvider
         RetratoHablado::saved(function ($retrato_hablado) {
              $event_name = "unidad_retrato_hablado_after_transition";
              $res = $this->after_object($event_name, $retrato_hablado);
+        });
+
+        Flagrancia::saving(function ($flagrancia) {
+             // check has delitos asignados
+             $res = $this->tools->FlagranciaonBeforeTransition($flagrancia);
+             $this->log::alert('$res@::saving is .. ' . var_export($res, true));
+             if ($res) {
+               // launch other events for other listeners
+               $event_name = "flagrancia_before_transition";
+               $result = $this->before_object($event_name, $flagrancia);
+             }
+             return $res;
+        });
+        Flagrancia::saved(function ($flagrancia) {
+             $event_name = "flagrancia_after_transition";
+             $res = $this->after_object($event_name, $flagrancia);
+        });
+
+        SolicitudAnalisis::saving(function ($solicitud_analisis) {
+             // check has delitos asignados
+             $res = $this->tools->SolicitudAnalisisonBeforeTransition($solicitud_analisis);
+             $this->log::alert('$res@::saving is .. ' . var_export($res, true));
+             if ($res) {
+               // launch other events for other listeners
+               $event_name = "solicitud_analisis_before_transition";
+               $result = $this->before_object($event_name, $solicitud_analisis);
+             }
+             return $res;
+        });
+        SolicitudAnalisis::saved(function ($solicitud_analisis) {
+             $event_name = "solicitud_analisis_after_transition";
+             $res = $this->after_object($event_name, $solicitud_analisis);
         });
 
     }
