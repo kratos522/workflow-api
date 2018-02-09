@@ -46,9 +46,9 @@ aprehencion_menor_infractor:
   diligencia_asignada: ['policia_tecnico']
   procesamiento_escena_crimen_asignada: ['policia_tecnico']
   escena_crimen_procesada: ['policia_tecnico']
-  remitido_fiscalia_niñez: ['policia_infancia_adolescensia']
+  remitido_fiscalia_niniez: ['policia_infancia_adolescensia']
   diligencia_completada: ['policia_infancia_adolescensia']
-  remitido_juzgado_niñez: ['policia_infancia_adolescensia', 'juez_juzgado_niñez']
+  remitido_juzgado_niniez: ['policia_infancia_adolescensia', 'juez_juzgado_niñez']
   remitido_medicina_forense: ['policia_infancia_adolescensia', 'perito_medicina_forense']
   informe_final_remitido: ['fiscal','juez_juzgado_niñez']
   remitido_centro_especializado: ['policia_infancia_adolescensia', 'juez_juzgado_niñez']
@@ -167,16 +167,16 @@ realizar_registro_arma:
   enviar_informe_decomiso: ['investigador']
   arma_registrada: ['persona']
 
-realizar_reseña_fotografica:
+realizar_resenia_fotografica:
   nueva: ['investigador']
   solicitud_recibida: ['auxiliar_administrativo']
-  reseña_fotografica_enviada: ['investigador']
+  resenia_fotografica_enviada: ['investigador']
 
 recepcionar_declaracion_ss:
   nueva: ['fiscal', 'investigador']
   solicitud_recepcionada: ['investigador']
   tipo_solicitud_verificada: ['investigador']
-  fiscal_niñez_solicitado: ['fiscal_niñez']
+  fiscal_niniez_solicitado: ['fiscal_niniez']
   declaracion_tomada: ['investigador', 'fiscal', 'analista_ss']
   registro_filmico_verificado: ['policia_tecnico']
   escena_crimen_procesada: ['investigador']
@@ -238,9 +238,10 @@ realizar_captura:
   motivos_captura_verificados: ['oficial_policia']
   captura_fines_extradicion_realizada: ['fiscal']
   procedicimento_aprehencion_menores_realizado: ['fiscal', 'fiscal_niñez']
-  registrar_captura: ['fiscal','departamento_localizacion_captura']
+  captura_registrada: ['fiscal','departamento_localizacion_captura']
   informe_captura_enviado: ['oficial_policia', 'fiscal']
-  registrar_evidencias: ['investigador']
+  informe_remision_enviado: ['oficial_policia', 'fiscal']
+  evidencias_registradas: ['investigador']
   informe_evidencia_encontrada_enviado: ['investigador', 'fiscal']
   informe_capturado_remitido_enviado: ['fiscal', 'departamento_localizacion_captura']
   informe_remision_evidencias_enviado: ['fiscal', 'investigador']
@@ -315,7 +316,6 @@ flagrancia:
   sospechoso_remitido_ministerio_publico: ['investigador', 'fiscal']
   informe_remision_enviado: ['investigador', 'fiscal']
   informe_final_enviado: ['fical', 'investigador']
-
 
 solicitud_analisis:
   nueva: ['juez', 'fiscal', 'investigador', 'responsable_almacen_evidencias']

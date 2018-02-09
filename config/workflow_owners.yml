@@ -152,7 +152,7 @@ realizar_entrega_vigilada:
       enviar_informe_entrega_evidencias: ['policia_tecnico']
       enviar_informe_investigativo: ['investigador']
       enviar_informe_diligencias: ['investigador']
-      enviar_informe_investigativo: ['investigador']
+      remitir_informe_investigativo: ['investigador']
       enviar_citacion_audiencia: ['investigador']
       realizar_informe_audiencia: ['investigador']
 
@@ -164,14 +164,14 @@ realizar_registro_arma:
       realizar_informe_decomiso: ['policia_tecnico']
       registrar_arma: ['policia_tecnico']
 
-realizar_reseña_fotografica:
+realizar_resenia_fotografica:
       recibir_solicitud: ['auxiliar_administrativo']
-      enviar_reseña_fotografica: ['auxiliar_administrativo']
+      enviar_resenia_fotografica: ['auxiliar_administrativo']
 
 recepcionar_declaracion_ss:
       recepcionar_solicitud: ['investigador']
       verificar_solicitud: ['investigador']
-      solicitar_fiscal_niñez: ['investigador']
+      solicitar_fiscal_niniez: ['investigador']
       realizar_toma_declaracion: ['investigador']
       realizar_toma_declaracion_menor: ['investigador']
       verificar_registro_filmico: ['analista_ss']
@@ -256,7 +256,7 @@ realizar_registro_personal:
 realizar_vigilancia_seguimiento:
       verificar_informacion: ['investigador']
       asignar_caso: ['jefe_departamento']
-      realizar_vigilancia_seguimiento: ['investigador']
+      realizar_vigilancia: ['investigador']
       procesar_escena_crimen: ['policia_tecnico']
       entregar_informe_vigilancia_seguimiento: ['investigador']
       entregar_pruebas: ['investigador']
