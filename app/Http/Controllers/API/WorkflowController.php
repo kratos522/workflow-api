@@ -47,12 +47,12 @@ class WorkflowController extends Controller
          "object_id" => "required|numeric|min:1",
          "action" => "required",
          "user_email" => "required",
-         "workflow_type" => "required" 
+         "workflow_type" => "required"
        ]);
 
        // $this->log::alert(json_encode($arr));
        // $this->log::alert($arr["workflow_type"]);
-       
+
        if ($validator->fails()) {
          return response()->json(['error'=>'No Content due to null or empty parameters'], 403);
        }
@@ -77,7 +77,6 @@ class WorkflowController extends Controller
 
        $this->log::alert('$res in workflow controller is...');
        $this->log::alert(json_encode($res));
-
        if (!$res->success) {
          return response()->json(['error'=>'Exception found '.$res->message], 403);
        }
@@ -108,13 +107,13 @@ class WorkflowController extends Controller
             $workflow_type = PolyBaseFactory::getWorkflow($arr["workflow_type"]);
        }
        catch (Exception $e) {
-            $this->log::alert('DefaultWorkflow..');        
+            $this->log::alert('DefaultWorkflow..');
             $workflow_type = new DefaultWorkflow();
        }
 
        # apply workflow transition
        $res = $workflow->user_actions($workflow_type);
-       
+
        //$res = $subject_workflow->user_actions($subject, $arr["user_email"]);
        if (is_null($res)) {
          return response()->json(['error'=>'Could not get user actions'], 403);

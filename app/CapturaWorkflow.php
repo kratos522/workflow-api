@@ -59,19 +59,23 @@ class CapturaWorkflow implements iAction
       $arr = $this->tools->get_workflow_transitions($captura, $action, $user_email);
 
       # set initial state if workflow_state is null
-      if (is_null($captura->workflow_state)) { $captura->workflow_state = $this->state;}
+      if (is_null($captura->workflow_state)) {$captura->workflow_state = $this->state;}
 
       # apply workflow transition
-      try {
-          $res = $this->tools->workflow_apply($captura, $action);
-      } catch (\Exception $e) {
-          return result;
+      $res = $this->tools->workflow_apply($captura, $action);
+
+      # update $captura
+      if (!$captura->save()) {
+         $this->log::alert('Workflow Transition Failed!');
+         $result->success = false;
+         $result->message = "acción/transición no permitida en el flujo";
+         return $result;
       }
 
-      $captura->save();
       $result->success = true;
       $result->message = $captura;
       return $result;
+
     } catch (\Exception $e) {
       unset($captura["enabled_transitions"]);
       unset($captura["user_email"]);

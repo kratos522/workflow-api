@@ -11,6 +11,7 @@ class CapturaFinExtradicion extends Model
 use WorkflowTrait;
 
 protected $table = "captura_fines_extradicion";
+protected $attributes =  ['id'=>null, 'id_orden_captura'=>null, 'id_nota_rota'=>null, 'workflow_state'=>null];
 
   public function orden_captura()
   {

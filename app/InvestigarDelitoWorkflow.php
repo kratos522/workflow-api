@@ -59,19 +59,23 @@ class InvestigarDelitoWorkflow implements iAction
       $arr = $this->tools->get_workflow_transitions($investigar_delito, $action, $user_email);
 
       # set initial state if workflow_state is null
-      if (is_null($investigar_delito->workflow_state)) { $investigar_delito->workflow_state = $this->state;}
+      if (is_null($investigar_delito->workflow_state)) {$investigar_delito->workflow_state = $this->state;}
 
       # apply workflow transition
-      try {
-          $res = $this->tools->workflow_apply($investigar_delito, $action);
-      } catch (\Exception $e) {
-          return result;
+      $res = $this->tools->workflow_apply($investigar_delito, $action);
+
+      # update $investigar_delito
+      if (!$investigar_delito->save()) {
+         $this->log::alert('Workflow Transition Failed!');
+         $result->success = false;
+         $result->message = "acción/transición no permitida en el flujo";
+         return $result;
       }
 
-      $investigar_delito->save();
       $result->success = true;
       $result->message = $investigar_delito;
       return $result;
+
     } catch (\Exception $e) {
       unset($investigar_delito["enabled_transitions"]);
       unset($investigar_delito["user_email"]);

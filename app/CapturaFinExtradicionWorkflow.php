@@ -57,25 +57,22 @@ class CapturaFinExtradicionWorkflow implements iAction
     $result = new \stdClass;
     try {
       $arr = $this->tools->get_workflow_transitions($captura_fin_extradicion, $action, $user_email);
-
       # set initial state if workflow_state is null
-      if (is_null($captura_fin_extradicion->workflow_state)) { $captura_fin_extradicion->workflow_state = $this->state;}
+      if (is_null($captura_fin_extradicion->workflow_state)) {$captura_fin_extradicion->workflow_state = $this->state;}
 
       # apply workflow transition
-      try {
-          $res = $this->tools->workflow_apply($captura_fin_extradicion, $action);
-      } catch (\Exception $e) {
-          return result;
-      }
+      $res = $this->tools->workflow_apply($captura_fin_extradicion, $action);
+      //if (!$res) { return false; }
 
+      # update $capturafin_extradicion
       $captura_fin_extradicion->save();
-      $result->success = true;
+      $result->success = true ;
       $result->message = $captura_fin_extradicion;
       return $result;
     } catch (\Exception $e) {
       unset($captura_fin_extradicion["enabled_transitions"]);
       unset($captura_fin_extradicion["user_email"]);
-      $result->success = false;
+      $result->success = false ;
       $result->message = $e;
       $this->log::alert($e);
       return $result;

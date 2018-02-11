@@ -59,19 +59,23 @@ class VictimaAgresionSexualWorkflow implements iAction
       $arr = $this->tools->get_workflow_transitions($victima_agresion_sexual, $action, $user_email);
 
       # set initial state if workflow_state is null
-      if (is_null($victima_agresion_sexual->workflow_state)) { $victima_agresion_sexual->workflow_state = $this->state;}
+      if (is_null($victima_agresion_sexual->workflow_state)) {$victima_agresion_sexual->workflow_state = $this->state;}
 
       # apply workflow transition
-      try {
-          $res = $this->tools->workflow_apply($victima_agresion_sexual, $action);
-      } catch (\Exception $e) {
-          return result;
+      $res = $this->tools->workflow_apply($victima_agresion_sexual, $action);
+
+      # update $victima_agresion_sexual
+      if (!$victima_agresion_sexual->save()) {
+         $this->log::alert('Workflow Transition Failed!');
+         $result->success = false;
+         $result->message = "acción/transición no permitida en el flujo";
+         return $result;
       }
 
-      $victima_agresion_sexual->save();
       $result->success = true;
       $result->message = $victima_agresion_sexual;
       return $result;
+  
     } catch (\Exception $e) {
       unset($victima_agresion_sexual["enabled_transitions"]);
       unset($victima_agresion_sexual["user_email"]);

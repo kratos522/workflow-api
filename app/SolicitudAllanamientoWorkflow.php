@@ -50,33 +50,37 @@ class SolicitudAllanamientoWorkflow implements iAction
     }
 
     public function apply(Array $arr) {
-      $allanamiento_id = $arr["object_id"];
+      $solicitud_allanamiento_id = $arr["object_id"];
       $action = $arr["action"];
       $user_email = $arr["user_email"];
-      $allanamiento = SolicitudAllanamiento::find($allanamiento_id);
+      $solicitud_allanamiento = SolicitudAllanamiento::find($solicitud_allanamiento_id);
 
       # set enabled transitions
       $result = new \stdClass;
       try {
-        $arr = $this->tools->get_workflow_transitions($allanamiento, $action, $user_email);
+        $arr = $this->tools->get_workflow_transitions($solicitud_allanamiento, $action, $user_email);
 
         # set initial state if workflow_state is null
-        if (is_null($allanamiento->workflow_state)) { $allanamiento->workflow_state = $this->state;}
+        if (is_null($solicitud_allanamiento->workflow_state)) {$solicitud_allanamiento->workflow_state = $this->state;}
 
         # apply workflow transition
-        try {
-            $res = $this->tools->workflow_apply($allanamiento, $action);
-        } catch (\Exception $e) {
-            return result;
+        $res = $this->tools->workflow_apply($solicitud_allanamiento, $action);
+
+        # update $solicitud_allanamiento
+        if (!$solicitud_allanamiento->save()) {
+           $this->log::alert('Workflow Transition Failed!');
+           $result->success = false;
+           $result->message = "acción/transición no permitida en el flujo";
+           return $result;
         }
 
-        $allanamiento->save();
         $result->success = true;
-        $result->message = $allanamiento;
+        $result->message = $solicitud_allanamiento;
         return $result;
+
       } catch (\Exception $e) {
-        unset($allanamiento["enabled_transitions"]);
-        unset($allanamiento["user_email"]);
+        unset($solicitud_allanamiento["enabled_transitions"]);
+        unset($solicitud_allanamiento["user_email"]);
         $result->success = false;
         $result->message = $e;
         $this->log::alert($e);

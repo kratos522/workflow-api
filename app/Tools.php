@@ -7,6 +7,22 @@ use App\DenunciaMP;
 use App\DenunciaSS;
 use App\DenunciaMPWorkflow;
 use App\DenunciaSSWorkflow;
+use App\CapturaFinExtradicion;
+use App\CapturaFinExtradicionWorkflow;
+use App\SolicitudAnalisis;
+use App\SolicitudAnalisisWorkflow;
+use App\Flagrancia;
+use App\FlagranciaWorkflow;
+use App\SolicitudAllanamiento;
+use App\SolicitudAllanamientoWorkflow;
+use App\Captura;
+use App\CapturaWorkflow;
+use App\VictimaAgresionSexual;
+use App\VictimaAgresionSexualWorkflow;
+use App\InvestigarDelito;
+use App\InvestigarDelitoWorkflow;
+use App\DictamenVehicular;
+use App\DictamenVehicularWorkflow;
 
 class Tools
 {
@@ -22,14 +38,14 @@ class Tools
                                               "fiscales_asignados",
                                               "delitos_tipificados",
                                               "pendiente_revision",
-                                              "dependencia_asignada"
+                                              "dependencia_asignada",
                                             );
       $this->actionable_functions = Array(
                                           "onBeforeTransitionDelitosAsignados",
                                           "onBeforeTransitionFiscalesAsignados",
                                           "onBeforeTransitionDelitosTipificados",
                                           "onBeforeTransitionPendienteRevision",
-                                          "onBeforeTransitionDependenciaAsignada"
+                                          "onBeforeTransitionDependenciaAsignada",
                                           );
   }
 
@@ -152,9 +168,177 @@ class Tools
       }
       return $res;
   }
+////////////////////////////////////////////////////
+public function SolicitudAnalisisonBeforeTransition($event) {
+    $res = true;
+    $solicitud_analisis = $event;
 
+    $workflow_state = $solicitud_analisis->workflow_state;
+
+    $condition = (in_array($solicitud_analisis, $this->actionable_before_states));
+
+    if ($condition) {
+      $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+      $condition = (in_array($function_name,$this->actionable_functions));
+      if ($condition) {
+        $res = (new \App\Tools)->$function_name($solicitud_analisis);
+      }
+    }
+
+    $this->log::alert('SolicitudAnalisisonBeforeTransition');
+    $this->log::alert(json_encode($res));
+    return $res;
+}
+
+public function FlagranciaonBeforeTransition($event) {
+    $res = true;
+    $flagrancia = $event;
+
+    $workflow_state = $flagrancia->workflow_state;
+
+    $condition = (in_array($flagrancia, $this->actionable_before_states));
+
+    if ($condition) {
+      $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+      $condition = (in_array($function_name,$this->actionable_functions));
+      if ($condition) {
+        $res = (new \App\Tools)->$function_name($flagrancia);
+      }
+    }
+
+    $this->log::alert('FlagranciaonBeforeTransition');
+    $this->log::alert(json_encode($res));
+    return $res;
+}
+
+public function SolicitudAllanamientoonBeforeTransition($event) {
+    $res = true;
+    $solicitud_allanamiento = $event;
+
+    $workflow_state = $solicitud_allanamiento->workflow_state;
+
+    $condition = (in_array($solicitud_allanamiento, $this->actionable_before_states));
+
+    if ($condition) {
+      $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+      $condition = (in_array($function_name,$this->actionable_functions));
+      if ($condition) {
+        $res = (new \App\Tools)->$function_name($solicitud_allanamiento);
+      }
+    }
+
+    $this->log::alert('SolicitudAllanamientoonBeforeTransition');
+    $this->log::alert(json_encode($res));
+    return $res;
+}
+
+public function VictimaAgresionSexualonBeforeTransition($event) {
+    $res = true;
+    $atender_lesionado_victima_agresion_sexual_ss = $event;
+
+    $workflow_state = $atender_lesionado_victima_agresion_sexual_ss->workflow_state;
+
+    $condition = (in_array($atender_lesionado_victima_agresion_sexual_ss, $this->actionable_before_states));
+
+    if ($condition) {
+      $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+      $condition = (in_array($function_name,$this->actionable_functions));
+      if ($condition) {
+        $res = (new \App\Tools)->$function_name($atender_lesionado_victima_agresion_sexual_ss);
+      }
+    }
+
+    $this->log::alert('VictimaAgresionSexualonBeforeTransition');
+    $this->log::alert(json_encode($res));
+    return $res;
+}
+
+public function CapturaonBeforeTransition($event) {
+    $res = true;
+    $captura = $event;
+
+    $workflow_state = $captura->workflow_state;
+
+    $condition = (in_array($captura, $this->actionable_before_states));
+
+    if ($condition) {
+      $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+      $condition = (in_array($function_name,$this->actionable_functions));
+      if ($condition) {
+        $res = (new \App\Tools)->$function_name($captura);
+      }
+    }
+
+    $this->log::alert('CapturaonBeforeTransition');
+    $this->log::alert(json_encode($res));
+    return $res;
+}
+
+public function InvestigarDelitoonBeforeTransition($event) {
+    $res = true;
+    $investigar_delito_ss = $event;
+
+    $workflow_state = $captura->workflow_state;
+
+    $condition = (in_array($investigar_delito_ss, $this->actionable_before_states));
+
+    if ($condition) {
+      $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+      $condition = (in_array($function_name,$this->actionable_functions));
+      if ($condition) {
+        $res = (new \App\Tools)->$function_name($investigar_delito_ss);
+      }
+    }
+
+    $this->log::alert('InvestigarDelitoonBeforeTransition');
+    $this->log::alert(json_encode($res));
+    return $res;
+}
+
+public function DictamenVehicularonBeforeTransition($event) {
+    $res = true;
+    $realizar_dictamen_vehicular = $event;
+
+    $workflow_state = $realizar_dictamen_vehicular->workflow_state;
+
+    $condition = (in_array($realizar_dictamen_vehicular, $this->actionable_before_states));
+
+    if ($condition) {
+      $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+      $condition = (in_array($function_name,$this->actionable_functions));
+      if ($condition) {
+        $res = (new \App\Tools)->$function_name($realizar_dictamen_vehicular);
+      }
+    }
+
+    $this->log::alert('DictamenVehicularonBeforeTransition');
+    $this->log::alert(json_encode($res));
+    return $res;
+}
+
+public function CapturaFinExtradiciononBeforeTransition($event) {
+      $res = true;
+      $captura_fin_extradicion = $event;
+
+      $workflow_state = $captura_fin_extradicion->workflow_state;
+
+      $condition = (in_array($workflow_state,$this->actionable_before_states));
+
+      if ($condition) {
+        $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+        $condition = (in_array($function_name,$this->actionable_functions));
+        if ($condition) {
+          $res = (new \App\Tools)->$function_name($captura_fin_extradicion);
+        }
+      }
+
+      $this->log::alert('CapturaFinExtradiciononBeforeTransition');
+      $this->log::alert(json_encode($res));
+      return $res;
+  }
+////////////////////////////////////////////////////////////////////
   public function get_workflow_transitions($objeto, $action, $user_email) {
-    $arr = [] ;
+    $arr = [];
     $objeto->enabled_transitions = [];
     $objeto->user_email = "";
 
@@ -181,6 +365,8 @@ class Tools
 
   public function workflow_apply($objeto, $action) {
     # workflow apply
+    //echo $objeto;
+    //echo $action;
     $this->log::alert(json_encode($objeto));
     $this->log::alert('but action is ....');
     $this->log::alert($action);
@@ -188,6 +374,7 @@ class Tools
     try {
       $res = $objeto->workflow_apply($action);
     } catch (\Exception $e) {
+          //echo $e;
         $this->log::alert($e);
         $res = NULL;
     }
@@ -195,9 +382,7 @@ class Tools
     # remove enabled transitions & user_email
     unset($objeto["user_email"]);
     unset($objeto["enabled_transitions"]);
-
     if (is_null($res)) {return false;}
-
     return true;
   }
 

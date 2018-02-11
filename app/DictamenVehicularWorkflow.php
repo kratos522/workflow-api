@@ -59,19 +59,23 @@ class DictamenVehicularWorkflow implements iAction
       $arr = $this->tools->get_workflow_transitions($dictamen_vehicular, $action, $user_email);
 
       # set initial state if workflow_state is null
-      if (is_null($dictamen_vehicular->workflow_state)) { $dictamen_vehicular->workflow_state = $this->state;}
+      if (is_null($dictamen_vehicular->workflow_state)) {$dictamen_vehicular->workflow_state = $this->state;}
 
       # apply workflow transition
-      try {
-          $res = $this->tools->workflow_apply($dictamen_vehicular, $action);
-      } catch (\Exception $e) {
-          return result;
+      $res = $this->tools->workflow_apply($dictamen_vehicular, $action);
+
+      # update $dictamen_vehicular
+      if (!$dictamen_vehicular->save()) {
+         $this->log::alert('Workflow Transition Failed!');
+         $result->success = false;
+         $result->message = "acción/transición no permitida en el flujo";
+         return $result;
       }
 
-      $dictamen_vehicular->save();
       $result->success = true;
       $result->message = $dictamen_vehicular;
       return $result;
+
     } catch (\Exception $e) {
       unset($dictamen_vehicular["enabled_transitions"]);
       unset($dictamen_vehicular["user_email"]);
