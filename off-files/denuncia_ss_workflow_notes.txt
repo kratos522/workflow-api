@@ -1,0 +1,6 @@
+# notes
+* Falta conocer catalogos SS
+
+
+# pendientes
+* Pantalla Modal para tipificar delitos por sospechoso
