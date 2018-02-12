@@ -7,6 +7,8 @@ use App\DenunciaMP;
 use App\DenunciaSS;
 use App\DenunciaMPWorkflow;
 use App\DenunciaSSWorkflow;
+use App\SolicitudEstructuraCriminalSS;
+use App\SolicitudEstructuraCriminalSSWorkflow;
 
 class Tools
 {
@@ -150,6 +152,24 @@ class Tools
           //$this->log::alert('$res is '. var_export($res, true) );
         }
       }
+      return $res;
+  }
+
+
+  public function SolicitudEstructuraCriminalSSonBeforeTransition($event) {
+      $res = true;
+      $solicitud_estructura_criminal_ss = $event;
+      $workflow_state = $solicitud_estructura_criminal_ss->workflow_state;
+      $condition = (in_array($solicitud_estructura_criminal_ss, $this->actionable_before_states));
+      if ($condition) {
+        $function_name = "onBeforeTransition" . ucfirst(implode("",explode("_",camel_case($workflow_state))));
+        $condition = (in_array($function_name,$this->actionable_functions));
+        if ($condition) {
+          $res = (new \App\Tools)->$function_name($solicitud_estructura_criminal_ss);
+        }
+      }
+      $this->log::alert('SolicitudEstructuraCriminalSSonBeforeTransition');
+      $this->log::alert(json_encode($res));
       return $res;
   }
 

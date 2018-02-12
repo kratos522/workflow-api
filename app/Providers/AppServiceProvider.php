@@ -6,6 +6,7 @@ use App\Task;
 use App\DenunciaMP;
 use App\DenunciaSS;
 use App\Documento;
+use App\SolicitudEstructuraCriminalSS;
 use App\Tools;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;

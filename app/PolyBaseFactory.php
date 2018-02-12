@@ -1,9 +1,6 @@
 <?php
-
 namespace App;
-
 class PolyBaseFactory {
-
     public static function getWorkflow($workflow_type) {
         $log = new \Log;
         // grab request variable
