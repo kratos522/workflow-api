@@ -85,7 +85,14 @@ class FlagranciaWorkflow implements iAction
     }
   }
 
-  public function user_actions(Flagrancia $flagrancia, $user_email) {
+  public function user_actions(Array $arr) {
+    $this->log::alert('FlagranciaWorkflow->user_actions');
+    $this->log::alert(json_encode($arr));
+
+    $flagrancia_id = $arr["object_id"];
+    $user_email = $arr["user_email"];
+    $flagrancia = Flagrancia::find($flagrancia_id);
+
     # set enabled transitions
     $result = new \stdClass;
     $result->success = true ;
@@ -111,7 +118,10 @@ class FlagranciaWorkflow implements iAction
     return false;
   }
 
-  public function actions(Flagrancia $flagrancia) {
+  public function actions(Array $arr) {
+    $flagrancia_id = $arr["object_id"];
+    $flagrancia = Flagrancia::find($flagrancia_id);
+
     $result = new \stdClass;
     $result->success = true ;
     $arr = $this->tools->get_actions($flagrancia);
@@ -130,7 +140,10 @@ class FlagranciaWorkflow implements iAction
     return (boolean)$result;
   }
 
-  public function owner_users($workflow_transition, $dependencia_id) {
+  public function owner_users(Array $arr) {
+    $dependencia_id = $arr["dependencia_id"];
+    $workflow_transition = $arr["workflow_transition"];
+
     $result = new \stdClass;
     $result->success = true ;
     $all_emails = $this->users($workflow_transition, $this->workflow_owners,$dependencia_id);
@@ -139,15 +152,7 @@ class FlagranciaWorkflow implements iAction
   }
 
   public function dependencia(Flagrancia $flagrancia) {
-    $dependencia_id = NULL;
-    $d_mp = Flagrancia::whereId($flagrancia->id)->with('institucion.documento.dependencia')->first();
-    if (is_null($d_mp)) { return $dependencia_id;}
-
-    $doc = $d_mp->institucion()->first()->documento()->first();
-    if (is_null($doc)) {return $dependencia_id;}
-
-    $dependencia_id = $doc->dependencia_id;
-    return $dependencia_id;
+    
   }
 
   public function notification_users($workflow_state,$dependencia_id) {
